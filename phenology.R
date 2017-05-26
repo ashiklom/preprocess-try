@@ -111,7 +111,7 @@ message(sprintf('%d species with phenology data. %d deciduous, %d evergreen.', t
 message(sprintf('Phenology information available for %d of %d species (%.2f%%).', 
                 total, all_total, total / all_total * 100))
 
-write_csv(pheno3_final, 'phenology.csv')
+write_csv(pheno3_final, 'attributes/phenology.csv')
 
 #trydat %>% 
     #filter(DataID == 226, OrigValueStr == 'always spring green') %>% 

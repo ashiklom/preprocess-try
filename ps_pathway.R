@@ -26,7 +26,7 @@ psp1_final <- psp1_proc %>%
 
 check_unique_species(psp1_final)
 
-write_csv(psp1_final, 'ps_pathway.csv')
+write_csv(psp1_final, 'attributes/ps_pathway.csv')
   
 #trydat %>% 
     #filter(OrigValueStr %in% c('C3', 'C4', 'c3', 'c4')) %>% 

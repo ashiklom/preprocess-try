@@ -176,7 +176,7 @@ check_unique_species(gf3_final)
 
 gf3_final %>% count(growth_form, sort = TRUE)
 
-write_csv(gf3_final, path = 'growth_form.csv')
+write_csv(gf3_final, path = 'attributes/growth_form.csv')
 
     ## See above note about special PFTs
     #mutate(pft = case_when(grepl('succulent|succ|cact', .$rawstring) ~ 'succulent',

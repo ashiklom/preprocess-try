@@ -29,10 +29,10 @@ growth_form_nonwoody <- c('graminoid', 'forb_herb', 'hemicryptophyte',
                           'therophyte', 'chamaephyte', 'fern',
                           'epiphyte', 'geophyte', 'perennial')
 
-plant_attrs <- read_csv('leaf_type.csv') %>% 
-    full_join(read_csv('phenology.csv')) %>% 
-    full_join(read_csv('ps_pathway.csv')) %>% 
-    full_join(read_csv('growth_form.csv')) %>% 
+plant_attrs <- read_csv('attributes/leaf_type.csv') %>% 
+    full_join(read_csv('attributes/phenology.csv')) %>% 
+    full_join(read_csv('attributes/ps_pathway.csv')) %>% 
+    full_join(read_csv('attributes/growth_form.csv')) %>% 
     filter(!growth_form %in% growth_form_ignore) %>% 
     mutate(woodiness = case_when(.$growth_form == 'woody' ~ 'woody',
                                  .$growth_form %in% growth_form_nonwoody ~ 'nonwoody',

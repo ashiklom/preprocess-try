@@ -76,7 +76,7 @@ check_unique_species(lt2_final)
 
 count(lt2_final, leaf_type, sort = TRUE)
 
-write_csv(lt2_final, 'leaf_type.csv')
+write_csv(lt2_final, 'attributes/leaf_type.csv')
 
 #trydat %>% 
     #filter(OrigValueStr %in% c('broadleaf', 'needleleaf', 'broad', 'needle')) %>% 
