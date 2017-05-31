@@ -70,15 +70,7 @@ pfts <- read_csv('try_pfts.csv')
 traits_pfts <- traits_fill %>% 
     left_join(pfts)
 
-traits_pfts %>% 
-    count(pft, sort = TRUE)
-
-traits_pfts %>% 
-    group_by(pft) %>% 
-    summarize_at(vars(-ObservationID, -AccSpeciesID),
-                 (function(x) sum(!is.na(x))))
-
-saveRDS(traits_data, file = 'trait_data.RData')
+saveRDS(traits_pfts, file = 'trait_data.rds')
 
 ############################################################
 

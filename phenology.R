@@ -102,6 +102,21 @@ pheno3_final %>%
 
 check_unique_species(pheno3_final)
 
+############################################################
+pheno4 <- trydat %>% 
+    distinct(AccSpeciesID) %>% 
+    collect(n = Inf) %>% 
+    anti_join(pheno3_final)
+
+pheno4_phylo <- pheno4 %>% 
+    left_join(trydb %>% tbl('species_phylo') %>% collect(n = Inf)) %>% 
+    mutate(phenology = case_when(.$Family == 'Myrtaceae' ~ 'evergreen',
+                                 .$Family == 'Arecaceae' ~ 'evergreen',
+                                 TRUE ~ NA_character_
+                                 ))
+pheno4_phylo %>% filter(is.na(phenology)) %>% count(Family, sort = TRUE) %>% print(n = 20)
+
+
 pheno_counts <- count(pheno3_final, phenology)
 nd <- filter(pheno_counts, phenology == 'deciduous')[['n']]
 ne <- filter(pheno_counts, phenology == 'evergreen')[['n']]

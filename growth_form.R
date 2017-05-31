@@ -2,6 +2,8 @@
 
 source('common.R')
 
+species_phylo <- tbl(trydb, 'species_phylo') %>% collect()
+
 # Trait ID 42 -- Plant growth form
 # Data IDs:
 #   47 -- Plant growth form   
@@ -175,6 +177,26 @@ gf3_final <- filter(gf3_proc, !is.na(growth_form)) %>%
 check_unique_species(gf3_final)
 
 gf3_final %>% count(growth_form, sort = TRUE)
+
+############################################################
+# Figure out remaining traits based on phylogeny
+gf4_long <- trydat %>% 
+    distinct(AccSpeciesID) %>% 
+    collect(n = Inf) %>% 
+    anti_join(gf3_final)
+
+gf4_phylo <- gf4_long %>% 
+    left_join(species_phylo) %>% 
+    mutate(growth_form = case_when(.$Family == 'Orchidaceae' ~ 'perennial',
+                                   .$Family == 'Myrtaceae' ~ 'woody',
+                                   .$Family == 'Iridaceae' ~ 'perennial',
+                                   .$Family == 'Proteaceae' & !grepl('Stirlingia', .$AccSpeciesName) ~ 'woody',
+                                   .$Family == 'Cyperaceae' ~ 'graminoid',
+                                   .$Family == 'Poaceae' ~ 'graminoid',
+                                   .$Family == 'Lauraceae' & !grepl('Cassytha', .$AccSpeciesName) ~ 'woody',
+                                   .$Family == 'Lauraceae' & grepl('Cassytha', .$AccSpeciesName) ~ 'liana_climber',
+                                   TRUE ~ NA_character_))
+gf4_phylo %>% filter(is.na(growth_form)) %>% count(Family, sort = TRUE) %>% print(n = 20)
 
 write_csv(gf3_final, path = 'attributes/growth_form.csv')
 

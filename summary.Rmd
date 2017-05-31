@@ -1,0 +1,102 @@
+---
+title: TRY data summary
+author: Alexey Shiklomanov
+output: 
+    html_document:
+        toc: true
+        theme: united
+---
+
+```{r setup, echo = FALSE, results = 'hide'}
+library(tidyverse)
+traits_pfts <- readRDS('trait_data.rds')
+pfts <- readRDS('all_pfts.rds')
+species_phylo <- src_sqlite('try.sqlite') %>% tbl('species_phylo') %>% collect(n = Inf)
+traits_phylo <- traits_pfts %>% 
+    left_join(species_phylo)
+pfts_phylo <- pfts %>% 
+    left_join(species_phylo)
+```
+
+# Phylogeny
+
+## Observations, by missing vs. nonmissing family
+```{r rowsbymissingfamily}
+traits_phylo %>% 
+    count(is.na(Family)) %>% 
+    knitr::kable()
+```
+
+## Number of observations, by Family
+```{r rowsbyfamily}
+traits_phylo %>% 
+    count(Family, sort = TRUE) %>% 
+    head(20) %>% 
+    knitr::kable()
+```
+
+## Observations missing family, by species
+```{r missingfamilybyspecies}
+traits_phylo %>% 
+    filter(is.na(Family)) %>% 
+    count(AccSpeciesID, AccSpeciesName, sort = TRUE) %>% 
+    head(20) %>% 
+    knitr::kable()
+```
+
+# Traits
+
+## Number of observations (rows), by PFT
+
+```{r rowsbypft}
+traits_pfts %>% 
+    count(pft, sort = TRUE) %>% 
+    knitr::kable()
+```
+
+## Missing traits by PFT
+
+```{r nonmissingbypft}
+traits_pfts %>% 
+    group_by(pft) %>% 
+    summarize_at(vars(-ObservationID, -AccSpeciesID),
+                 (function(x) sum(!is.na(x)))) %>% 
+    knitr::kable()
+```
+
+## Non-missing traits by family
+
+```{r missingbyfamily}
+traits_phylo %>% 
+    group_by(Family) %>% 
+    summarize_if(is_double,
+                 (function(x) sum(!is.na(x)))) %>% 
+    mutate(total = rowSums(.[-1])) %>% 
+    select(Family, total, everything()) %>% 
+    arrange(desc(total)) %>% 
+    knitr::kable()
+```
+
+# PFTs 
+
+## Species missing PFTs, by attribute
+
+```{r pftsnonmissingcategory}
+pfts %>% 
+    filter(is.na(pft)) %>% 
+    count(leaf_type, phenology, ps_pathway, growth_form, woodiness, sort = TRUE) %>% 
+    head(15) %>% 
+    knitr::kable()
+```
+
+## Species, by missing vs. nonmissing PFT
+
+```{r speciesmissingpft}
+pfts %>% count(is.na(pft)) %>% knitr::kable()
+```
+
+## Species, by PFT (including missing)
+
+```{r speciesbypft}
+count(pfts, pft, sort = TRUE) %>% knitr::kable()
+```

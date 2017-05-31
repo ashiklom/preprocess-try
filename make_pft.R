@@ -29,10 +29,13 @@ growth_form_nonwoody <- c('graminoid', 'forb_herb', 'hemicryptophyte',
                           'therophyte', 'chamaephyte', 'fern',
                           'epiphyte', 'geophyte', 'perennial')
 
+species_phylo <- src_sqlite('try.sqlite') %>% tbl('species_phylo') %>% collect()
+
 plant_attrs <- read_csv('attributes/leaf_type.csv') %>% 
     full_join(read_csv('attributes/phenology.csv')) %>% 
     full_join(read_csv('attributes/ps_pathway.csv')) %>% 
     full_join(read_csv('attributes/growth_form.csv')) %>% 
+    left_join(species_phylo) %>% 
     filter(!growth_form %in% growth_form_ignore) %>% 
     mutate(woodiness = case_when(.$growth_form == 'woody' ~ 'woody',
                                  .$growth_form %in% growth_form_nonwoody ~ 'nonwoody',
@@ -42,6 +45,7 @@ pfts <- character(nrow(plant_attrs))
 
 assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type) {
     pft <- NA_character_
+    # First try based on attributes
     # `isTRUE` is necessary to handle missing values
     if (isTRUE(growth_form == 'succulent' | ps_pathway == 'CAM')) {
         pft <- 'succulent'
@@ -66,22 +70,17 @@ assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type)
             }
         }
     } else if (isTRUE(woodiness == 'nonwoody')) {
-        if (isTRUE(phenology == 'deciduous')) {
-            pft <- 'deciduous_herb'
-        } else if (isTRUE(phenology == 'evergreen')) {
-            pft <- 'evergreen_herb'
-        }
+        pft <- 'C3_herb'
     }
     return(pft)
 }
+
 pfts <- plant_attrs %>% 
     rowwise() %>% 
     mutate(pft = assign_pft(growth_form, ps_pathway, woodiness, phenology, leaf_type)) %>% 
-    ungroup()
-pfts %>% filter(is.na(pft)) %>% count(leaf_type, phenology, ps_pathway, growth_form, woodiness,
-                                      sort = TRUE)
-pfts %>% count(is.na(pft))
-count(pfts, pft, sort = TRUE)
+    'class<-'(c('tbl_df', 'data.frame'))
+
+saveRDS(pfts, 'all_pfts.rds')
 
 pfts %>% 
     filter(!is.na(pft)) %>% 
