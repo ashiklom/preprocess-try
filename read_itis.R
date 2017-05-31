@@ -47,5 +47,3 @@ tax_processed %>% distinct(Superdivision, Division, Subdivision, Class) %>%
 tax_processed %>% distinct(Kingdom, Subkingdom, Infrakingdom, Division) %>% 
     DBI::dbWriteTable(phylo_db$con, name = 'kingdom_division', value = .)
 
-#write_csv(tax_processed, 'itis_taxonomy.csv')
-
