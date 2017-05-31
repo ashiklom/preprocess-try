@@ -24,24 +24,41 @@ tpl_dat <- tpl_list %>%
 
 tpl_proc <- tpl_dat %>% 
     mutate(AccSpeciesName = paste(Genus, Species)) %>% 
-    select(tpl_id = ID, major_group = `Major group`, AccSpeciesName, Family, Genus, Species)
+    distinct(AccSpeciesName, Family, Genus, Species)
+
+tpl_fam <- count(tpl_proc, Family, sort = TRUE)
 
 #tpl_proc %>% glimpse()
+
+#tpl_proc %>% 
+    #filter(AccSpeciesName == 'Anacampseros affinis') %>% 
+    #glimpse()
+
+# Remove duplicate families by selecting the more common family
+tpl_dupsp <- tpl_proc %>% count(AccSpeciesName) %>% filter(n > 1)
+tpl_dupfam <- tpl_proc %>% select(AccSpeciesName, Family) %>% semi_join(tpl_dupsp)
+tpl_rmfam <- tpl_dupfam %>% 
+    left_join(tpl_fam) %>% 
+    group_by(AccSpeciesName) %>% 
+    filter(n != max(n))
+
+tpl_proc2 <- anti_join(tpl_proc, tpl_rmfam)
+
+#tpl_proc2 %>% count(AccSpeciesName) %>% filter(n > 1)
+
 
 #count(species)
 #semi_join(species, tpl_proc) %>% count()
 #anti_join(species, tpl_proc) %>% count()
 
 species_merge <- species %>% 
-    left_join(tpl_proc) %>% 
+    left_join(tpl_proc2) %>% 
     mutate(Family = factor(Family) %>% 
                 forcats::fct_recode(Isoetaceae = 'Isoëtaceae',
                                     Aspleniaceae = 'Athyriaceae',
                                     Asteraceae = 'Compositae',
                                     Fabaceae = 'Leguminosae'
                                     ))
-    mutate(Family = case_when(.$Family == 'Leguminosae' ~ 'Fabaceae'
-                              TRUE ~ NA_character_))
 
 families <- species_merge %>% 
     filter(!is.na(Family)) %>% 
@@ -52,26 +69,27 @@ phylo_db <- src_sqlite('itis_taxonomy.sqlite')
 # Add new families to phylogeny database
 missed_families <- tribble(
     ~Family, ~Order,
-    'Lactoridaceae', 'Piperales'
-    'Hypodematiaceae', 'Polypodiales'
-    'Nephrolepidaceae', 'Polypodiales'
+    'Lactoridaceae', 'Piperales',
+    'Hypodematiaceae', 'Polypodiales',
+    'Nephrolepidaceae', 'Polypodiales',
     'Cystopteridaceae', 'Polypodiales'
-                           ) #%>% 
-    #dbhelpers::db_merge_into(phylo_db)
+                           ) %>% 
+    dbhelpers::db_merge_into(phylo_db, 'order_family', ., 'Family')
 
 
-itis_families <- tbl(phylo_db, 'order_family')
+itis_families <- tbl(phylo_db, 'order_family') %>% collect()
 
-anti_join(families, itis_taxonomy)
+#anti_join(families, itis_families)
 
 species_tax <- species_merge %>% 
-    left_join(itis_taxonomy)
+    left_join(itis_families)
 
-# Missed families:
-# - Lactoridaceae -- Order: Piperales
-# - Hypodematiaceae -- Order: Polypodiales
-# - Nephrolepidaceae -- Order: Polypodiales
-# - Cystopteridaceae -- Order: Polypodiales
+species_tax %>% 
+    count(AccSpeciesName) %>% 
+    filter(n > 1)
+
+# Write to new table in TryDB 
+db_insert_into(trydb$con, 'species_phylo', species_tax)
 
 # DataIDs:
 #   - 846 -- Family
