@@ -1,37 +1,28 @@
 source('common.R')
 
-# DataID 25 -- "Photosynthetic pathway"
+# TraitID 22 -- Photosynthetic pathway
+# DataID 25 -- Photosynthetic pathway
 
-psp1 <- trydat %>% 
-    filter(DataID == 25) %>% 
+psp_long <- trydat %>% 
+    filter(TraitID == 22) %>% 
+    left_join(datanames) %>% 
     collect(n = Inf)
 
-psp1_raw <- raw_string(psp1)
+#psp_long %>% 
+    #prep_sheet %>% 
+    #write_csv('attribute_maps/ps_pathway.csv')
 
-psp1_proc <- psp1_raw %>% 
-    mutate(ps_pathway = case_when(.$rawstring == 'c3' ~ 'C3',
-                                  .$rawstring == 'c4' ~ 'C4',
-                                  .$rawstring == 'cam' ~ 'CAM',
-                                  # If there are conflicts, go in order of increasing frequency
-                                  grepl('cam', .$rawstring) ~ 'CAM',
-                                  grepl('c4', .$rawstring) ~ 'C4',
-                                  grepl('c3', .$rawstring) ~ 'C3',
-                                  TRUE ~ NA_character_
-                                  ))
-psp1_proc %>% filter(is.na(ps_pathway)) %>% count(rawstring, sort = TRUE)
+#lookup(25, 205, 'Y', psp_long, 'attribute_maps/ps_pathway.csv', 'ps_pathway')
 
-psp1_final <- psp1_proc %>% 
-    filter(!is.na(ps_pathway)) %>% 
-    distinct(AccSpeciesID, ps_pathway)
+psp_map <- read_csv('attribute_maps/ps_pathway.csv')
 
-check_unique_species(psp1_final)
+psp_proc <- inner_join(psp_long, psp_map)
 
-write_csv(psp1_final, 'attributes/ps_pathway.csv')
-  
-#trydat %>% 
-    #filter(OrigValueStr %in% c('C3', 'C4', 'c3', 'c4')) %>% 
-    #count(DataID, sort = TRUE)
+psp_species <- psp_proc %>% 
+    filter(ps_pathway != 'n/a') %>% 
+    group_by(AccSpeciesID) %>% 
+    summarize(ps_pathway = most_frequent(ps_pathway, c('CAM', 'C4', 'C3')))
 
-#datanames %>% 
-    #filter(DataID %in% c(25, 235)) %>% 
-    #select(DataID, DataName)
+count(psp_species, ps_pathway, sort = TRUE)
+
+saveRDS(psp_species, 'attributes/ps_pathway.rds')
