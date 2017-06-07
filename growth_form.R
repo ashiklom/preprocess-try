@@ -82,8 +82,8 @@ gf_species <-
     gf_proc %>% 
     filter(growth_form != 'n/a') %>% 
     group_by(AccSpeciesID) %>% 
-    mutate(growth_form_final = set_gf(growth_form)) %>% 
-    ungroup()
+    summarize(growth_form = set_gf(growth_form)) %>% 
+    filter(growth_form!= 'n/a')
     #mutate(woody = most_frequent(growth_form == 'woody', TRUE),
            #liana = most_frequent(growth_form == 'liana_climber', TRUE),
            #succulent = most_frequent(growth_form == 'succulent', TRUE)) %>% 
@@ -92,25 +92,8 @@ gf_species <-
                                          #.$woody ~ 'woody',
                                          #TRUE ~ most_frequent(.$growth_form)
                                          #))
-gf_species %>% ungroup %>% count(growth_form_final, sort = TRUE)
-gf_species %>% filter(growth_form_final == 'n/a') %>% count(growth_form, sort = TRUE)
-
-    #mutate(nwoody = n(), 
-           #woody_proc = get_maxval(woody, nwoody)) %>% 
-    #ungroup()# %>% 
-    #mutate(growth_form = case_when(.$woody_proc == 'FALSE' ~ .$growth_form,
-             ##                      .$woody_proc != 'FALSE' ~ 'woody'))
-
-
-
-    #count(AccSpeciesID, growth_form, woody) %>% 
-    #group_by(AccSpeciesID, woody) %>% 
-    #summarize(growth_form = get_maxval(AccSpe))
-
-#%>% 
-    #summarize(growth_form = get_maxval(growth_form, nn)) %>% 
-    #ungroup()
-#message('Done!')
+gf_species %>% ungroup %>% count(growth_form, sort = TRUE)
+#gf_species %>% filter(growth_form == 'n/a') %>% count(growth_form, sort = TRUE)
 
 saveRDS(gf_species, 'attributes/growth_form.rds')
 
