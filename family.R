@@ -1,77 +1,87 @@
-source('common.R')
+library(tidyverse)
 
-species <- collect(species)
+trydb <- src_sqlite('try.sqlite')
 
-tpl_proc <- readRDS('theplantlist.rds')
-
-#count(species)
-#semi_join(species, tpl_proc) %>% count()
-#anti_join(species, tpl_proc) %>% count()
-
-message('Fixing species name encoding...')
-species_fixenc <- species %>% 
-    mutate(AccSpeciesName = stringi::stri_trans_general(AccSpeciesName, 'latin-ascii'))
-message('Done!')
-
-message('Merging species with ThePlantList data...')
-species_merge <- species_fixenc %>% 
-    left_join(tpl_proc) %>% 
-    mutate(Family = recode(Family,
-                           `Isoëtaceae` = 'Isoetaceae',
-                           `Athyriaceae` = 'Aspleniaceae',
-                           `Compositae` = 'Asteraceae',
-                           `Leguminosae` = 'Fabaceae'
-                           )) %>% 
-    mutate(Family = case_when(!is.na(.$Family) ~ .$Family,
-                              is.na(.$Family) & .$AccSpeciesName == 'Poaceae sp' ~ 'Poaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Fabaceae sp' ~ 'Fabaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Carex sp' ~ 'Cyperaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Populus sp' ~ 'Salicaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Salix sp' ~ 'Salicaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Protium sp' ~ 'Burseraceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Hieracium pilosella' ~ 'Asteraceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Hammada scoparia' ~ 'Amaranthaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Maxillaria uncata' ~ 'Orchidaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Dicranopteris dichotoma' ~ 'Gleicheniaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Triticum sp' ~ 'Poaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Amphicarpa bracteata' ~ 'Fabaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Coussarea racemosa' ~ 'Rubiaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Citrofortunella mitis' ~ 'Rutaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Eucalyptus sp' ~ 'Myrtaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Thymus polytrichus' ~ 'Lamiaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Achnatherum splendens' ~ 'Poaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Jessenia bataua' ~ 'Arecaceae',
-                              is.na(.$Family) & .$AccSpeciesName == 'Digitalis micrantha' ~ 'Plantaginaceae',
-                              TRUE ~ NA_character_))
-message('Done!')
+species_merge <- readRDS('tps_species.rds')
 
 families <- species_merge %>% 
     filter(!is.na(Family)) %>% 
     distinct(Family)
 
-phylo_db <- src_sqlite('itis_taxonomy.sqlite')
+tol_fname <- 'tol_classification.rds'
+tol_present <- file.exists(tol_fname)
 
-# Add new families to phylogeny database
-missed_families <- tribble(
-    ~Family, ~Order,
-    'Lactoridaceae', 'Piperales',
-    'Hypodematiaceae', 'Polypodiales',
-    'Nephrolepidaceae', 'Polypodiales',
-    'Cystopteridaceae', 'Polypodiales'
-                           ) %>% 
-    dbhelpers::db_merge_into(phylo_db, 'order_family', ., 'Family')
+if (tol_present) {
+    old_tol <- readRDS(tol_fname)
+    missing_families <- anti_join(families, old_tol)
+} else {
+    missing_families <- families
+}
 
+new_families <- nrow(missing_families) > 0
 
-itis_families <- tbl(phylo_db, 'order_family') %>% collect()
+if (new_families) {
+    mf_famid <- mutate(missing_families, tol_id = taxize::get_tolid(Family))
+    mf_rawclass <- mutate(mf_famid, classification = taxize::classification(tol_id))
+    mf_class <- mutate(mf_rawclass, classification = map(classification, as_data_frame))
+}
 
-#anti_join(families, itis_families)
+if (tol_present && new_families) {
+    fam_dat <- full_join(old_tol, mf_class)
+} else if (tol_present && !new_families) { 
+    fam_dat <- old_tol
+} else {
+    fam_dat <- mf_class
+}
 
-species_tax <- species_merge %>% 
-    left_join(itis_families)
+saveRDS(fam_dat, tol_fname)
+
+get_rank <- function(dat, rank) {
+    ranknames <- dat[['rank']]
+    rankvals <- dat[['name']]
+    ind <- which(ranknames == rank)
+    if (length(ind) == 0) {
+        return(NA)
+    } else if (length(ind) == 1) {
+        return(rankvals[ind])
+    } else {
+        stop('Found ', length(ind), ' ranks called "', rank, '".')
+    }
+}
+
+find_rank <- function(dat, pattern) {
+    ind <- grep(pattern, dat$name)
+    if (length(ind) == 0) {
+        return(NA)
+    } else if (length(ind) == 1) {
+        return(dat[['name']][ind])
+    } else {
+        stop('Found ', length(ind), ' names matching pattern "', pattern, '".')
+    }
+}
+
+fam_processed <- fam_dat %>% 
+    mutate(
+           tol_Family = map_chr(classification, get_rank, rank = 'family'),
+           Order = map_chr(classification, get_rank, rank = 'order'),
+           SubClass = map_chr(classification, get_rank, rank = 'subclass'),
+           Class = map_chr(classification, get_rank, rank = 'class'),
+           PlantGroup = map_chr(classification, find_rank, pattern = 'gymno|angio')
+           )
+
+family_taxonomy <- select(fam_processed, -classification)
+
+#family_taxonomy %>% filter(Family != tol_Family)
+
+species_tax <- left_join(species_merge, family_taxonomy)
 
 species_tax %>% 
-    count(AccSpeciesName) %>% 
-    filter(n > 1)
+    filter(is.na(tol_Family)) %>% 
+    arrange(desc(N))
+
+#species_tax %>% 
+    #count(AccSpeciesName) %>% 
+    #filter(n > 1)
 
 # Write to new table in TryDB 
 if (db_has_table(trydb$con, 'species_phylo')) {
@@ -80,20 +90,3 @@ if (db_has_table(trydb$con, 'species_phylo')) {
 db_insert_into(trydb$con, 'species_phylo', species_tax)
 file.create('.family', showWarnings = FALSE)
 
-# DataIDs:
-#   - 846 -- Family
-#   - 1490 -- Family APG
-#   - 1730 -- Subfamily
-
-#family_long <- trydat %>% 
-    #filter(DataID == 846) %>% 
-    #collect(n = Inf)
-
-#family_dist <- family_long %>% 
-    #distinct(AccSpeciesID, OrigValueStr) %>% 
-    #rename(family = OrigValueStr)
-
-#family_dist %>% count(AccSpeciesID) %>% filter(n > 1)
-
-#datanames %>% 
-    #filter(DataName %like% "%Family%")
