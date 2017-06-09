@@ -4,44 +4,27 @@
 #   - [X] C3 vs C4
 #   - [X] Leaf type
 
-# PFTs:
-#   - Growth form: Liana_climber (ignore)
-#   - Growth form: Hydrophyte (ignore)
-#   - Growth form: Succulent
-#   - PS pathway == C4
-#       * Woodiness: woody -- C4_tree
-#       * Woodiness: non-woody -- C4_grass
-#   - PS pathway != C4
-#       * Growth form: Tree, shrub
-#           - Leaf type: Broadleaf
-#               * Phenology: Deciduous
-#                   - By biome
-#               * Phenology: Evergreen
-#                   - By biome?
-#           - Leaf type: Needleleaf
-#       * Growth form: Forb/herb
-#       * Growth form: Graminoid (C3 grass)
-
 library(tidyverse)
 
-growth_form_ignore <- c('liana_climber', 'cryptophyte')
-growth_form_nonwoody <- c('graminoid', 'forb_herb', 'hemicryptophyte',
-                          'therophyte', 'chamaephyte', 'fern',
-                          'epiphyte', 'geophyte', 'perennial')
+#growth_form_ignore <- c('liana_climber', 'cryptophyte')
+#growth_form_nonwoody <- c('graminoid', 'forb_herb', 'hemicryptophyte',
+                          #'therophyte', 'chamaephyte', 'fern',
+                          #'epiphyte', 'geophyte', 'perennial')
 
 species_phylo <- src_sqlite('try.sqlite') %>% tbl('species_phylo') %>% collect()
 
-plant_attrs <- read_csv('attributes/leaf_type.csv') %>% 
-    full_join(read_csv('attributes/phenology.csv')) %>% 
-    full_join(read_csv('attributes/ps_pathway.csv')) %>% 
-    full_join(read_csv('attributes/growth_form.csv')) %>% 
-    left_join(species_phylo) %>% 
-    filter(!growth_form %in% growth_form_ignore) %>% 
-    mutate(woodiness = case_when(.$growth_form == 'woody' ~ 'woody',
-                                 .$growth_form %in% growth_form_nonwoody ~ 'nonwoody',
-                                 TRUE ~ NA_character_))
+plant_attrs_raw <- readRDS('attributes/leaf_type.rds') %>% 
+    full_join(readRDS('attributes/phenology.rds')) %>% 
+    full_join(readRDS('attributes/ps_pathway.rds')) %>% 
+    full_join(readRDS('attributes/growth_form.rds')) %>% 
+    left_join(species_phylo)
 
-pfts <- character(nrow(plant_attrs))
+plant_attrs_raw %>% distinct(growth_form)
+
+plant_attrs <- plant_attrs_raw %>% 
+    mutate(woodiness = case_when(!is.na(.$growth_form) & .$growth_form == 'woody' ~ 'woody',
+                                 !is.na(.$growth_form) & .$growth_form != 'woody' ~ 'nonwoody',
+                                 TRUE ~ NA_character_))
 
 assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type) {
     pft <- NA_character_
@@ -50,11 +33,7 @@ assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type)
     if (isTRUE(growth_form == 'succulent' | ps_pathway == 'CAM')) {
         pft <- 'succulent'
     } else if (isTRUE(ps_pathway == 'C4')) {
-        if (isTRUE(woodiness == 'woody')) {
-            pft <- 'C4_tree'
-        } else {
-            pft <- 'C4_grass'
-        }
+        pft <- 'C4'
     } else if (isTRUE(woodiness == 'woody')) {
         if (isTRUE(leaf_type == 'broad')) {
             if (isTRUE(phenology == 'deciduous')) {
@@ -70,7 +49,11 @@ assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type)
             }
         }
     } else if (isTRUE(woodiness == 'nonwoody')) {
-        pft <- 'C3_herb'
+        if (isTRUE(growth_form == 'graminoid')) {
+            pft <- 'C3_graminoid'
+        } else if (isTRUE(growth_form == 'forb')) {
+            pft <- 'C3_forb'
+        }
     }
     return(pft)
 }
