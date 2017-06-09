@@ -53,28 +53,6 @@ set_gf <- function(growth_form) {
     } else {
         return('n/a')
     }
-    #succulent <- most_frequent(growth_form == 'succulent', TRUE)
-    #if (succulent) { 
-        #return('succulent') 
-    #}
-    #liana <- most_frequent(growth_form == 'liana_climber', TRUE)
-    #if (liana) {
-        #return('liana')
-    #} 
-    #fern <- most_frequent(growth_form == 'fern', TRUE)
-    #if (fern) {
-        #return('fern')
-    #} 
-    #woody <- most_frequent(growth_form == 'woody', TRUE)
-    #if (woody) {
-        #return('woody')
-    #}
-    #has_forb <- growth_form %in% c('forb', 'graminoid')
-    #if (sum(has_forb) > 0) {
-        #forb_gram <- most_frequent(growth_form[has_forb], 'forb')
-        #return(forb_gram)
-    #} 
-    #return('n/a')
 }
 
 message('Processing growth form...')
@@ -95,6 +73,34 @@ gf_species <-
 gf_species %>% ungroup %>% count(growth_form, sort = TRUE)
 #gf_species %>% filter(growth_form == 'n/a') %>% count(growth_form, sort = TRUE)
 
+gf_missing <- anti_join(species_phylo, gf_species) %>% 
+    left_join(gf_proc) %>% 
+    group_by(AccSpeciesID, Family, Genus) %>% 
+    summarize(gf_string = paste(sort(unique(growth_form)), collapse = '|')) %>% 
+    ungroup()
+#count(gf_missing, gf_string, sort = TRUE) %>% print(n = 15)
+count(gf_missing, Family, sort = TRUE) %>% print(n = 15)
+
+graminoid_families <- c('Poaceae', 'Cyperaceae', 'Juncaceae')
+herb_string <- 'herb|cryptophyte|therophyte|chamaephyte|hydrophyte|geophyte|perennial'
+forb_families <- c('Orchidaceae')
+
+gf_filled <- gf_missing %>% 
+    mutate(growth_form = case_when(!is.na(.$Family) & .$Family %in% graminoid_families ~ 'gramonid',
+                                   grepl(herb_string, .$gf_string) ~ 'forb',
+                                   !is.na(.$Family) & .$Family %in% forb_families ~ 'forb',
+                                   !is.na(.$Genus) & .$Genus == 'Stirlingia' ~ 'forb',
+                                   !is.na(.$Genus) & !is.na(.$Family) & 
+                                       .$Family == 'Proteaceae' & !grepl('Stirlingia', .$Genus) ~ 'woody',
+                                   TRUE ~ NA_character_)) %>% 
+    distinct(AccSpeciesID, growth_form) %>% 
+    filter(!is.na(growth_form))
+
+gf_species <- gf_species %>% 
+    anti_join(gf_missing) %>% 
+    full_join(gf_filled)
+
+gf_species %>% ungroup %>% count(growth_form, sort = TRUE)
 saveRDS(gf_species, 'attributes/growth_form.rds')
 
 #gf_species %>% 
