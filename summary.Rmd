@@ -74,6 +74,7 @@ traits_phylo %>%
     mutate(total = rowSums(.[-1])) %>% 
     select(Family, total, everything()) %>% 
     arrange(desc(total)) %>% 
+    head(25) %>% 
     knitr::kable()
 ```
 
