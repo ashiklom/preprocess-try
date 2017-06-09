@@ -3,17 +3,19 @@ source('common.R')
 # Data IDs:
 #   - 13 -- leaf_lifespan
 #   - 12 -- specific leaf area (SLA) -- 1/LMA
+#   - 64 -- leaf mass per area (LMA) (NOTE: Based on units, this is stil SLA)
 #   - 15 -- Nmass
 #   - 65 -- Narea
 #   - 16 -- Pmass
 #   - 66 -- Parea
-#   - 71 -- Rdmass
-
-#   - 2356 -- Aarea
+#   - 71 -- Rdmass  (at 25 C)
+#   - 549 -- Vcmax_mass (at 25 C)
+#   - 550 -- Vcmax_area (at 25 C)
 #   - 2368 -- Rdarea
 
-# Other traits:
-#   - 64 -- leaf mass per area (LMA) -- 1/SLA
+# Other information:
+#   - 59 -- Latitude
+#   - 60 -- Longitude
 
 data_ids <- c("leaf_lifespan" = 13,
               "SLA" = 12,
@@ -22,11 +24,14 @@ data_ids <- c("leaf_lifespan" = 13,
               "Narea" = 65,
               "Pmass" = 16,
               "Parea" = 66,
-              #"Aarea" = 2356,  ## Not sure about this
-              #"Amass" = NA,    ## Couldn't find this
+              #"Aarea" = 2356,
               #"Gs" = NA,       ## Not sure about this; stomatal conductance
-              "Rdmass" = 71
+              #"Rdmass" = 71
               #"Rdarea" = 2368   ## Exclude for now
+              "Vcmax_area" = 549,
+              "Vcmax_mass" = 550,
+              "Latitude" = 59,
+              "Longitude" = 60
               )
 data_ids_noname <- unname(data_ids)
 
@@ -57,13 +62,23 @@ traits_wide <- traits_proc %>%
 
 # Perform trait conversions
 traits_fill <- traits_wide %>% 
-    mutate(LMA = case_when(!is.na(.$LMA) ~ .$LMA,
-                           !is.na(.$SLA) ~ 1/.$SLA,
-                           TRUE ~ NA_real_
-                           ),
-           SLA = case_when(!is.na(.$SLA) ~ .$SLA,
-                           !is.na(.$LMA) ~ 1/.$LMA,
-                           TRUE ~ NA_real_))
+    mutate(SLA = case_when(!is.na(.$SLA) ~ .$SLA,
+                           !is.na(.$LMA) ~ .$LMA,
+                           TRUE ~ NA_real_),
+           LMA = 1/SLA,
+           Nmass = case_when(!is.na(.$Nmass) ~ .$Nmass,
+                             !is.na(.$Narea) & !is.na(.$SLA) ~ .$Narea * .$SLA,
+                             TRUE ~ NA_real_),
+           Narea = case_when(!is.na(.$Narea) ~ .$Narea,
+                             !is.na(.$Nmass) & !is.na(.$LMA) ~ .$Nmass * .$LMA,
+                             TRUE ~ NA_real_),
+           Pmass = case_when(!is.na(.$Pmass) ~ .$Pmass,
+                             !is.na(.$Parea) & !is.na(.$SLA) ~ .$Parea * .$SLA,
+                             TRUE ~ NA_real_),
+           Parea = case_when(!is.na(.$Parea) ~ .$Parea,
+                             !is.na(.$Pmass) & !is.na(.$LMA) ~ .$Pmass * .$LMA,
+                             TRUE ~ NA_real_)
+           )
 
 pfts <- read_csv('try_pfts.csv')
 
