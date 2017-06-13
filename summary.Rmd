@@ -9,12 +9,14 @@ output:
 
 ```{r setup, echo = FALSE, results = 'hide'}
 library(tidyverse)
-traits_pfts <- readRDS('trait_data.rds')
-pfts <- readRDS('all_pfts.rds')
-species_phylo <- src_sqlite('try.sqlite') %>% tbl('species_phylo') %>% collect(n = Inf)
+traits_pfts <- readRDS('traits_pfts.rds')
+all_pfts <- readRDS('all_pfts.rds')
+species_phylo <- src_sqlite('try.sqlite') %>% 
+    tbl('species_phylo') %>% 
+    collect(n = Inf)
 traits_phylo <- traits_pfts %>% 
     left_join(species_phylo)
-pfts_phylo <- pfts %>% 
+pfts_phylo <- all_pfts %>% 
     left_join(species_phylo)
 ```
 
@@ -54,7 +56,7 @@ traits_pfts %>%
     knitr::kable()
 ```
 
-## Missing traits by PFT
+## Non-missing traits by PFT
 
 ```{r nonmissingbypft}
 traits_pfts %>% 
@@ -83,9 +85,9 @@ traits_phylo %>%
 ## Species missing PFTs, by attribute
 
 ```{r pftsnonmissingcategory}
-pfts %>% 
+all_pfts %>% 
     filter(is.na(pft)) %>% 
-    count(leaf_type, phenology, ps_pathway, growth_form, woodiness, sort = TRUE) %>% 
+    count(leaf_type, phenology, ps_pathway, growth_form, woodiness, climate_zone, sort = TRUE) %>% 
     head(15) %>% 
     knitr::kable()
 ```
@@ -93,11 +95,56 @@ pfts %>%
 ## Species, by missing vs. nonmissing PFT
 
 ```{r speciesmissingpft}
-pfts %>% count(is.na(pft)) %>% knitr::kable()
+all_pfts %>% count(is.na(pft)) %>% knitr::kable()
 ```
 
 ## Species, by PFT (including missing)
 
 ```{r speciesbypft}
-count(pfts, pft, sort = TRUE) %>% knitr::kable()
+count(all_pfts, pft, sort = TRUE) %>% knitr::kable()
+```
+
+# Plots 
+
+```{r covariances}
+traits_nested <- traits_pfts %>% 
+    select(leaf_lifespan:pft, -Latitude, -Longitude) %>% 
+    nest(-pft)
+covdat <- traits_nested %>% 
+    mutate(covmat = map(data, cov, use = 'pairwise.complete.obs'),
+           cormat = map(covmat, cov2cor))
+covmat2df <- function(mat) {
+    mat2 <- mat
+    mat2[upper.tri(mat2, diag = TRUE)] <- NA
+    long <- reshape2::melt(mat2) %>% 
+        as_data_frame %>% 
+        mutate(cor_vars = paste(Var1, Var2, sep = '.'),
+               value = if_else(abs(value) > 1, NA_real_, value)) %>% 
+        filter(!is.na(value)) %>% 
+        filter(!grepl('area.*mass|mass.*area', cor_vars),
+               !grepl('SLA\\.LMA|LMA\\.SLA', cor_vars)) %>% 
+        select(-Var1, -Var2)
+    return(long)
+}
+
+covdat_long <- covdat %>% 
+    mutate(cor_long = map(cormat, covmat2df))
+
+cor_unnest <- covdat_long %>% 
+    select(pft, cor_long) %>% 
+    unnest()
+
+ggplot(cor_unnest %>% filter(!is.na(pft))) + 
+    aes(x = pft, y = value, fill = pft) +
+    geom_col(position = 'dodge') + 
+    facet_wrap(~cor_vars, scales = 'free_x') + 
+    theme(axis.text.x = element_blank())
+```
+
+```{r correlationplots}
+plt <- ggplot(traits_pfts) + 
+    aes(color = pft) + 
+    geom_point(size = 0.5, alpha = 0.2) + 
+    geom_smooth(method = 'lm', se = FALSE)
+plt + aes(x = log(LMA), y = log(Nmass))
 ```

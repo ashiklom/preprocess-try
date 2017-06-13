@@ -2,9 +2,9 @@ library(tidyverse)
 library(ncdf4)
 library(riri)
 
-traits_pfts <- readRDS('trait_data.rds')
+trait_data <- readRDS('trait_data.rds')
 
-coords <- distinct(traits_pfts, Longitude, Latitude) %>% 
+coords <- distinct(trait_data, Longitude, Latitude) %>% 
     filter(!is.na(Latitude), !is.na(Longitude))
 
 #library(sp)
@@ -20,6 +20,6 @@ temp_values <- readRDS('try_temperature_values.rds')
 
 temp_data <- mutate(coords, AMT = temp_values)
 
-traits_with_climate <- left_join(traits_pfts, temp_data)
+traits_with_climate <- left_join(trait_data, temp_data)
 
 saveRDS(traits_with_climate, 'traits_with_climate.rds')

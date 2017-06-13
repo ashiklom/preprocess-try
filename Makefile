@@ -13,12 +13,18 @@ attributes/leaf_type.rds: leaf_type.R attribute_maps/leaf_type.csv .family
 
 attributes/phenology.rds: phenology.R attribute_maps/phenology.csv .family
 
-try_pfts.csv: make_pft.R \
+attributes/climate_zone.rds: climate_zone.R traits_with_climate.rds
+
+traits_pfts.rds all_pfts.rds: make_pft.R \
     attributes/growth_form.rds \
     attributes/ps_pathway.rds \
     attributes/leaf_type.rds \
-    attributes/phenology.rds
+    attributes/phenology.rds \
+    attributes/climate_zone.rds
 	Rscript make_pft.R
+
+traits_with_climate.rds: climate.R try_temperature_values.rds trait_data.rds
+	Rscript climate.R
 
 tps_species.rds: merge_species.R theplantlist.rds
 	Rscript merge_species.R
@@ -26,10 +32,10 @@ tps_species.rds: merge_species.R theplantlist.rds
 .family: family.R tps_species.rds
 	Rscript family.R
 
-trait_data.rds: trait_data.R try_pfts.csv
+trait_data.rds: trait_data.R
 	Rscript trait_data.R
 
-summary.html: summary.Rmd trait_data.rds .family
+summary.html: summary.Rmd traits_pfts.rds .family
 	Rscript -e 'rmarkdown::render("summary.Rmd")'
 
 theplantlist.rds: process_tpl.R

@@ -80,12 +80,7 @@ traits_fill <- traits_wide %>%
                              TRUE ~ NA_real_)
            )
 
-pfts <- read_csv('try_pfts.csv')
-
-traits_pfts <- traits_fill %>% 
-    left_join(pfts)
-
-saveRDS(traits_pfts, file = 'trait_data.rds')
+saveRDS(traits_fill, file = 'trait_data.rds')
 
 ############################################################
 
