@@ -40,16 +40,22 @@ assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type,
             if (isTRUE(phenology == 'deciduous')) {
                 if (isTRUE(climate_zone == 'tropical')) {
                     pft <- 'tropical_deciduous_broadleaf'
-                } else if (isTRUE(climate_zone == 'temperate')) {
+                } else if (isTRUE(climate_zone %in% c('temperate', 'boreal'))) {
                     pft <- 'temperate_deciduous_broadleaf'
-                } else if (isTRUE(climate_zone == 'boreal')) {
-                    pft <- 'boreal_deciduous_broadleaf'
                 }
             } else if (isTRUE(phenology == 'evergreen')) {
-                pft <- 'evergreen_broadleaf'
+                if (isTRUE(climate_zone == 'tropical')) {
+                    pft <- 'tropical_evergreen_broadleaf'
+                } else if (isTRUE(climate_zone %in% c('temperate', 'boreal'))) {
+                    pft <- 'temperate_evergreen_broadleaf'
+                }
             }
         } else if (isTRUE(leaf_type == 'needle')) {
-            pft <- 'conifer'
+            if (isTRUE(phenology == 'deciduous')) {
+                pft <- 'deciduous_conifer'
+            } else {
+                pft <- 'evergreen_conifer'
+            }
         }
     } else if (isTRUE(woodiness == 'nonwoody')) {
         if (isTRUE(growth_form == 'graminoid')) {
@@ -60,7 +66,6 @@ assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type,
     }
     return(pft)
 }
-
 
 pfts <- plant_attrs %>% 
     rowwise() %>% 
@@ -79,6 +84,12 @@ traits_pfts <- left_join(traits_fill, distinct_pfts)
 
 saveRDS(traits_pfts, file = 'traits_pfts.rds')
 
+traits_analysis <- traits_pfts %>% 
+    filter(!is.na(pft)) %>% 
+    select(ObservationID, AccSpeciesID, pft, which(sapply(., is_double)), 
+           -Latitude, -Longitude, -Temperature_measurement)
+
+saveRDS(traits_analysis, file = 'traits_analysis.rds')
 ############################################################
 
 #plant_attrs %>% count(phenology, sort = TRUE)

@@ -104,11 +104,23 @@ all_pfts %>% count(is.na(pft)) %>% knitr::kable()
 count(all_pfts, pft, sort = TRUE) %>% knitr::kable()
 ```
 
-# Plots 
+# Plots and summaries 
 
-```{r covariances}
-traits_nested <- traits_pfts %>% 
-    select(leaf_lifespan:pft, -Latitude, -Longitude) %>% 
+```{r datasummary}
+cpdat <- readRDS('traits_analysis.rds')
+sumlong <- cpdat %>% 
+    select(which(sapply(., is_double))) %>% 
+    gather() %>% 
+    group_by(key) %>% 
+    summarize(min = min(value, na.rm = TRUE),
+              max = max(value, na.rm = TRUE),
+              mean = mean(value, na.rm = TRUE),
+              median = median(value, na.rm = TRUE))
+knitr::kable(sumlong)
+```
+
+```{r covariances, fig.height=12, fig.width=10}
+traits_nested <- cpdat %>% 
     nest(-pft)
 covdat <- traits_nested %>% 
     mutate(covmat = map(data, cov, use = 'pairwise.complete.obs'),
@@ -138,13 +150,30 @@ ggplot(cor_unnest %>% filter(!is.na(pft))) +
     aes(x = pft, y = value, fill = pft) +
     geom_col(position = 'dodge') + 
     facet_wrap(~cor_vars, scales = 'free_x') + 
-    theme(axis.text.x = element_blank())
+    theme(axis.text.x = element_blank(), 
+          legend.position = 'bottom')
 ```
 
-```{r correlationplots}
-plt <- ggplot(traits_pfts) + 
-    aes(color = pft) + 
-    geom_point(size = 0.5, alpha = 0.2) + 
-    geom_smooth(method = 'lm', se = FALSE)
-plt + aes(x = log(LMA), y = log(Nmass))
+```{r correlationplots, fig.width=10}
+xy_plot2 <- function(x, y) {
+    xexp <- parse(text = x)
+    yexp <- parse(text = y)
+    plt_dat <- filter(cpdat, !is.na(eval(xexp)), !is.na(eval(yexp)))
+    plt <- ggplot(plt_dat) + 
+        aes_string(x = sprintf('log(%s)', x), y = sprintf('log(%s)', y)) +
+        aes(color = pft) + 
+        geom_point(size = 0.5, alpha = 0.2) + 
+        geom_smooth(method = 'lm', se = FALSE) + 
+        theme(legend.position = 'bottom')
+    plot(plt)
+}
+
+expand_nonrep <- . %>% combinat::combn(2) %>% t() %>% as_data_frame()
+mass_vars <- c('SLA' ,'Nmass', 'Pmass', 'Vcmax_mass', 'Jmax_mass')
+mass_df <- expand_nonrep(mass_vars)
+area_vars <- c('LMA' ,'Narea', 'Parea', 'Vcmax_area', 'Jmax_area')
+area_df <- expand_nonrep(area_vars)
+
+for (i in seq_len(nrow(mass_df))) xy_plot2(mass_df[[i,1]], mass_df[[i,2]])
+for (i in seq_len(nrow(area_df))) xy_plot2(area_df[[i,1]], area_df[[i,2]])
 ```

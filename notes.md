@@ -95,3 +95,8 @@
 - 1122 -- Activation energy of electron transport
 - 1123 -- Parameter H in electron transport temperature response
 - 1124 -- Parameter S in electron transport temperature response
+
+# Other notes
+
+- There are very few temperature data (that I could find) available for temperature-correcting Vcmax and Jmax.
+- However, those temperature data that _are_ available have a range of 20 - 36 degrees, with an IQR of 26 - 30, which is small enough to reasonably assume no temperature correction is necessary.

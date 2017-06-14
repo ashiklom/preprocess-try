@@ -30,13 +30,25 @@ data_ids <- c("leaf_lifespan" = 13,
               #"Rdarea" = 2368   ## Exclude for now
               "Vcmax_area" = 549,
               "Vcmax_mass" = 550,
+              "Jmax_mass" = 664,
+              "Jmax_mass" = 2369,
+              "Jmax_mass" = 2383,
+              "Jmax_area" = 665,
+              "Jmax_area" = 1000,
+              "Jmax_area" = 1119,
+              "Jmax_area" = 2351,
+              "Jmax_area" = 2372,
+              "Jmax_area" = 2379,
               "Latitude" = 59,
-              "Longitude" = 60
+              "Longitude" = 60,
+              "Temperature_measurement" = 51,
+              "Temperature_measurement" = 1666
               )
 data_ids_noname <- unname(data_ids)
 
 traits_long <- trydat %>%
     filter(DataID %in% data_ids_noname) %>% 
+    mutate(StdValue = if_else(DataID %in% c(51, 1666), as.numeric(OrigValueStr), StdValue)) %>% 
     select(ObservationID, AccSpeciesID, DataID, StdValue, UnitName, ReferenceID) %>% 
     collect(n = Inf)
 
@@ -65,20 +77,31 @@ traits_fill <- traits_wide %>%
     mutate(SLA = case_when(!is.na(.$SLA) ~ .$SLA,
                            !is.na(.$LMA) ~ .$LMA,
                            TRUE ~ NA_real_),
-           LMA = 1/SLA,
-           Nmass = case_when(!is.na(.$Nmass) ~ .$Nmass,
-                             !is.na(.$Narea) & !is.na(.$SLA) ~ .$Narea * .$SLA,
-                             TRUE ~ NA_real_),
-           Narea = case_when(!is.na(.$Narea) ~ .$Narea,
-                             !is.na(.$Nmass) & !is.na(.$LMA) ~ .$Nmass * .$LMA,
-                             TRUE ~ NA_real_),
-           Pmass = case_when(!is.na(.$Pmass) ~ .$Pmass,
-                             !is.na(.$Parea) & !is.na(.$SLA) ~ .$Parea * .$SLA,
-                             TRUE ~ NA_real_),
-           Parea = case_when(!is.na(.$Parea) ~ .$Parea,
-                             !is.na(.$Pmass) & !is.na(.$LMA) ~ .$Pmass * .$LMA,
-                             TRUE ~ NA_real_)
-           )
+           LMA = 1/SLA) %>% 
+    mutate(Nmass = case_when(!is.na(.$Nmass) ~ .$Nmass,
+                             is.na(.$Nmass) & !is.na(.$Narea) & !is.na(.$SLA) ~ .$Narea * .$SLA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Narea = case_when(!is.na(.$Narea) ~ .$Narea,
+                             is.na(.$Narea) & !is.na(.$Nmass) & !is.na(.$LMA) ~ .$Nmass * .$LMA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Pmass = case_when(!is.na(.$Pmass) ~ .$Pmass,
+                             is.na(.$Pmass) & !is.na(.$Parea) & !is.na(.$SLA) ~ .$Parea * .$SLA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Parea = case_when(!is.na(.$Parea) ~ .$Parea,
+                             is.na(.$Parea) & !is.na(.$Pmass) & !is.na(.$LMA) ~ .$Pmass * .$LMA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Vcmax_mass = case_when(!is.na(.$Vcmax_mass) ~ .$Vcmax_mass,
+                             is.na(.$Vcmax_mass) & !is.na(.$Vcmax_area) & !is.na(.$SLA) ~ .$Vcmax_area * .$SLA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Vcmax_area = case_when(!is.na(.$Vcmax_area) ~ .$Vcmax_area,
+                             is.na(.$Vcmax_area) & !is.na(.$Vcmax_mass) & !is.na(.$LMA) ~ .$Vcmax_mass * .$LMA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Jmax_mass = case_when(!is.na(.$Jmax_mass) ~ .$Jmax_mass,
+                             is.na(.$Jmax_mass) & !is.na(.$Jmax_area) & !is.na(.$SLA) ~ .$Jmax_area * .$SLA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Jmax_area = case_when(!is.na(.$Jmax_area) ~ .$Jmax_area,
+                             is.na(.$Jmax_area) & !is.na(.$Jmax_mass) & !is.na(.$LMA) ~ .$Jmax_mass * .$LMA,
+                             TRUE ~ NA_real_))
 
 saveRDS(traits_fill, file = 'trait_data.rds')
 
