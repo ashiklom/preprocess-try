@@ -169,9 +169,9 @@ xy_plot2 <- function(x, y) {
 }
 
 expand_nonrep <- . %>% combinat::combn(2) %>% t() %>% as_data_frame()
-mass_vars <- c('SLA' ,'Nmass', 'Pmass', 'Vcmax_mass', 'Jmax_mass')
+mass_vars <- c('SLA' ,'Nmass', 'Pmass', 'Rdmass', 'Vcmax_mass', 'Jmax_mass')
 mass_df <- expand_nonrep(mass_vars)
-area_vars <- c('LMA' ,'Narea', 'Parea', 'Vcmax_area', 'Jmax_area')
+area_vars <- c('LMA' ,'Narea', 'Parea', 'Rdarea', 'Vcmax_area', 'Jmax_area')
 area_df <- expand_nonrep(area_vars)
 
 for (i in seq_len(nrow(mass_df))) xy_plot2(mass_df[[i,1]], mass_df[[i,2]])

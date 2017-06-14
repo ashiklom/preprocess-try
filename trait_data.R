@@ -26,8 +26,17 @@ data_ids <- c("leaf_lifespan" = 13,
               "Parea" = 66,
               #"Aarea" = 2356,
               #"Gs" = NA,       ## Not sure about this; stomatal conductance
-              #"Rdmass" = 71
-              #"Rdarea" = 2368   ## Exclude for now
+              "Rdmass" = 46,
+              "Rdmass" = 70,
+              "Rdmass" = 71,
+              "Rdmass" = 72,
+              "Rdmass" = 1453,
+              "Rdarea" = 69,
+              "Rdarea" = 1456,
+              "Rdarea" = 2285,
+              "Rdarea" = 2368,
+              "Rdarea" = 2375,
+              "Rdarea" = 2381,
               "Vcmax_area" = 549,
               "Vcmax_mass" = 550,
               "Jmax_mass" = 664,
@@ -89,6 +98,12 @@ traits_fill <- traits_wide %>%
                              TRUE ~ NA_real_)) %>% 
     mutate(Parea = case_when(!is.na(.$Parea) ~ .$Parea,
                              is.na(.$Parea) & !is.na(.$Pmass) & !is.na(.$LMA) ~ .$Pmass * .$LMA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Rdmass = case_when(!is.na(.$Rdmass) ~ .$Rdmass,
+                             is.na(.$Rdmass) & !is.na(.$Rdarea) & !is.na(.$SLA) ~ .$Rdarea * .$SLA,
+                             TRUE ~ NA_real_)) %>% 
+    mutate(Rdarea = case_when(!is.na(.$Rdarea) ~ .$Rdarea,
+                             is.na(.$Rdarea) & !is.na(.$Rdmass) & !is.na(.$LMA) ~ .$Rdmass * .$LMA,
                              TRUE ~ NA_real_)) %>% 
     mutate(Vcmax_mass = case_when(!is.na(.$Vcmax_mass) ~ .$Vcmax_mass,
                              is.na(.$Vcmax_mass) & !is.na(.$Vcmax_area) & !is.na(.$SLA) ~ .$Vcmax_area * .$SLA,
