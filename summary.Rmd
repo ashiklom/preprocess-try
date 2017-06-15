@@ -121,6 +121,7 @@ knitr::kable(sumlong)
 
 ```{r covariances, fig.height=12, fig.width=10}
 traits_nested <- cpdat %>% 
+    select(pft, which(sapply(., is_double))) %>% 
     nest(-pft)
 covdat <- traits_nested %>% 
     mutate(covmat = map(data, cov, use = 'pairwise.complete.obs'),
