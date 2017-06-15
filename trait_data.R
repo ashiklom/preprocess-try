@@ -27,9 +27,9 @@ data_ids <- c("leaf_lifespan" = 13,
               #"Aarea" = 2356,
               #"Gs" = NA,       ## Not sure about this; stomatal conductance
               "Rdmass" = 46,
-              "Rdmass" = 70,
+              #"Rdmass" = 70,   ## Looks like 70:72 are duplicates from same dataset
               "Rdmass" = 71,
-              "Rdmass" = 72,
+              #"Rdmass" = 72, 
               "Rdmass" = 1453,
               "Rdarea" = 69,
               "Rdarea" = 1456,
@@ -82,70 +82,40 @@ traits_wide <- traits_proc %>%
     spread(trait, value)
 
 # Perform trait conversions
+fill_prod <- function(tofill, fillfrom, multby) {
+    case_when(!is.na(tofill) ~ tofill,
+              is.na(tofill) & !is.na(fillfrom) & !is.na(multby) ~ fillfrom * multby,
+              TRUE ~ NA_real_)
+}
+
+match_str <- 'SLA|LMA|leaf_lifespan|mass|area'
+
 traits_fill <- traits_wide %>% 
     mutate(SLA = case_when(!is.na(.$SLA) ~ .$SLA,
                            !is.na(.$LMA) ~ .$LMA,
                            TRUE ~ NA_real_),
            LMA = 1/SLA) %>% 
-    mutate(Nmass = case_when(!is.na(.$Nmass) ~ .$Nmass,
-                             is.na(.$Nmass) & !is.na(.$Narea) & !is.na(.$SLA) ~ .$Narea * .$SLA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Narea = case_when(!is.na(.$Narea) ~ .$Narea,
-                             is.na(.$Narea) & !is.na(.$Nmass) & !is.na(.$LMA) ~ .$Nmass * .$LMA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Pmass = case_when(!is.na(.$Pmass) ~ .$Pmass,
-                             is.na(.$Pmass) & !is.na(.$Parea) & !is.na(.$SLA) ~ .$Parea * .$SLA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Parea = case_when(!is.na(.$Parea) ~ .$Parea,
-                             is.na(.$Parea) & !is.na(.$Pmass) & !is.na(.$LMA) ~ .$Pmass * .$LMA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Rdmass = case_when(!is.na(.$Rdmass) ~ .$Rdmass,
-                             is.na(.$Rdmass) & !is.na(.$Rdarea) & !is.na(.$SLA) ~ .$Rdarea * .$SLA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Rdarea = case_when(!is.na(.$Rdarea) ~ .$Rdarea,
-                             is.na(.$Rdarea) & !is.na(.$Rdmass) & !is.na(.$LMA) ~ .$Rdmass * .$LMA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Vcmax_mass = case_when(!is.na(.$Vcmax_mass) ~ .$Vcmax_mass,
-                             is.na(.$Vcmax_mass) & !is.na(.$Vcmax_area) & !is.na(.$SLA) ~ .$Vcmax_area * .$SLA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Vcmax_area = case_when(!is.na(.$Vcmax_area) ~ .$Vcmax_area,
-                             is.na(.$Vcmax_area) & !is.na(.$Vcmax_mass) & !is.na(.$LMA) ~ .$Vcmax_mass * .$LMA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Jmax_mass = case_when(!is.na(.$Jmax_mass) ~ .$Jmax_mass,
-                             is.na(.$Jmax_mass) & !is.na(.$Jmax_area) & !is.na(.$SLA) ~ .$Jmax_area * .$SLA,
-                             TRUE ~ NA_real_)) %>% 
-    mutate(Jmax_area = case_when(!is.na(.$Jmax_area) ~ .$Jmax_area,
-                             is.na(.$Jmax_area) & !is.na(.$Jmax_mass) & !is.na(.$LMA) ~ .$Jmax_mass * .$LMA,
-                             TRUE ~ NA_real_))
+    mutate(Nmass = fill_prod(Nmass, Narea, SLA),
+           Pmass = fill_prod(Pmass, Parea, SLA),
+           Rdmass = fill_prod(Rdmass, Rdarea, SLA),
+           Vcmax_mass = fill_prod(Vcmax_mass, Vcmax_area, SLA),
+           Jmax_mass = fill_prod(Jmax_mass, Jmax_area, SLA),
+           Narea = fill_prod(Narea, Nmass, LMA),
+           Parea = fill_prod(Parea, Pmass, LMA),
+           Rdarea = fill_prod(Rdarea, Rdmass, LMA),
+           Vcmax_area = fill_prod(Vcmax_area, Vcmax_mass, LMA),
+           Jmax_area = fill_prod(Jmax_area, Jmax_mass, LMA)
+           ) %>% 
+    mutate_at(vars(matches(match_str)), function(x) {x[x < 0] = NA; x})
+
+traits_fill %>% 
+    summarize_at(vars(matches(match_str)), ~sum(!is.na(.))) %>% 
+    glimpse()
+
+traits_fill %>% 
+    summarize_at(vars(matches(match_str)), ~n_distinct(.)) %>% 
+    glimpse()
 
 saveRDS(traits_fill, file = 'trait_data.rds')
 
 ############################################################
-
-#try.cast <- dcast(try.sub, ObservationID + AccSpeciesID ~ DataName,
-                  #value.var = "StdValue",
-                  #fun.aggregate = mean, 
-                  #na.rm=TRUE)
-
-## Convert SLA to LMA
-#try.cast[is.na(LMA) & !is.na(SLA), LMA := 1/SLA]
-#try.cast[, SLA := NULL]
-
-#try.cast[, c("log.LMA", "log.Nmass", "log.Pmass", "log.Rdmass", "log.LL") := lapply(.SD, log), .SDcols=c("LMA", "Nmass", "Pmass", "Rdmass", "leaf.lifespan")]
-
-#saveRDS(try.cast, file = "try.subset.RData")
-
-#%>%
-    #filter(!(DatasetID == 50 & ValueKindName != "Single"),
-           #!(DatasetID == 25 & ValueKindName != "Best estimate"),
-           #!(DatasetID == 112 & ValueKindName != "Mean"),
-           #!(DatasetID == 67 & ValueKindName != "Single"),
-           #!(DatasetID == 158 & ValueKindName != "Single"),
-           #!(DatasetID == 159 & ValueKindName != "Mean"),
-           #!(DatasetID == 211 & ValueKindName != "Mean"),
-           #!(DatasetID == 210 & ValueKindName != "Mean")) %>%
-    #collect(n = Inf) %>%
-    #setDT()
-    ## 131 is fine as is
-    ## 267 is fine as is
-

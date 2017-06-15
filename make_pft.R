@@ -5,6 +5,7 @@
 #   - [X] Leaf type
 
 library(tidyverse)
+match_str <- 'SLA|LMA|leaf_lifespan|mass|area'
 
 #growth_form_ignore <- c('liana_climber', 'cryptophyte')
 #growth_form_nonwoody <- c('graminoid', 'forb_herb', 'hemicryptophyte',
@@ -29,6 +30,16 @@ plant_attrs <- plant_attrs_raw %>%
 
 assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type, climate_zone) {
     pft <- NA_character_
+    pft_levels <- c('temperate_deciduous_broadleaf',
+                    'tropical_deciduous_broadleaf',
+                    'temperate_evergreen_broadleaf',
+                    'tropical_evergreen_broadleaf',
+                    'evergreen_conifer',
+                    'deciduous_conifer',
+                    'C3_graminoid',
+                    'C3_forb',
+                    'C4',
+                    'succulent')
     # First try based on attributes
     # `isTRUE` is necessary to handle missing values
     if (isTRUE(growth_form == 'succulent' | ps_pathway == 'CAM')) {
@@ -64,7 +75,8 @@ assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type,
             pft <- 'C3_forb'
         }
     }
-    return(pft)
+    pft_factor <- factor(pft, levels = pft_levels)
+    return(pft_factor)
 }
 
 pfts <- plant_attrs %>% 
@@ -86,6 +98,8 @@ saveRDS(traits_pfts, file = 'traits_pfts.rds')
 
 traits_analysis <- traits_pfts %>% 
     filter(!is.na(pft)) %>% 
+    filter_at(vars(matches(match_str)), any_vars(!is.na(.))) %>% 
+    filter(!duplicated(select(., matches(match_str)))) %>% 
     select(ObservationID, AccSpeciesID, pft, which(sapply(., is_double)), 
            -Latitude, -Longitude, -Temperature_measurement)
 
