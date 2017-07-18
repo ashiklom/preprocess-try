@@ -1,0 +1,48 @@
+DataID,DataName,ReferenceID,OrigValueStr,leaf_type,n
+48,Leaf type,18,broad-leaved,broad,5792
+48,Leaf type,68,broadleaved,broad,2000
+48,Leaf type,18,broadleaved,broad,1981
+48,Leaf type,78,broadleaved,broad,1877
+48,Leaf type,72,B,broad,1651
+48,Leaf type,105,B,broad,963
+48,Leaf type,38,broad-leaved,broad,910
+2417,Leaf type: needle,148,no,n/a,804
+2418,Leaf type: scale,148,no,n/a,780
+2416,Leaf type: broad,148,yes,broad,772
+48,Leaf type,43,needle-leaved,needle,692
+48,Leaf type,78,needleleaved,needle,591
+48,Leaf type,128,broadleaved,broad,517
+48,Leaf type,43,broadleaved,broad,503
+48,Leaf type,18,"needle-leaved (including non-conifers with needle-like leaves, e.g. many arid-zone Hakea and Ac ...",needle,377
+48,Leaf type,26,B,broad,373
+48,Leaf type,18,needle-leaved,needle,257
+48,Leaf type,40,B,broad,230
+48,Leaf type,53,B,broad,177
+48,Leaf type,38,needle-leaved,needle,165
+48,Leaf type,25,B,broad,151
+48,Leaf type,40,coniferous,needle,140
+48,Leaf type,72,N,needle,116
+48,Leaf type,105,C,needle,99
+48,Leaf type,79,broadleaved,broad,89
+48,Leaf type,2,B,broad,59
+2416,Leaf type: broad,148,no,n/a,42
+48,Leaf type,40,N,needle,36
+2418,Leaf type: scale,148,yes,needle,34
+48,Leaf type,26,N,needle,33
+48,Leaf type,53,N,needle,31
+48,Leaf type,38,scale-like,needle,28
+48,Leaf type,68,needle-leaved,needle,23
+48,Leaf type,25,N,needle,22
+48,Leaf type,128,needle-leaved,needle,22
+48,Leaf type,68,*,n/a,20
+48,Leaf type,79,needleleaved,needle,20
+48,Leaf type,18,Broadleaved,broad,14
+48,Leaf type,25,NA,n/a,13
+48,Leaf type,18,"fine-leaved (needle, leptophypylluous, linear)",needle,10
+48,Leaf type,80,broadleaved,broad,10
+2417,Leaf type: needle,148,yes,needle,10
+48,Leaf type,18,needles,needle,9
+48,Leaf type,2,N,needle,8
+48,Leaf type,38,Phyllodium,n/a,8
+48,Leaf type,2,NA,n/a,6
+48,Leaf type,81,broadleaved,broad,6

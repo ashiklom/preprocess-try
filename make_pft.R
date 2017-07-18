@@ -1,11 +1,5 @@
-# Need the following:
-#   - [X] Phenology
-#   - [X] Growth form
-#   - [X] C3 vs C4
-#   - [X] Leaf type
-
 library(tidyverse)
-match_str <- 'SLA|LMA|leaf_lifespan|mass|area'
+match_str <- 'SLA|leaf_lifespan|mass|area'
 
 #growth_form_ignore <- c('liana_climber', 'cryptophyte')
 #growth_form_nonwoody <- c('graminoid', 'forb_herb', 'hemicryptophyte',
@@ -18,77 +12,35 @@ plant_attrs_raw <- readRDS('attributes/leaf_type.rds') %>%
     full_join(readRDS('attributes/phenology.rds')) %>% 
     full_join(readRDS('attributes/ps_pathway.rds')) %>% 
     full_join(readRDS('attributes/growth_form.rds')) %>% 
+    full_join(readRDS('attributes/n_fixation.rds')) %>% 
     full_join(readRDS('attributes/climate_zone.rds')) %>% 
     left_join(species_phylo)
 
-plant_attrs_raw %>% distinct(growth_form)
+plant_attrs_raw %>% count(growth_form, sort = TRUE)
+
+woody_gf <- c('woody', 'tree', 'shrub')
 
 plant_attrs <- plant_attrs_raw %>% 
-    mutate(woodiness = case_when(!is.na(.$growth_form) & .$growth_form == 'woody' ~ 'woody',
-                                 !is.na(.$growth_form) & .$growth_form != 'woody' ~ 'nonwoody',
+    mutate(woodiness = case_when(!is.na(.$growth_form) & .$growth_form %in% woody_gf ~ 'woody',
+                                 !is.na(.$growth_form) & !(.$growth_form %in% woody_gf) ~ 'nonwoody',
                                  TRUE ~ NA_character_))
 
-assign_pft <- function(growth_form, ps_pathway, woodiness, phenology, leaf_type, climate_zone) {
-    pft <- NA_character_
-    pft_levels <- c('temperate_deciduous_broadleaf',
-                    'tropical_deciduous_broadleaf',
-                    'temperate_evergreen_broadleaf',
-                    'tropical_evergreen_broadleaf',
-                    'evergreen_conifer',
-                    'deciduous_conifer',
-                    'C3_graminoid',
-                    'C3_forb',
-                    'C4',
-                    'succulent')
-    # First try based on attributes
-    # `isTRUE` is necessary to handle missing values
-    if (isTRUE(growth_form == 'succulent' | ps_pathway == 'CAM')) {
-        pft <- 'succulent'
-    } else if (isTRUE(ps_pathway == 'C4')) {
-        pft <- 'C4'
-    } else if (isTRUE(woodiness == 'woody')) {
-        if (isTRUE(leaf_type == 'broad')) {
-            if (isTRUE(phenology == 'deciduous')) {
-                if (isTRUE(climate_zone == 'tropical')) {
-                    pft <- 'tropical_deciduous_broadleaf'
-                } else if (isTRUE(climate_zone %in% c('temperate', 'boreal'))) {
-                    pft <- 'temperate_deciduous_broadleaf'
-                }
-            } else if (isTRUE(phenology == 'evergreen')) {
-                if (isTRUE(climate_zone == 'tropical')) {
-                    pft <- 'tropical_evergreen_broadleaf'
-                } else if (isTRUE(climate_zone %in% c('temperate', 'boreal'))) {
-                    pft <- 'temperate_evergreen_broadleaf'
-                }
-            }
-        } else if (isTRUE(leaf_type == 'needle')) {
-            if (isTRUE(phenology == 'deciduous')) {
-                pft <- 'deciduous_conifer'
-            } else {
-                pft <- 'evergreen_conifer'
-            }
-        }
-    } else if (isTRUE(woodiness == 'nonwoody')) {
-        if (isTRUE(growth_form == 'graminoid')) {
-            pft <- 'C3_graminoid'
-        } else if (isTRUE(growth_form == 'forb')) {
-            pft <- 'C3_forb'
-        }
-    }
-    pft_factor <- factor(pft, levels = pft_levels)
-    return(pft_factor)
-}
-
+source('pft_schemes.R')
 pfts <- plant_attrs %>% 
     rowwise() %>% 
-    mutate(pft = assign_pft(growth_form, ps_pathway, woodiness, phenology, leaf_type, climate_zone)) %>% 
+    mutate(jules1 = jules1_assign(growth_form, ps_pathway, leaf_type),
+           jules2 = jules2_assign(growth_form, ps_pathway, leaf_type, phenology, climate_zone),
+           clm45 = clm45_assign(growth_form, ps_pathway, leaf_type, phenology, climate_zone),
+           custom = custom_assign(growth_form, ps_pathway, woodiness, phenology, leaf_type, n_fixation, climate_zone)) %>% 
     'class<-'(c('tbl_df', 'data.frame'))
+
+pftcols <- c('jules1', 'jules2', 'clm45', 'custom')
 
 saveRDS(pfts, 'all_pfts.rds')
 
 distinct_pfts <- pfts %>% 
-    filter(!is.na(pft)) %>% 
-    distinct(AccSpeciesID, pft)
+    filter(!is.na(jules1), !is.na(jules2), !is.na(clm45), !is.na(custom)) %>% 
+    distinct(AccSpeciesID, jules1, jules2, clm45, custom)
 
 traits_fill <- readRDS('trait_data.rds')
 
@@ -97,11 +49,11 @@ traits_pfts <- left_join(traits_fill, distinct_pfts)
 saveRDS(traits_pfts, file = 'traits_pfts.rds')
 
 traits_analysis <- traits_pfts %>% 
-    filter(!is.na(pft)) %>% 
+    filter_at(vars(one_of(pftcols)), all_vars(!is.na(.))) %>% 
     filter_at(vars(matches(match_str)), any_vars(!is.na(.))) %>% 
     filter(!duplicated(select(., matches(match_str)))) %>% 
-    select(ObservationID, AccSpeciesID, pft, which(sapply(., is_double)), 
-           -Latitude, -Longitude, -Temperature_measurement)
+    select(ObservationID, AccSpeciesID, one_of(pftcols), which(sapply(., is_double)), 
+           -Latitude, -Longitude)
 
 saveRDS(traits_analysis, file = 'traits_analysis.rds')
 ############################################################

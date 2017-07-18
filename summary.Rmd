@@ -9,6 +9,7 @@ output:
 
 ```{r setup, echo = FALSE, results = 'hide'}
 library(tidyverse)
+pftcols <- c('jules1', 'jules2', 'clm45', 'custom')
 traits_pfts <- readRDS('traits_pfts.rds')
 all_pfts <- readRDS('all_pfts.rds')
 species_phylo <- src_sqlite('try.sqlite') %>% 
@@ -52,18 +53,30 @@ traits_phylo %>%
 
 ```{r rowsbypft}
 traits_pfts %>% 
-    count(pft, sort = TRUE) %>% 
+    count(jules1, sort = TRUE) %>% 
+    knitr::kable()
+traits_pfts %>% 
+    count(jules2, sort = TRUE) %>% 
+    knitr::kable()
+traits_pfts %>% 
+    count(clm45, sort = TRUE) %>% 
+    knitr::kable()
+traits_pfts %>% 
+    count(custom, sort = TRUE) %>% 
     knitr::kable()
 ```
 
 ## Non-missing traits by PFT
 
 ```{r nonmissingbypft}
-traits_pfts %>% 
-    group_by(pft) %>% 
+nmtbp <- . %>% 
     summarize_at(vars(-ObservationID, -AccSpeciesID),
                  (function(x) sum(!is.na(x)))) %>% 
     knitr::kable()
+traits_pfts %>% group_by(jules1) %>% nmtbp
+traits_pfts %>% group_by(jules2) %>% nmtbp
+traits_pfts %>% group_by(clm45) %>% nmtbp
+traits_pfts %>% group_by(custom) %>% nmtbp
 ```
 
 ## Non-missing traits by family
@@ -85,23 +98,33 @@ traits_phylo %>%
 ## Species missing PFTs, by attribute
 
 ```{r pftsnonmissingcategory}
-all_pfts %>% 
-    filter(is.na(pft)) %>% 
+sp_miss_pft_by_attribute <- . %>% 
     count(leaf_type, phenology, ps_pathway, growth_form, woodiness, climate_zone, sort = TRUE) %>% 
     head(15) %>% 
     knitr::kable()
+
+all_pfts %>% filter(is.na(jules1)) %>% sp_miss_pft_by_attribute
+all_pfts %>% filter(is.na(jules2)) %>% sp_miss_pft_by_attribute
+all_pfts %>% filter(is.na(clm45)) %>% sp_miss_pft_by_attribute
+all_pfts %>% filter(is.na(custom)) %>% sp_miss_pft_by_attribute
 ```
 
 ## Species, by missing vs. nonmissing PFT
 
 ```{r speciesmissingpft}
-all_pfts %>% count(is.na(pft)) %>% knitr::kable()
+all_pfts %>% count(is.na(jules1)) %>% knitr::kable()
+all_pfts %>% count(is.na(jules2)) %>% knitr::kable()
+all_pfts %>% count(is.na(clm45)) %>% knitr::kable()
+all_pfts %>% count(is.na(custom)) %>% knitr::kable()
 ```
 
 ## Species, by PFT (including missing)
 
 ```{r speciesbypft}
-count(all_pfts, pft, sort = TRUE) %>% knitr::kable()
+count(all_pfts, jules1, sort = TRUE) %>% knitr::kable()
+count(all_pfts, jules2, sort = TRUE) %>% knitr::kable()
+count(all_pfts, clm45, sort = TRUE) %>% knitr::kable()
+count(all_pfts, custom, sort = TRUE) %>% knitr::kable()
 ```
 
 # Plots and summaries 
@@ -121,8 +144,8 @@ knitr::kable(sumlong)
 
 ```{r covariances, fig.height=12, fig.width=10}
 traits_nested <- cpdat %>% 
-    select(pft, which(sapply(., is_double))) %>% 
-    nest(-pft)
+    select(clm45, which(sapply(., is_double))) %>% 
+    nest(-clm45)
 covdat <- traits_nested %>% 
     mutate(covmat = map(data, cov, use = 'pairwise.complete.obs'),
            cormat = map(covmat, cov2cor))
@@ -144,11 +167,11 @@ covdat_long <- covdat %>%
     mutate(cor_long = map(cormat, covmat2df))
 
 cor_unnest <- covdat_long %>% 
-    select(pft, cor_long) %>% 
+    select(clm45, cor_long) %>% 
     unnest()
 
-ggplot(cor_unnest %>% filter(!is.na(pft))) + 
-    aes(x = pft, y = value, fill = pft) +
+ggplot(cor_unnest %>% filter(!is.na(clm45))) + 
+    aes(x = clm45, y = value, fill = clm45) +
     geom_col(position = 'dodge') + 
     facet_wrap(~cor_vars, scales = 'free_x') + 
     theme(axis.text.x = element_blank(), 
@@ -162,7 +185,7 @@ xy_plot2 <- function(x, y) {
     plt_dat <- filter(cpdat, !is.na(eval(xexp)), !is.na(eval(yexp)))
     plt <- ggplot(plt_dat) + 
         aes_string(x = sprintf('log(%s)', x), y = sprintf('log(%s)', y)) +
-        aes(color = pft) + 
+        aes(color = clm45) + 
         geom_point(size = 0.5, alpha = 0.2) + 
         geom_smooth(method = 'lm', se = FALSE) + 
         theme(legend.position = 'bottom')

@@ -49,9 +49,9 @@ data_ids <- c("leaf_lifespan" = 13,
               "Jmax_area" = 2372,
               "Jmax_area" = 2379,
               "Latitude" = 59,
-              "Longitude" = 60,
-              "Temperature_measurement" = 51,
-              "Temperature_measurement" = 1666
+              "Longitude" = 60
+              #"Temperature_measurement" = 51,
+              #"Temperature_measurement" = 1666
               )
 data_ids_noname <- unname(data_ids)
 
@@ -68,7 +68,7 @@ traits_proc <- traits_long %>%
 references <- traits_proc %>% 
     count(ReferenceID, sort = TRUE)
 
-write_csv(references, 'references.csv')
+write_csv(references, 'processed/references.csv')
 
 # Print units
 distinct(traits_proc, trait, UnitName) # %>% write_csv('trait_units.csv')

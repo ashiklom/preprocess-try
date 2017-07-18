@@ -1,6 +1,8 @@
-*.csv
 *.sqlite
 .deprecated/
 .family
 *.html
 *.rds
+tpl/
+processed/
+*.~lock*

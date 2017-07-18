@@ -13,6 +13,8 @@ attributes/leaf_type.rds: leaf_type.R attribute_maps/leaf_type.csv .family
 
 attributes/phenology.rds: phenology.R attribute_maps/phenology.csv .family
 
+attributes/n_fixation.rds: n_fixation.R attribute_maps/n_fixation.csv .family
+
 attributes/climate_zone.rds: climate_zone.R traits_with_climate.rds
 
 traits_pfts.rds all_pfts.rds: make_pft.R \
@@ -20,6 +22,7 @@ traits_pfts.rds all_pfts.rds: make_pft.R \
     attributes/ps_pathway.rds \
     attributes/leaf_type.rds \
     attributes/phenology.rds \
+    attributes/n_fixation.rds \
     attributes/climate_zone.rds
 	Rscript make_pft.R
 

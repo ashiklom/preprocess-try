@@ -1,0 +1,136 @@
+DataID,DataName,ReferenceID,OrigValueStr,phenology,n
+42,Leaf phenology type,18,evergreen,evergreen,12929
+42,Leaf phenology type,204,EV,evergreen,5420
+42,Leaf phenology type,40,evergreen,evergreen,5037
+42,Leaf phenology type,18,deciduous,deciduous,4813
+42,Leaf phenology type,40,deciduous,deciduous,2240
+42,Leaf phenology type,38,Deciduous broad-leaved,deciduous,2012
+42,Leaf phenology type,138,evergreen,evergreen,1753
+42,Leaf phenology type,138,deciduous,deciduous,1584
+42,Leaf phenology type,68,evergreen,evergreen,1576
+226,Leaf phenology 2 (seasonal timing of foliage),29,always summer green,n/a,1518
+42,Leaf phenology type,78,evergreen,evergreen,1514
+42,Leaf phenology type,78,deciduous,deciduous,1392
+42,Leaf phenology type,204,D,deciduous,1244
+42,Leaf phenology type,72,E,evergreen,1225
+42,Leaf phenology type,74,Evergreen,evergreen,1040
+42,Leaf phenology type,154,E,evergreen,963
+42,Leaf phenology type,205,Y,evergreen,863
+226,Leaf phenology 2 (seasonal timing of foliage),29,always persistent green,n/a,769
+42,Leaf phenology type,68,deciduous,deciduous,765
+42,Leaf phenology type,38,Evergreen broad-leaved,evergreen,751
+42,Leaf phenology type,38,Deciduous,deciduous,745
+2421,Leaf phenology: leaf exchanger,148,no,n/a,738
+2420,Leaf phenology: semi-deciduous,148,no,n/a,737
+42,Leaf phenology type,43,Evergreen,evergreen,617
+42,Leaf phenology type,72,D,deciduous,598
+42,Leaf phenology type,43,Deciduous,deciduous,578
+42,Leaf phenology type,1,N,deciduous,566
+42,Leaf phenology type,105,D,deciduous,554
+42,Leaf phenology type,205,N,deciduous,521
+42,Leaf phenology type,38,Evergreen,evergreen,511
+2422,Leaf phenology: evergreen,148,no,n/a,511
+2419,Leaf phenology: deciduous,148,yes,deciduous,510
+42,Leaf phenology type,105,E,evergreen,502
+42,Leaf phenology type,62,E,evergreen,500
+42,Leaf phenology type,99,evergreen,evergreen,479
+42,Leaf phenology type,62,D,deciduous,381
+42,Leaf phenology type,99,aestival,deciduous,379
+42,Leaf phenology type,118,evergreen,evergreen,375
+42,Leaf phenology type,128,deciduous,deciduous,363
+42,Leaf phenology type,154,W,deciduous,356
+42,Leaf phenology type,38,Evergreen needle-leaved,evergreen,331
+42,Leaf phenology type,118,deciduous,deciduous,262
+226,Leaf phenology 2 (seasonal timing of foliage),29,always overwintering green,n/a,248
+42,Leaf phenology type,1,Y,evergreen,240
+42,Leaf phenology type,26,D,deciduous,229
+2419,Leaf phenology: deciduous,148,no,n/a,228
+2422,Leaf phenology: evergreen,148,yes,evergreen,227
+42,Leaf phenology type,154,D,deciduous,210
+42,Leaf phenology type,40,E,evergreen,209
+42,Leaf phenology type,24,evergreen,evergreen,185
+42,Leaf phenology type,74,deciduous,deciduous,170
+42,Leaf phenology type,53,E,evergreen,163
+42,Leaf phenology type,128,evergreen,evergreen,154
+42,Leaf phenology type,112,deciduous,deciduous,150
+42,Leaf phenology type,99,semi-evergreen,evergreen,121
+42,Leaf phenology type,25,NA,n/a,120
+42,Leaf phenology type,68,semi-deciduous,deciduous,107
+42,Leaf phenology type,26,NA,n/a,104
+42,Leaf phenology type,40,D,deciduous,83
+42,Leaf phenology type,4,D,deciduous,78
+42,Leaf phenology type,100,Evergreen,evergreen,78
+42,Leaf phenology type,26,E,evergreen,73
+42,Leaf phenology type,38,Evergreen scale-like,evergreen,72
+42,Leaf phenology type,99,hibernal,deciduous,71
+42,Leaf phenology type,50,D,deciduous,66
+226,Leaf phenology 2 (seasonal timing of foliage),29,always spring green,n/a,59
+42,Leaf phenology type,100,Deciduous,deciduous,58
+42,Leaf phenology type,121,1,n/a,58
+42,Leaf phenology type,79,deciduous,deciduous,55
+42,Leaf phenology type,79,evergreen,evergreen,54
+42,Leaf phenology type,191,deciduous,deciduous,52
+42,Leaf phenology type,2,NA,n/a,50
+42,Leaf phenology type,38,Deciduous or evergreen broad-leaved,n/a,50
+42,Leaf phenology type,4,E,evergreen,46
+42,Leaf phenology type,53,D,deciduous,45
+42,Leaf phenology type,24,drought semi-deciduous,n/a,44
+42,Leaf phenology type,48,D,deciduous,42
+42,Leaf phenology type,204,D_EV,n/a,42
+42,Leaf phenology type,24,winter deciduous,deciduous,38
+42,Leaf phenology type,48,E,evergreen,38
+42,Leaf phenology type,25,D,deciduous,37
+42,Leaf phenology type,38,Phyllodium,n/a,35
+42,Leaf phenology type,38,NA,n/a,34
+42,Leaf phenology type,38,Other,n/a,30
+42,Leaf phenology type,38,Deciduous needle-leaved,deciduous,28
+42,Leaf phenology type,25,E,evergreen,27
+42,Leaf phenology type,121,3,n/a,27
+42,Leaf phenology type,2,D,deciduous,26
+226,Leaf phenology 2 (seasonal timing of foliage),154,SD,n/a,23
+226,Leaf phenology 2 (seasonal timing of foliage),73,4,n/a,22
+42,Leaf phenology type,38,Deciduous scale-like,deciduous,20
+42,Leaf phenology type,99,vernal,deciduous,20
+42,Leaf phenology type,191,semideciduous,deciduous,18
+42,Leaf phenology type,191,evergreen,evergreen,17
+42,Leaf phenology type,2,E,evergreen,16
+42,Leaf phenology type,50,E,evergreen,16
+42,Leaf phenology type,18,deciduous type 3,deciduous,12
+42,Leaf phenology type,111,evergreen,evergreen,11
+42,Leaf phenology type,80,evergreen,evergreen,10
+42,Leaf phenology type,18,deciduous type 2,deciduous,9
+42,Leaf phenology type,18,semideciduous,deciduous,9
+226,Leaf phenology 2 (seasonal timing of foliage),73,1,n/a,9
+226,Leaf phenology 2 (seasonal timing of foliage),154,SG,n/a,9
+42,Leaf phenology type,54,evergreen,evergreen,8
+42,Leaf phenology type,81,deciduous,deciduous,8
+42,Leaf phenology type,121,2,n/a,7
+42,Leaf phenology type,62,S,deciduous,6
+42,Leaf phenology type,18,Deciduous,deciduous,5
+42,Leaf phenology type,18,evergreen type 2,evergreen,5
+42,Leaf phenology type,38,Deciduous or evergreen scale-like,n/a,5
+42,Leaf phenology type,2,W,n/a,4
+42,Leaf phenology type,205,Y/N,n/a,4
+42,Leaf phenology type,18,deciduous type 1,deciduous,3
+42,Leaf phenology type,24,winter semi-deciduous,deciduous,3
+42,Leaf phenology type,51,evergreen,evergreen,3
+42,Leaf phenology type,111,deciduous,deciduous,3
+42,Leaf phenology type,18,?,n/a,2
+42,Leaf phenology type,25,SEMI,deciduous,2
+42,Leaf phenology type,38,Cladophylls,n/a,2
+42,Leaf phenology type,50,SD,deciduous,2
+42,Leaf phenology type,2,SEMI,deciduous,1
+42,Leaf phenology type,18,Evergreen,evergreen,1
+42,Leaf phenology type,18,evergreen  type 1,evergreen,1
+42,Leaf phenology type,18,variable deciduous,deciduous,1
+42,Leaf phenology type,38,Deciduous or evergreen needle-leaved,n/a,1
+42,Leaf phenology type,38,Deciduous or semi-evergreen broad-leaved,deciduous,1
+42,Leaf phenology type,38,evergreen grass,evergreen,1
+42,Leaf phenology type,40,DC,n/a,1
+42,Leaf phenology type,62,SEMI,deciduous,1
+42,Leaf phenology type,74,deciduousecideciduousuous,deciduous,1
+42,Leaf phenology type,99,megaphanerophyte,n/a,1
+42,Leaf phenology type,99,sessile,n/a,1
+42,Leaf phenology type,112,evergreen,evergreen,1
+42,Leaf phenology type,112,semi-deciduous,deciduous,1
+2420,Leaf phenology: semi-deciduous,148,yes,deciduous,1

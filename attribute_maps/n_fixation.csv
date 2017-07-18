@@ -1,0 +1,62 @@
+DataID,DataName,ReferenceID,OrigValueStr,n_fixation,n
+9,Nitrogen-fixation capacity,8,No,FALSE,8939
+9,Nitrogen-fixation capacity,78,no,FALSE,4191
+9,Nitrogen-fixation capacity,18,"no, not an N fixer",FALSE,2741
+9,Nitrogen-fixation capacity,72,N,FALSE,2146
+9,Nitrogen-fixation capacity,8,Yes,TRUE,1609
+9,Nitrogen-fixation capacity,28,0,FALSE,1401
+9,Nitrogen-fixation capacity,62,N,FALSE,1060
+9,Nitrogen-fixation capacity,200,0,FALSE,687
+9,Nitrogen-fixation capacity,18,not N2 fixing,FALSE,600
+9,Nitrogen-fixation capacity,26,n,FALSE,388
+9,Nitrogen-fixation capacity,18,"yes, an N fixer",TRUE,278
+9,Nitrogen-fixation capacity,78,yes,TRUE,278
+9,Nitrogen-fixation capacity,40,N,FALSE,244
+9,Nitrogen-fixation capacity,53,N,FALSE,236
+9,Nitrogen-fixation capacity,72,Y,TRUE,178
+9,Nitrogen-fixation capacity,112,No,FALSE,139
+9,Nitrogen-fixation capacity,79,no,FALSE,109
+9,Nitrogen-fixation capacity,49,Medium,TRUE,83
+9,Nitrogen-fixation capacity,18,non Fixer,FALSE,80
+9,Nitrogen-fixation capacity,2,N,FALSE,67
+9,Nitrogen-fixation capacity,2,NO-N-fixer,FALSE,66
+9,Nitrogen-fixation capacity,28,7,TRUE,65
+9,Nitrogen-fixation capacity,49,Low,TRUE,59
+9,Nitrogen-fixation capacity,49,NA,FALSE,54
+9,Nitrogen-fixation capacity,18,0,FALSE,50
+9,Nitrogen-fixation capacity,28,5,TRUE,50
+9,Nitrogen-fixation capacity,27,N,FALSE,49
+9,Nitrogen-fixation capacity,185,True,TRUE,42
+9,Nitrogen-fixation capacity,49,High,TRUE,41
+9,Nitrogen-fixation capacity,28,1,TRUE,40
+9,Nitrogen-fixation capacity,200,1,TRUE,39
+9,Nitrogen-fixation capacity,28,6,TRUE,38
+9,Nitrogen-fixation capacity,62,R,TRUE,37
+9,Nitrogen-fixation capacity,62,n,FALSE,36
+9,Nitrogen-fixation capacity,18,N2 fixing,TRUE,33
+9,Nitrogen-fixation capacity,18,N2 fixing?,TRUE,32
+9,Nitrogen-fixation capacity,53,Y,TRUE,31
+9,Nitrogen-fixation capacity,40,Y,TRUE,26
+9,Nitrogen-fixation capacity,28,4,TRUE,22
+9,Nitrogen-fixation capacity,28,-1,TRUE,21
+9,Nitrogen-fixation capacity,26,y,TRUE,18
+9,Nitrogen-fixation capacity,28,3,TRUE,15
+9,Nitrogen-fixation capacity,62,A,n/a,13
+9,Nitrogen-fixation capacity,111,No,FALSE,13
+9,Nitrogen-fixation capacity,112,yes,TRUE,13
+9,Nitrogen-fixation capacity,18,None,FALSE,11
+9,Nitrogen-fixation capacity,18,N Fixer,TRUE,10
+9,Nitrogen-fixation capacity,80,no,FALSE,10
+9,Nitrogen-fixation capacity,18,2,TRUE,7
+9,Nitrogen-fixation capacity,28,2,TRUE,7
+9,Nitrogen-fixation capacity,62,hp,FALSE,7
+9,Nitrogen-fixation capacity,2,N-FIXER,TRUE,6
+9,Nitrogen-fixation capacity,2,Y,TRUE,6
+9,Nitrogen-fixation capacity,62,y,TRUE,6
+9,Nitrogen-fixation capacity,18,1,TRUE,5
+9,Nitrogen-fixation capacity,27,Y,TRUE,5
+9,Nitrogen-fixation capacity,18,NO,FALSE,2
+9,Nitrogen-fixation capacity,18,,n/a,1
+9,Nitrogen-fixation capacity,62,carn,n/a,1
+9,Nitrogen-fixation capacity,62,cyan,n/a,1
+9,Nitrogen-fixation capacity,111,Yes,TRUE,1

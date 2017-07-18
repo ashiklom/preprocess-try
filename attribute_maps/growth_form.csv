@@ -1,0 +1,698 @@
+DataID,DataName,ReferenceID,OrigValueStr,growth_form,n
+47,Plant growth form,18,tree,tree,13426
+47,Plant growth form,18,grass,graminoid,8969
+47,Plant growth form,40,Tree,tree,5748
+47,Plant growth form,18,shrub,shrub,5323
+47,Plant growth form,30,herb,herb,5281
+47,Plant growth form,126,mesoxerophyte,n/a,5203
+47,Plant growth form,18,herb,herb,4094
+47,Plant growth form,65,TREE,tree,3965
+47,Plant growth form,143,forb,forb,3923
+411,Shoot growth form,21,Stem erect,woody,3867
+47,Plant growth form,18,Tree,tree,3769
+47,Plant growth form,8,Tree,tree,3364
+870,Plant growth form: Succulence,138,non-succulent,n/a,3091
+47,Plant growth form,30,shrub,shrub,2530
+47,Plant growth form,78,tree,tree,2468
+47,Plant growth form,126,xerophyte,n/a,2444
+47,Plant growth form,38,Tree,tree,2390
+1297,Growth Form,68,woody,woody,2076
+47,Plant growth form,38,Shrub,shrub,2065
+1741,Plant growth form 2,68,woody,woody,2059
+47,Plant growth form,18,Forbs,forb,2018
+1303,Low Growing Grass,49,No,n/a,2013
+47,Plant growth form,126,mesophyte,n/a,1960
+47,Plant growth form,74,tree,tree,1926
+47,Plant growth form,8,Herbaceous Monocot,herb,1881
+47,Plant growth form,53,T,tree,1809
+47,Plant growth form,63,Climber,liana_climber,1783
+47,Plant growth form,196,b H,hemicryptophyte,1765
+47,Plant growth form,101,climber,liana_climber,1765
+47,Plant growth form,126,xeromesophyte,n/a,1753
+47,Plant growth form,65,SHRUB/TREE,tree,1684
+2391,Life form: small tree,148,no,n/a,1577
+2401,Life form: fern/fern ally,148,no,n/a,1575
+2400,Life form: succulent,148,no,n/a,1573
+2394,Life form: prostrate dwarf shrub,148,no,n/a,1572
+2402,Life form: epiphyte/parasite,148,no,n/a,1564
+2396,Life form: climber,148,no,n/a,1555
+47,Plant growth form,40,Shrub,shrub,1542
+2398,Life form: geophyte,148,no,n/a,1531
+47,Plant growth form,30,tree,tree,1501
+2395,Life form: liana,148,no,n/a,1485
+2404,Plant form: vase,148,no,n/a,1477
+2393,Life form: erect dwarf shrub,148,no,n/a,1474
+2408,Plant form: caespitose,148,no,n/a,1473
+2405,Plant form: open,148,no,n/a,1473
+2409,Plant form: tangled,148,no,n/a,1469
+2407,Plant form: cushion,148,no,n/a,1461
+2411,Plant form: prostrate,148,no,n/a,1457
+2399,Life form: graminoid,148,no,n/a,1417
+47,Plant growth form,68,tree,tree,1372
+2410,Plant form: climbing,148,no,n/a,1360
+1304,Shape and Orientation,49,Erect,n/a,1358
+47,Plant growth form,126,succulent,succulent,1310
+2403,Plant form: Non-distinctive,148,yes,n/a,1273
+2390,Life form: tree,148,no,n/a,1272
+2392,Life form: shrub,148,no,n/a,1269
+47,Plant growth form,43,tree,tree,1194
+47,Plant growth form,143,forb-annual,forb,1174
+47,Plant growth form,72,T,tree,1102
+2330,Plant growth form: epiphyte,18,epiphyte,epiphyte,1089
+47,Plant growth form,40,Herb,herb,1086
+2397,Life form: forb,148,no,n/a,1072
+47,Plant growth form,154,T,tree,1043
+47,Plant growth form,18,forb,forb,1040
+47,Plant growth form,8,Herbaceous Dicot,herb,1009
+47,Plant growth form,205,tree,tree,985
+1425,Gymnosperm/Angiosperm/Tree/Herb,53,Gymn,n/a,964
+47,Plant growth form,18,Shrub,shrub,946
+1425,Gymnosperm/Angiosperm/Tree/Herb,53,angWood,woody,941
+47,Plant growth form,78,herbaceous,herb,842
+47,Plant growth form,30,climber,liana_climber,799
+2481,Leaf succulence,148,no,n/a,768
+2503,Stem succulent,148,no,n/a,764
+47,Plant growth form,185,tree,tree,753
+47,Plant growth form,72,S,shrub,747
+47,Plant growth form,40,Grasses&Sedges,graminoid,739
+47,Plant growth form,134,forb,forb,732
+47,Plant growth form,18,drwarf shrub,shrub,725
+47,Plant growth form,200,A,tree,706
+47,Plant growth form,144,hydrophyte,hydrophyte,611
+47,Plant growth form,105,shrub,shrub,611
+47,Plant growth form,143,graminoid,graminoid,602
+47,Plant growth form,78,crops,crop,594
+411,Shoot growth form,21,Stem ascending to prostrate,n/a,586
+47,Plant growth form,196,e N,shrub,563
+47,Plant growth form,196,a T,therophyte,555
+47,Plant growth form,49,Forb/herb,forb,554
+47,Plant growth form,126,hydrophyte,hydrophyte,532
+47,Plant growth form,18,fern,fern,528
+47,Plant growth form,72,H,forb,524
+47,Plant growth form,142,shrub,shrub,524
+47,Plant growth form,18,Graminoids,graminoid,512
+47,Plant growth form,78,shrub,shrub,510
+47,Plant growth form,15,tree / shrub,tree,507
+2397,Life form: forb,148,yes,forb,506
+47,Plant growth form,49,Graminoid,graminoid,503
+1741,Plant growth form 2,68,O,n/a,487
+47,Plant growth form,68,shrub,shrub,483
+47,Plant growth form,23,herb,herb,476
+47,Plant growth form,38,Tree shrub intermediate,tree,474
+47,Plant growth form,105,forb,forb,469
+47,Plant growth form,142,tree,tree,466
+47,Plant growth form,29,forb,forb,465
+47,Plant growth form,62,T,tree,458
+1297,Growth Form,68,herb,herb,458
+47,Plant growth form,105,tree,tree,446
+47,Plant growth form,68,herb,herb,440
+47,Plant growth form,154,S,shrub,439
+47,Plant growth form,141,forb,forb,438
+47,Plant growth form,92,Grass,graminoid,426
+1297,Growth Form,49,Multiple Stem,n/a,419
+47,Plant growth form,18,vine,liana_climber,417
+47,Plant growth form,18,graminoid,graminoid,414
+47,Plant growth form,33,shrub,shrub,413
+1297,Growth Form,49,Single Stem,n/a,410
+47,Plant growth form,65,LIANA,liana_climber,402
+47,Plant growth form,130,Herb,herb,394
+47,Plant growth form,15,herbaceous monocotyl,herb,394
+47,Plant growth form,149,Tree (deciduous),tree,388
+47,Plant growth form,140,graminoid,graminoid,384
+1297,Growth Form,49,Rhizomatous,n/a,378
+47,Plant growth form,196,d Z,shrub,361
+47,Plant growth form,126,succulent with Kranz anatomy,succulent,359
+47,Plant growth form,23,shrub,shrub,349
+1297,Growth Form,49,Bunch,n/a,349
+47,Plant growth form,23,tree,tree,339
+1297,Growth Form,49,Single Crown,n/a,339
+47,Plant growth form,40,T  resp.  T,tree,338
+47,Plant growth form,90,Forb,forb,336
+47,Plant growth form,177,Top.Canopy.Tree,tree,335
+870,Plant growth form: Succulence,138,succulent,succulent,335
+47,Plant growth form,205,shrub,shrub,331
+47,Plant growth form,107,Tree,tree,331
+47,Plant growth form,91,Forb,forb,320
+47,Plant growth form,18,herbaceous,herb,316
+47,Plant growth form,105,grass,graminoid,313
+47,Plant growth form,146,Mid Canopy,tree,313
+47,Plant growth form,18,liana,liana_climber,309
+2392,Life form: shrub,148,yes,shrub,309
+2390,Life form: tree,148,yes,tree,306
+47,Plant growth form,149,Tree (evergreen),tree,298
+47,Plant growth form,49,Tree,tree,282
+47,Plant growth form,49,"Tree, Shrub",tree,280
+47,Plant growth form,126,hygrophyte,hydrophyte,276
+47,Plant growth form,142,shrub (sub-),shrub,275
+1741,Plant growth form 2,68,monocot,n/a,273
+47,Plant growth form,15,herbaceous dicotyl,herb,267
+1304,Shape and Orientation,49,Semi-Erect,n/a,264
+47,Plant growth form,23,Grass,graminoid,263
+47,Plant growth form,62,S,shrub,261
+47,Plant growth form,196,c C,chamaephyte,260
+47,Plant growth form,18,Shrub/Tree intermediate,shrub,257
+47,Plant growth form,143,forb-biennial,forb,252
+411,Shoot growth form,21,Lianas and climbers,liana_climber,250
+411,Shoot growth form,21,Stem prostrate,n/a,250
+47,Plant growth form,86,sub-shrub,shrub,235
+47,Plant growth form,143,graminoid-annual,graminoid,234
+47,Plant growth form,68,grass,graminoid,227
+47,Plant growth form,130,Shrub,shrub,227
+1297,Growth Form,68,grass,graminoid,227
+1425,Gymnosperm/Angiosperm/Tree/Herb,53,angHerb,herb,225
+47,Plant growth form,179,herb,herb,224
+47,Plant growth form,201,herb,herb,220
+411,Shoot growth form,21,Submerged attached to the substrate,hydrophyte,217
+47,Plant growth form,68,climber,liana_climber,208
+47,Plant growth form,125,tree,tree,207
+47,Plant growth form,196,f P,tree,206
+2403,Plant form: Non-distinctive,148,no,n/a,205
+47,Plant growth form,142,forb,forb,204
+47,Plant growth form,43,Grass,graminoid,197
+47,Plant growth form,24,annual forb,forb,191
+47,Plant growth form,24,perennial forb,forb,188
+47,Plant growth form,86,shrub,shrub,185
+47,Plant growth form,23,Herb,herb,184
+47,Plant growth form,49,Shrub,shrub,184
+47,Plant growth form,33,tree,tree,179
+47,Plant growth form,62,H,forb,175
+47,Plant growth form,38,Liana,liana_climber,167
+2399,Life form: graminoid,148,yes,graminoid,161
+47,Plant growth form,146,Top Canopy,tree,160
+47,Plant growth form,180,herb,herb,152
+47,Plant growth form,47,herb,herb,149
+47,Plant growth form,26,T,tree,148
+47,Plant growth form,18,"forb (herbaceous, with or without woody base)",forb,147
+47,Plant growth form,144,hydrophyte-annual,hydrophyte,143
+47,Plant growth form,26,S,shrub,143
+1304,Shape and Orientation,49,Decumbent,n/a,141
+47,Plant growth form,62,G,graminoid,140
+47,Plant growth form,107,Shrub,shrub,140
+47,Plant growth form,18,Climber,liana_climber,139
+47,Plant growth form,14,herb,herb,137
+47,Plant growth form,142,climber,liana_climber,135
+47,Plant growth form,38,Herbaceous,herb,135
+959,Multi-stemness,42,soli,n/a,135
+47,Plant growth form,72,G,graminoid,134
+47,Plant growth form,146,Understory,n/a,132
+47,Plant growth form,53,H,herb,131
+47,Plant growth form,33,herb,herb,131
+47,Plant growth form,146,Liana - Top,liana_climber,130
+47,Plant growth form,196,g L,liana_climber,125
+47,Plant growth form,18,Hydrophytes,hydrophyte,125
+47,Plant growth form,141,graminoid,graminoid,124
+47,Plant growth form,143,shrub (sub-),shrub,122
+47,Plant growth form,40,S  resp.  S,shrub,120
+1303,Low Growing Grass,49,Yes,graminoid,118
+2410,Plant form: climbing,148,yes,liana_climber,118
+47,Plant growth form,112,herb,herb,117
+47,Plant growth form,130,Grass,graminoid,114
+47,Plant growth form,24,scrub,shrub,111
+47,Plant growth form,38,Dwarf shrub,shrub,110
+47,Plant growth form,79,tree,tree,109
+47,Plant growth form,134,subshrub,shrub,108
+47,Plant growth form,179,gras,graminoid,104
+2393,Life form: erect dwarf shrub,148,yes,shrub,104
+47,Plant growth form,40,Climber,liana_climber,103
+47,Plant growth form,134,tree,tree,102
+1304,Shape and Orientation,49,Prostrate,n/a,102
+1297,Growth Form,49,Stoloniferous,n/a,98
+47,Plant growth form,53,S,shrub,96
+47,Plant growth form,86,tree,tree,96
+47,Plant growth form,193,Forb,forb,94
+47,Plant growth form,90,Graminoid,graminoid,94
+47,Plant growth form,196,H,hemicryptophyte,94
+47,Plant growth form,50,h,forb,93
+47,Plant growth form,24,shrub,shrub,93
+47,Plant growth form,202,Tree,tree,93
+2395,Life form: liana,148,yes,liana_climber,93
+47,Plant growth form,149,Graminoid,graminoid,91
+47,Plant growth form,42,forb,forb,90
+47,Plant growth form,91,Graminoid,graminoid,90
+47,Plant growth form,149,Forb,forb,89
+47,Plant growth form,40,Vine,liana_climber,89
+47,Plant growth form,15,conifer,n/a,88
+47,Plant growth form,74,shrub,shrub,88
+2330,Plant growth form: epiphyte,18,hemiepiphyte,epiphyte,88
+47,Plant growth form,53,G,graminoid,86
+47,Plant growth form,149,Conifers,n/a,84
+1304,Shape and Orientation,49,Rounded,n/a,84
+47,Plant growth form,49,"Subshrub, Forb/herb",shrub,83
+47,Plant growth form,23,Woody,woody,83
+47,Plant growth form,18,Ferns and allies (Lycophytes),fern,81
+47,Plant growth form,14,shrub,shrub,80
+47,Plant growth form,14,tree,tree,80
+47,Plant growth form,25,H,forb,79
+47,Plant growth form,33,grass,graminoid,78
+47,Plant growth form,42,tree,tree,77
+411,Shoot growth form,21,Emergent attached to the substrate,n/a,77
+411,Shoot growth form,21,Floating leaves attached to the substrate,hydrophyte,77
+47,Plant growth form,146,Sapling,n/a,76
+47,Plant growth form,181,Tree,tree,76
+47,Plant growth form,18,Succulent,succulent,75
+47,Plant growth form,50,g,graminoid,72
+47,Plant growth form,180,gras,graminoid,72
+47,Plant growth form,43,Shrub,shrub,72
+47,Plant growth form,33,vine,liana_climber,72
+47,Plant growth form,121,herb/sub-shrub,herb,71
+47,Plant growth form,127,herb,herb,69
+47,Plant growth form,11,herbs,herb,68
+47,Plant growth form,18,epiphyte,epiphyte,66
+47,Plant growth form,29,grass,graminoid,66
+47,Plant growth form,29,sedge,graminoid,66
+47,Plant growth form,18,Lianna,liana_climber,65
+47,Plant growth form,40,Palm,tree,65
+47,Plant growth form,49,"Subshrub, Shrub",shrub,65
+2331,Plant growth form: climber,18,climber,liana_climber,65
+1297,Growth Form,49,Thicket Forming,n/a,64
+47,Plant growth form,134,grass,graminoid,62
+47,Plant growth form,74,liana,liana_climber,62
+411,Shoot growth form,21,Free-floating plants,hydrophyte,62
+47,Plant growth form,68,shrub/tree,tree,61
+47,Plant growth form,196,h,hemicryptophyte,60
+47,Plant growth form,24,geophyte,geophyte,56
+47,Plant growth form,193,Graminoid,graminoid,56
+47,Plant growth form,24,perennial grass,graminoid,55
+47,Plant growth form,50,sh,shrub,55
+47,Plant growth form,26,H,forb,54
+47,Plant growth form,25,S,shrub,54
+47,Plant growth form,49,NA,n/a,54
+1297,Growth Form,49,NA,n/a,54
+1303,Low Growing Grass,49,NA,n/a,54
+1304,Shape and Orientation,49,NA,n/a,54
+47,Plant growth form,18,grass (Poaceae only),graminoid,53
+47,Plant growth form,185,saplings,n/a,53
+47,Plant growth form,8,Shrub,shrub,53
+47,Plant growth form,18,herb.,herb,52
+47,Plant growth form,57,Tree,tree,51
+47,Plant growth form,65,VINE,liana_climber,51
+47,Plant growth form,26,G,graminoid,50
+47,Plant growth form,42,gram,graminoid,50
+47,Plant growth form,18,perennial herb,herb,50
+47,Plant growth form,4,S,shrub,50
+47,Plant growth form,47,graminoid,graminoid,49
+959,Multi-stemness,42,mult,n/a,49
+47,Plant growth form,24,large shrub,shrub,48
+47,Plant growth form,4,T,tree,48
+1617,Plant growth form additional information,18,aquatic fresh water,hydrophyte,48
+1617,Plant growth form additional information,18,epiphyte,epiphyte,48
+47,Plant growth form,134,shrub,shrub,47
+2398,Life form: geophyte,148,yes,geophyte,47
+1297,Growth Form,68,unclasified,n/a,46
+870,Plant growth form: Succulence,18,No,n/a,46
+2330,Plant growth form: epiphyte,18,"epiphyte, hemiepiphyte",epiphyte,45
+47,Plant growth form,140,graminoid-annual,graminoid,44
+47,Plant growth form,18,Hemi-epipjyte,epiphyte,44
+47,Plant growth form,40,Macrophyte,hydrophyte,44
+47,Plant growth form,18,succulent,succulent,43
+47,Plant growth form,86,suffrutescent,n/a,43
+47,Plant growth form,61,Tree,tree,43
+870,Plant growth form: Succulence,184,0,n/a,43
+47,Plant growth form,130,Seagrass,graminoid,42
+47,Plant growth form,24,tree,tree,42
+47,Plant growth form,18,Tree/Large Shrub,tree,42
+47,Plant growth form,146,Grass,graminoid,40
+47,Plant growth form,42,shru,shrub,40
+1304,Shape and Orientation,49,Irregular,n/a,40
+47,Plant growth form,142,forb-annual,forb,39
+47,Plant growth form,18,perennial graminoid,graminoid,39
+1304,Shape and Orientation,49,Climbing,liana_climber,39
+2481,Leaf succulence,148,yes,succulent,39
+47,Plant growth form,29,herbaceous legume,herb,38
+571,Climbing mode,29,always Climbing using tendrils,liana_climber,38
+47,Plant growth form,18,Cushion plant,non-vascular,36
+47,Plant growth form,61,Shrub,shrub,35
+47,Plant growth form,18,shrub (woody 1-4m),shrub,35
+47,Plant growth form,143,forb-succulent,succulent,34
+47,Plant growth form,8,Herbaceous,herb,34
+47,Plant growth form,134,vine,liana_climber,34
+1617,Plant growth form additional information,18,aquatic salt water,hydrophyte,34
+47,Plant growth form,49,Subshrub,shrub,33
+1304,Shape and Orientation,49,Conical,n/a,33
+47,Plant growth form,2,H,forb,32
+47,Plant growth form,48,T,tree,32
+47,Plant growth form,49,"Vine, Forb/herb",liana_climber,32
+47,Plant growth form,177,Shrub,shrub,31
+47,Plant growth form,205,tree/shrub,tree,31
+870,Plant growth form: Succulence,73,1,succulent,31
+870,Plant growth form: Succulence,97,Absence,n/a,31
+47,Plant growth form,141,shrub (sub-),shrub,30
+47,Plant growth form,48,S,shrub,29
+47,Plant growth form,24,annual grass,graminoid,28
+47,Plant growth form,25,G,graminoid,28
+47,Plant growth form,112,grass,graminoid,28
+47,Plant growth form,185,seedlings,n/a,28
+47,Plant growth form,18,subshrub (woody <1m),shrub,28
+47,Plant growth form,18,amphibiousubmerged,hydrophyte,27
+47,Plant growth form,47,leguminous forb,forb,27
+47,Plant growth form,50,t,tree,27
+47,Plant growth form,24,variable forb,forb,27
+959,Multi-stemness,42,tuss,n/a,27
+47,Plant growth form,130,Aquatic,hydrophyte,26
+47,Plant growth form,144,forb-annual,forb,26
+47,Plant growth form,143,hydrophyte,hydrophyte,26
+47,Plant growth form,179,shrub,shrub,26
+47,Plant growth form,50,se,graminoid,25
+47,Plant growth form,18,submerged,hydrophyte,25
+47,Plant growth form,74,hemiepiphyte,epiphyte,24
+47,Plant growth form,205,hemiepiphyte,epiphyte,24
+47,Plant growth form,154,L,liana_climber,24
+47,Plant growth form,177,Mid.Canopy.Tree,tree,24
+47,Plant growth form,18,tree (woody >4m),tree,24
+47,Plant growth form,29,woody plant,woody,24
+47,Plant growth form,18,Hemiepiphite,epiphyte,23
+47,Plant growth form,57,Herb,herb,23
+47,Plant growth form,127,shrub or chamaephyt,shrub,23
+47,Plant growth form,72,V,liana_climber,23
+2396,Life form: climber,148,yes,liana_climber,23
+47,Plant growth form,149,Ferns,fern,22
+47,Plant growth form,57,Climber,liana_climber,21
+47,Plant growth form,62,V,liana_climber,21
+571,Climbing mode,29,always Trailing,liana_climber,21
+1297,Growth Form,49,Colonizing,n/a,21
+2411,Plant form: prostrate,148,yes,n/a,21
+47,Plant growth form,18,Succulent Leaves,succulent,20
+47,Plant growth form,49,Vine,liana_climber,20
+47,Plant growth form,196,m Hel,cryptophyte,19
+47,Plant growth form,18,palm,palm,19
+47,Plant growth form,18,perennial leguminous herb,herb,19
+47,Plant growth form,2,S,shrub,19
+47,Plant growth form,205,vine,liana_climber,19
+47,Plant growth form,24,liana,liana_climber,18
+47,Plant growth form,180,shrub,shrub,18
+47,Plant growth form,49,"Subshrub, Shrub, Forb/herb",shrub,18
+1617,Plant growth form additional information,18,"aquatic, fresh water, floating",hydrophyte,18
+47,Plant growth form,108,epiphyte,epiphyte,17
+47,Plant growth form,85,Scap,n/a,17
+47,Plant growth form,120,tree,tree,17
+2407,Plant form: cushion,148,yes,non-vascular,17
+47,Plant growth form,33,fern,fern,16
+47,Plant growth form,134,fern,fern,16
+47,Plant growth form,62,MOSS,non-vascular,16
+47,Plant growth form,18,Epiphytes,epiphyte,15
+47,Plant growth form,147,Forb,forb,15
+47,Plant growth form,50,rus,graminoid,15
+47,Plant growth form,149,Tree (evergreen) Liana,n/a,15
+47,Plant growth form,38,culm,graminoid,14
+47,Plant growth form,72,F,fern,14
+47,Plant growth form,18,forage grass,graminoid,14
+47,Plant growth form,196,Shrub,shrub,14
+47,Plant growth form,97,Sub-Shrub (Chamaephyte),shrub,14
+47,Plant growth form,111,tree,tree,14
+2402,Life form: epiphyte/parasite,148,yes,epiphyte,14
+47,Plant growth form,154,C,succulent,13
+47,Plant growth form,120,crop,crop,13
+47,Plant growth form,144,graminoid,graminoid,13
+47,Plant growth form,142,graminoid-annual,graminoid,13
+47,Plant growth form,18,Graminoids Tussock,graminoid,13
+47,Plant growth form,177,Herb,herb,13
+47,Plant growth form,40,Herb  resp.  H,herb,13
+47,Plant growth form,142,hydrophyte,cryptophyte,13
+47,Plant growth form,200,L,n/a,13
+47,Plant growth form,205,dwarf shrub,shrub,12
+47,Plant growth form,68,fern,fern,12
+47,Plant growth form,141,forb-succulent,succulent,12
+47,Plant growth form,2,G,graminoid,12
+47,Plant growth form,18,Grass,graminoid,12
+47,Plant growth form,96,Hemiparasite,epiphyte,12
+47,Plant growth form,196,l succ,succulent,12
+47,Plant growth form,196,n Hyd,hydrophyte,12
+47,Plant growth form,40,resp.  T,tree,12
+47,Plant growth form,25,T,tree,12
+47,Plant growth form,196,therophyte,therophyte,12
+47,Plant growth form,74,vine,liana_climber,12
+47,Plant growth form,40,W climb  resp.  V,liana_climber,12
+571,Climbing mode,29,always Spread climbing,liana_climber,12
+1297,Growth Form,68,forb,forb,12
+1304,Shape and Orientation,49,Vase,n/a,12
+47,Plant growth form,42,lian,liana_climber,11
+47,Plant growth form,121,shrub,shrub,11
+47,Plant growth form,48,SS,shrub,11
+47,Plant growth form,121,tree,tree,11
+47,Plant growth form,26,V,liana_climber,11
+47,Plant growth form,194,woody shrub,shrub,11
+47,Plant growth form,127,grass,graminoid,10
+47,Plant growth form,80,tree,tree,10
+47,Plant growth form,97,Annual Herb,herb,9
+47,Plant growth form,47,dwarf shrub,shrub,9
+47,Plant growth form,141,forb-biennial,forb,9
+47,Plant growth form,142,forb-biennial,forb,9
+47,Plant growth form,49,"Forb/herb, Subshrub",forb,9
+47,Plant growth form,18,parasite,liana_climber,9
+47,Plant growth form,49,"Shrub, Subshrub",shrub,9
+47,Plant growth form,196,t,therophyte,9
+47,Plant growth form,149,Trees,tree,9
+2409,Plant form: tangled,148,yes,n/a,9
+47,Plant growth form,48,C+Sc,n/a,8
+47,Plant growth form,85,Caesp,n/a,8
+47,Plant growth form,23,liana,liana_climber,8
+47,Plant growth form,4,PS,n/a,8
+47,Plant growth form,4,SC,n/a,8
+47,Plant growth form,54,shrub / tree,shrub,8
+47,Plant growth form,4,SS,shrub,8
+47,Plant growth form,130,Succulent,succulent,8
+47,Plant growth form,29,woody legume,woody,8
+47,Plant growth form,147,Woody shrub,shrub,8
+959,Multi-stemness,18,single stem,n/a,8
+1617,Plant growth form additional information,18,tree-like,woody,8
+47,Plant growth form,85,caesp,n/a,7
+47,Plant growth form,18,climber,liana_climber,7
+47,Plant growth form,8,Fern,fern,7
+47,Plant growth form,54,forb,forb,7
+47,Plant growth form,154,H,forb,7
+47,Plant growth form,2,HEMI-PARASITE,epiphyte,7
+47,Plant growth form,8,Herbaceous Forb,forb,7
+47,Plant growth form,8,liana,liana_climber,7
+47,Plant growth form,18,sedge,graminoid,7
+47,Plant growth form,2,SEDGE,graminoid,7
+47,Plant growth form,18,Succulent Stems,succulent,7
+1304,Shape and Orientation,49,Columnar,n/a,7
+2503,Stem succulent,148,yes,succulent,7
+47,Plant growth form,57,Epiphyte,epiphyte,6
+47,Plant growth form,2,FERNALLY,fern,6
+47,Plant growth form,141,forb-annual,forb,6
+47,Plant growth form,154,G,graminoid,6
+47,Plant growth form,8,Grass,graminoid,6
+47,Plant growth form,74,herb,herb,6
+47,Plant growth form,107,Liana,liana_climber,6
+47,Plant growth form,97,Perennial Herb/Hemicryptophyte,herb,6
+47,Plant growth form,85,Rhiz,n/a,6
+47,Plant growth form,49,"Shrub, Tree",shrub,6
+47,Plant growth form,49,"Shrub, Vine",shrub,6
+47,Plant growth form,81,tree,tree,6
+47,Plant growth form,127,tree,tree,6
+47,Plant growth form,8,Vine,liana_climber,6
+1304,Shape and Orientation,49,Oval,n/a,6
+2394,Life form: prostrate dwarf shrub,148,yes,shrub,6
+47,Plant growth form,18,cereal,crop,5
+47,Plant growth form,205,epiphyte,epiphyte,5
+47,Plant growth form,25,FERN,fern,5
+47,Plant growth form,2,FERN ALLY,fern,5
+47,Plant growth form,42,geop,geophyte,5
+47,Plant growth form,2,GRAMINOID,graminoid,5
+47,Plant growth form,196,k Climber,liana_climber,5
+47,Plant growth form,200,P,n/a,5
+47,Plant growth form,196,Perennial,perennial,5
+47,Plant growth form,49,"Vine, Subshrub",liana_climber,5
+47,Plant growth form,18,weed,herb,5
+870,Plant growth form: Succulence,97,Presence,succulent,5
+2400,Life form: succulent,148,yes,succulent,5
+2405,Plant form: open,148,yes,n/a,5
+2408,Plant form: caespitose,148,yes,n/a,5
+47,Plant growth form,18,AQUATIC,hydrophyte,4
+47,Plant growth form,177,C3.Sedges,graminoid,4
+47,Plant growth form,25,CLUBMOSS,non-vascular,4
+47,Plant growth form,120,DESERT SUB-SHRUBS,shrub,4
+47,Plant growth form,72,EP,epiphyte,4
+47,Plant growth form,33,epiphyte (mistletoe),epiphyte,4
+47,Plant growth form,130,Fern,fern,4
+47,Plant growth form,40,G&S  resp.  G&S,graminoid,4
+47,Plant growth form,147,Graminoid,graminoid,4
+47,Plant growth form,54,grass,graminoid,4
+47,Plant growth form,8,hemiepiphyte,epiphyte,4
+47,Plant growth form,196,m hel,cryptophyte,4
+47,Plant growth form,205,palm,palm,4
+47,Plant growth form,97,Perennial Grass/Hemicryptophyte,graminoid,4
+47,Plant growth form,112,shrub,shrub,4
+47,Plant growth form,120,shrub,shrub,4
+47,Plant growth form,49,"Subshrub, Shrub, Graminoid",shrub,4
+47,Plant growth form,2,T,tree,4
+47,Plant growth form,18,twiner/climber.,liana_climber,4
+47,Plant growth form,130,Vine,liana_climber,4
+47,Plant growth form,196,z,shrub,4
+47,Plant growth form,38,NA,n/a,4
+1617,Plant growth form additional information,18,succulent,succulent,4
+47,Plant growth form,40,Agaves&Cacti  resp.  Agaves&Cacti,succulent,3
+47,Plant growth form,85,bulb,n/a,3
+47,Plant growth form,196,ch,chamaephyte,3
+47,Plant growth form,196,Ch,chamaephyte,3
+47,Plant growth form,74,epiphyte,epiphyte,3
+47,Plant growth form,196,I succ,succulent,3
+47,Plant growth form,85,Lian,liana_climber,3
+47,Plant growth form,196,n,hydrophyte,3
+47,Plant growth form,40,Palm  resp.  Palm,palm,3
+47,Plant growth form,40,resp.  S,shrub,3
+47,Plant growth form,18,stem parasite,liana_climber,3
+47,Plant growth form,40,T  resp.  S,tree,3
+47,Plant growth form,112,Tree,tree,3
+47,Plant growth form,49,"Tree, Shrub, Vine",tree,3
+47,Plant growth form,49,"Tree, Subshrub, Shrub",tree,3
+47,Plant growth form,61,Vine,liana_climber,3
+47,Plant growth form,61,Vine/Shrub,liana_climber,3
+47,Plant growth form,90,Woody,woody,3
+870,Plant growth form: Succulence,18,Yes,succulent,3
+959,Multi-stemness,51,multiple stems,n/a,3
+2401,Life form: fern/fern ally,148,yes,fern,3
+47,Plant growth form,97,Annual Grass,graminoid,2
+47,Plant growth form,4,C,n/a,2
+47,Plant growth form,62,C,n/a,2
+47,Plant growth form,42,cact,succulent,2
+47,Plant growth form,2,CARNIVORE,n/a,2
+47,Plant growth form,40,Climb  resp.  Climb,liana_climber,2
+47,Plant growth form,62,CLUBMOSS,non-vascular,2
+47,Plant growth form,196,d z,shrub,2
+47,Plant growth form,50,f,fern,2
+47,Plant growth form,147,Fern,fern,2
+47,Plant growth form,62,FERN,fern,2
+47,Plant growth form,49,"Forb/herb, Shrub, Subshrub",forb,2
+47,Plant growth form,107,Grass,graminoid,2
+47,Plant growth form,196,Hel,cryptophyte,2
+47,Plant growth form,61,Herb,herb,2
+47,Plant growth form,81,herbaceous,herb,2
+47,Plant growth form,25,HORSETAIL,forb,2
+47,Plant growth form,196,hyd,hydrophyte,2
+47,Plant growth form,147,Mat forming,non-vascular,2
+47,Plant growth form,62,Moss,non-vascular,2
+47,Plant growth form,25,MOSS,non-vascular,2
+47,Plant growth form,196,n hyd,hydrophyte,2
+47,Plant growth form,196,p,tree,2
+47,Plant growth form,130,Parasite,epiphyte,2
+47,Plant growth form,18,pasture grass,graminoid,2
+47,Plant growth form,85,Rept,n/a,2
+47,Plant growth form,18,root parasite,n/a,2
+47,Plant growth form,134,sedge,graminoid,2
+47,Plant growth form,81,shrub,shrub,2
+47,Plant growth form,196,Shrub or tree,shrub,2
+47,Plant growth form,201,srub,shrub,2
+47,Plant growth form,130,Tree,tree,2
+47,Plant growth form,127,vine or liana,liana_climber,2
+47,Plant growth form,49,"Vine, Shrub",liana_climber,2
+571,Climbing mode,29,sometimes Spread climbing,liana_climber,2
+47,Plant growth form,18,(shrub),shrub,1
+47,Plant growth form,196,c,chamaephyte,1
+47,Plant growth form,196,C,chamaephyte,1
+47,Plant growth form,107,Cactus,succulent,1
+47,Plant growth form,40,carnivorous plant  resp.  carnivorous plant,forb,1
+47,Plant growth form,40,Climb  resp.  V,liana_climber,1
+47,Plant growth form,154,F,fern,1
+47,Plant growth form,23,fern,fern,1
+47,Plant growth form,42,fern,fern,1
+47,Plant growth form,62,Fern,fern,1
+47,Plant growth form,40,Fern  resp.  Fern,fern,1
+47,Plant growth form,49,"Forb/herb, Vine",forb,1
+47,Plant growth form,40,Halfshrubs  resp.  S,shrub,1
+47,Plant growth form,196,hel,cryptophyte,1
+47,Plant growth form,123,herb,herb,1
+47,Plant growth form,38,Herbaceous or shrubby,herb,1
+47,Plant growth form,62,HORSETAIL,forb,1
+47,Plant growth form,200,liana,liana_climber,1
+47,Plant growth form,61,Mistletoe,epiphyte,1
+47,Plant growth form,196,perennial,perennial,1
+47,Plant growth form,196,Perennial or shrub,perennial,1
+47,Plant growth form,196,Perennial or subshrub,perennial,1
+47,Plant growth form,18,prairie grass,graminoid,1
+47,Plant growth form,85,rept,n/a,1
+47,Plant growth form,85,ros,n/a,1
+47,Plant growth form,61,shrub,shrub,1
+47,Plant growth form,196,shrub,shrub,1
+47,Plant growth form,97,Shrub (Chamaephyte),shrub,1
+47,Plant growth form,205,shrub/vine,shrub,1
+47,Plant growth form,49,"Subshrub, Shrub, Tree",shrub,1
+47,Plant growth form,18,Subshrub/Shrub,shrub,1
+47,Plant growth form,62,T (treefern),tree,1
+47,Plant growth form,62,T/S,tree,1
+47,Plant growth form,43,Tree,tree,1
+47,Plant growth form,49,"Tree, Shrub, Subshrub",tree,1
+47,Plant growth form,30,unspecified,n/a,1
+47,Plant growth form,24,variable grass,graminoid,1
+47,Plant growth form,43,various,n/a,1
+47,Plant growth form,49,"Vine, Shrub, Graminoid",liana_climber,1
+47,Plant growth form,18,"weed, sedge",graminoid,1
+47,Plant growth form,91,Woody,woody,1
+571,Climbing mode,29,always Climbing using adhesive roots,liana_climber,1
+870,Plant growth form: Succulence,18,102.097299956947,n/a,1
+870,Plant growth form: Succulence,18,102.482054830061,n/a,1
+870,Plant growth form: Succulence,18,103.377352646549,n/a,1
+870,Plant growth form: Succulence,18,105.053611852526,n/a,1
+870,Plant growth form: Succulence,18,107.476008994454,n/a,1
+870,Plant growth form: Succulence,18,107.794208269408,n/a,1
+870,Plant growth form: Succulence,18,108.3863017265,n/a,1
+870,Plant growth form: Succulence,18,108.517808189492,n/a,1
+870,Plant growth form: Succulence,18,114.451519585526,n/a,1
+870,Plant growth form: Succulence,18,115.148738306355,n/a,1
+870,Plant growth form: Succulence,18,116.84552934506,n/a,1
+870,Plant growth form: Succulence,18,117.594968558779,n/a,1
+870,Plant growth form: Succulence,18,118.053674800762,n/a,1
+870,Plant growth form: Succulence,18,119.160905482619,n/a,1
+870,Plant growth form: Succulence,18,121.985029110064,n/a,1
+870,Plant growth form: Succulence,18,127.258465144736,n/a,1
+870,Plant growth form: Succulence,18,127.497483151493,n/a,1
+870,Plant growth form: Succulence,18,128.059410787179,n/a,1
+870,Plant growth form: Succulence,18,137.661927830446,n/a,1
+870,Plant growth form: Succulence,18,139.065260846351,n/a,1
+870,Plant growth form: Succulence,18,140.409034950058,n/a,1
+870,Plant growth form: Succulence,18,140.531555094063,n/a,1
+870,Plant growth form: Succulence,18,140.78402198547,n/a,1
+870,Plant growth form: Succulence,18,142.358824397062,n/a,1
+870,Plant growth form: Succulence,18,144.524046069775,n/a,1
+870,Plant growth form: Succulence,18,147.300791349996,n/a,1
+870,Plant growth form: Succulence,18,149.896728064873,n/a,1
+870,Plant growth form: Succulence,18,151.520417028671,n/a,1
+870,Plant growth form: Succulence,18,157.444167361923,n/a,1
+870,Plant growth form: Succulence,18,157.641771336547,n/a,1
+870,Plant growth form: Succulence,18,159.222648588991,n/a,1
+870,Plant growth form: Succulence,18,169.172178793345,n/a,1
+870,Plant growth form: Succulence,18,170.410534469404,n/a,1
+870,Plant growth form: Succulence,18,171.271782784269,n/a,1
+870,Plant growth form: Succulence,18,172.595430518732,n/a,1
+870,Plant growth form: Succulence,18,173.489211774765,n/a,1
+870,Plant growth form: Succulence,18,175.38644470868,n/a,1
+870,Plant growth form: Succulence,18,177.035522814055,n/a,1
+870,Plant growth form: Succulence,18,178.037848605578,n/a,1
+870,Plant growth form: Succulence,18,178.796728626732,n/a,1
+870,Plant growth form: Succulence,18,186.536203927944,n/a,1
+870,Plant growth form: Succulence,18,191.68581879404,n/a,1
+870,Plant growth form: Succulence,18,192.066153086918,n/a,1
+870,Plant growth form: Succulence,18,192.409262454956,n/a,1
+870,Plant growth form: Succulence,18,197.267863966374,n/a,1
+870,Plant growth form: Succulence,18,207.703788226609,n/a,1
+870,Plant growth form: Succulence,18,211.682973692402,n/a,1
+870,Plant growth form: Succulence,18,215.708812260536,n/a,1
+870,Plant growth form: Succulence,18,240.299532768747,n/a,1
+870,Plant growth form: Succulence,18,252.912357103974,n/a,1
+870,Plant growth form: Succulence,18,256.655438443986,n/a,1
+870,Plant growth form: Succulence,18,270.853706825612,n/a,1
+870,Plant growth form: Succulence,18,275.426115047736,n/a,1
+870,Plant growth form: Succulence,18,286.452399431598,n/a,1
+870,Plant growth form: Succulence,18,299.973372264758,n/a,1
+870,Plant growth form: Succulence,18,318.188369727845,n/a,1
+870,Plant growth form: Succulence,18,337.709700948213,n/a,1
+870,Plant growth form: Succulence,18,340.251276049678,n/a,1
+870,Plant growth form: Succulence,18,68.269818626452,n/a,1
+870,Plant growth form: Succulence,18,80.3904679873672,n/a,1
+870,Plant growth form: Succulence,18,82.3635922008523,n/a,1
+870,Plant growth form: Succulence,18,86.9821612855669,n/a,1
+870,Plant growth form: Succulence,18,87.5999999610455,n/a,1
+870,Plant growth form: Succulence,18,87.9902214062848,n/a,1
+870,Plant growth form: Succulence,18,93.4291128641312,n/a,1
+870,Plant growth form: Succulence,18,98.7465870084245,n/a,1
+870,Plant growth form: Succulence,18,99.3847724771451,n/a,1
+959,Multi-stemness,18,branchy,n/a,1
+959,Multi-stemness,18,Multi-stem,n/a,1
+959,Multi-stemness,18,Multiple stem,n/a,1
+959,Multi-stemness,18,multiple stems,n/a,1
+959,Multi-stemness,18,single stem or multi stemed,n/a,1
+2391,Life form: small tree,148,yes,tree,1
+2404,Plant form: vase,148,yes,n/a,1
+2481,Leaf succulence,148,,n/a,1
+47,Plant growth form,134,`,n/a,1

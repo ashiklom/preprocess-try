@@ -46,7 +46,9 @@ gf_long <- trydat %>%
 gf_proc <- inner_join(gf_long, gf_map)
 
 set_gf <- function(growth_form) {
-    common_gf <- c('succulent', 'liana_climber', 'fern', 'woody', 'forb', 'graminoid')
+    common_gf <- c('succulent', 'liana_climber', 'fern', 'crop', 
+                   'tree', 'shrub', 'woody', 
+                   'forb', 'graminoid')
     gf_sub <- growth_form[growth_form %in% common_gf]
     if (length(gf_sub) > 0) {
         return(most_frequent(gf_sub, common_gf))
@@ -55,13 +57,56 @@ set_gf <- function(growth_form) {
     }
 }
 
+#c3_crop_species <- c('Avena sativa',       # Oat, C3
+                     #'Hordeum vulgare',    # Barley, C3
+                     #'Secale cereale',     # Rye, C3
+                     #'Gycine max',         # Soybean, C3
+                     ## Rice, C3
+                     #'Oryza sativa',
+                     #'Oryza glaberrima'
+                     #)
+
+#c3_crop_genera <- c('Triticum'              # Wheat, C3
+                    #)
+
+#c3_crop_ids <- species_phylo %>% 
+    #filter(AccSpeciesName %in% c3_crop_species | Genus %in% c3_crop_genera) %>% 
+    #distinct(AccSpeciesID) %>% 
+    #pull(AccSpeciesID)
+
+#c4_crop_species <- c('Zea mays',           # Maize, C4
+                     #'Panicum virganum',   # Switchgrass, C4
+                     ## Millets, C4
+                     #'Eleusine coracana',
+                     #'Panicum miliaceum',
+                     #'Pennisetum glaucum',
+                     #'Setaria italica',
+                     ## Fonio
+                     #'Digitaria exilis',
+                     #'Digitaria iburua',
+                     ## Sugarcane
+                     #'Saccharum officinarum',
+                     #'Saccharum barberi'
+                     #)
+
+#c4_crop_genera <- c('Sorghum'              # Sorghum, C4
+                 #)
+
+#c4_crop_ids <- species_phylo %>% 
+    #filter(AccSpeciesName %in% c4_crop_species | Genus %in% c4_crop_genera) %>% 
+    #distinct(AccSpeciesID) %>% 
+    #pull(AccSpeciesID)
+
 message('Processing growth form...')
 gf_species <- 
     gf_proc %>% 
     filter(growth_form != 'n/a') %>% 
     group_by(AccSpeciesID) %>% 
     summarize(growth_form = set_gf(growth_form)) %>% 
-    filter(growth_form!= 'n/a')
+    #mutate(growth_form = case_when(.$AccSpeciesID %in% c4_crop_ids ~ 'c4_crop',
+                                   #.$AccSpeciesID %in% c3_crop_ids ~ 'c3_crop',
+                                   #TRUE ~ .$growth_form)) %>% 
+    filter(growth_form != 'n/a')
     #mutate(woody = most_frequent(growth_form == 'woody', TRUE),
            #liana = most_frequent(growth_form == 'liana_climber', TRUE),
            #succulent = most_frequent(growth_form == 'succulent', TRUE)) %>% 
@@ -86,7 +131,7 @@ herb_string <- 'herb|cryptophyte|therophyte|chamaephyte|hydrophyte|geophyte|pere
 forb_families <- c('Orchidaceae')
 
 gf_filled <- gf_missing %>% 
-    mutate(growth_form = case_when(!is.na(.$Family) & .$Family %in% graminoid_families ~ 'gramonid',
+    mutate(growth_form = case_when(!is.na(.$Family) & .$Family %in% graminoid_families ~ 'graminoid',
                                    grepl(herb_string, .$gf_string) ~ 'forb',
                                    !is.na(.$Family) & .$Family %in% forb_families ~ 'forb',
                                    !is.na(.$Genus) & .$Genus == 'Stirlingia' ~ 'forb',
