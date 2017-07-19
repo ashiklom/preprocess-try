@@ -55,16 +55,19 @@ data_ids <- c("leaf_lifespan" = 13,
               )
 data_ids_noname <- unname(data_ids)
 
+message('Extracting desired traits from TRY')
 traits_long <- trydat %>%
     filter(DataID %in% data_ids_noname) %>% 
     mutate(StdValue = if_else(DataID %in% c(51, 1666), as.numeric(OrigValueStr), StdValue)) %>% 
-    select(ObservationID, AccSpeciesID, DataID, StdValue, UnitName, ReferenceID) %>% 
+    select(ObservationID, AccSpeciesID, DataID, StdValue, UnitName, ReferenceID, DatasetID) %>% 
     collect(n = Inf)
 
+message('Filtering to present StdValues and recoding trait names as factors')
 traits_proc <- traits_long %>% 
     filter(!is.na(StdValue)) %>% 
     mutate(trait = names(data_ids[match(DataID, data_ids)]) %>% factor)
 
+message('Writing reference list')
 references <- traits_proc %>% 
     count(ReferenceID, sort = TRUE)
 
@@ -73,10 +76,11 @@ write_csv(references, 'processed/references.csv')
 # Print units
 distinct(traits_proc, trait, UnitName) # %>% write_csv('trait_units.csv')
 
+message('Converting traits from long to wide')
 traits_wide <- traits_proc %>% 
-    select(ObservationID, AccSpeciesID, trait, StdValue) %>% 
+    select(DatasetID, ObservationID, AccSpeciesID, trait, StdValue) %>% 
     # Aggregate observations by mean
-    group_by(ObservationID, AccSpeciesID, trait) %>% 
+    group_by(DatasetID, ObservationID, AccSpeciesID, trait) %>% 
     summarize(value = mean(StdValue, na.rm = TRUE)) %>% 
     ungroup() %>% 
     spread(trait, value)
@@ -90,6 +94,7 @@ fill_prod <- function(tofill, fillfrom, multby) {
 
 match_str <- 'SLA|LMA|leaf_lifespan|mass|area'
 
+message('Filling trait values based on LMA/SLA products')
 traits_fill <- traits_wide %>% 
     mutate(SLA = case_when(!is.na(.$SLA) ~ .$SLA,
                            !is.na(.$LMA) ~ .$LMA,
@@ -106,16 +111,46 @@ traits_fill <- traits_wide %>%
            Vcmax_area = fill_prod(Vcmax_area, Vcmax_mass, LMA),
            Jmax_area = fill_prod(Jmax_area, Jmax_mass, LMA)
            ) %>% 
-    mutate_at(vars(matches(match_str)), function(x) {x[x < 0] = NA; x})
+    mutate_at(vars(matches(match_str)), function(x) {x[x < 0] = NA; x}) %>% 
+    # Fix unit mismatch for certain datasets
+    mutate(Jmax_mass = case_when(.$DatasetID %in% c(77, 216, 255) ~ .$Jmax_mass / 1000,
+                                 TRUE ~ .$Jmax_mass))
 
-traits_fill %>% 
+message('Removing fully missing and duplicate rows')
+traits_final <- traits_fill %>% 
+    # Remove rows where all traits are missing
+    filter_at(vars(matches(match_str)), any_vars(!is.na(.))) %>% 
+    # Remove rows where all traits have the same value
+    filter(!duplicated(select(., -DatasetID, -ObservationID, -AccSpeciesID)))
+
+message('Non-missing value counts of each trait:')
+traits_final %>% 
     summarize_at(vars(matches(match_str)), ~sum(!is.na(.))) %>% 
     glimpse()
 
-traits_fill %>% 
-    summarize_at(vars(matches(match_str)), ~n_distinct(.)) %>% 
-    glimpse()
+#traits_final %>% 
+    #summarize_at(vars(matches(match_str)), ~n_distinct(.)) %>% 
+    #glimpse()
 
-saveRDS(traits_fill, file = 'trait_data.rds')
+message('Saving final traits table')
+saveRDS(traits_final, file = 'traits/trait_data.rds')
+
+traits_final_long <- traits_final %>% 
+    gather(trait, value, -DatasetID, -ObservationID, -AccSpeciesID) %>% 
+    filter(!is.na(value), !(trait %in% c('Latitude', 'Longitude')))
+
+diag_plot <- function(yval) {
+    yvalq <- enquo(yval)
+    ggplot(traits_final_long) + 
+        aes(x = factor(DatasetID)) + 
+        aes_(y = yvalq) + 
+        geom_boxplot() + 
+        facet_wrap(~trait, scales = 'free')
+}
+
+pdf('diagnostics/traits_by_datasetid.pdf', width = 15, height = 15)
+diag_plot(value)
+diag_plot(log(value))
+dev.off()
 
 ############################################################

@@ -36,26 +36,25 @@ pfts <- plant_attrs %>%
 
 pftcols <- c('jules1', 'jules2', 'clm45', 'custom')
 
-saveRDS(pfts, 'all_pfts.rds')
+saveRDS(pfts, 'pfts_species/all_pfts.rds')
 
 distinct_pfts <- pfts %>% 
     filter(!is.na(jules1), !is.na(jules2), !is.na(clm45), !is.na(custom)) %>% 
     distinct(AccSpeciesID, jules1, jules2, clm45, custom)
 
-traits_fill <- readRDS('trait_data.rds')
+traits_fill <- readRDS('traits/trait_data.rds')
 
 traits_pfts <- left_join(traits_fill, distinct_pfts)
 
-saveRDS(traits_pfts, file = 'traits_pfts.rds')
+saveRDS(traits_pfts, file = 'traits/traits_pfts.rds')
 
 traits_analysis <- traits_pfts %>% 
     filter_at(vars(one_of(pftcols)), all_vars(!is.na(.))) %>% 
     filter_at(vars(matches(match_str)), any_vars(!is.na(.))) %>% 
-    filter(!duplicated(select(., matches(match_str)))) %>% 
     select(ObservationID, AccSpeciesID, one_of(pftcols), which(sapply(., is_double)), 
            -Latitude, -Longitude)
 
-saveRDS(traits_analysis, file = 'traits_analysis.rds')
+saveRDS(traits_analysis, file = 'traits/traits_analysis.rds')
 ############################################################
 
 #plant_attrs %>% count(phenology, sort = TRUE)

@@ -1,4 +1,7 @@
-all: summary.html
+all: dirs summary.html
+
+dirs:
+	mkdir -p attributes traits pfts_species climate
 
 phenology.R growth_form.R ps_pathway.R leaf_type.R: common.R
 
@@ -15,9 +18,9 @@ attributes/phenology.rds: phenology.R attribute_maps/phenology.csv .family
 
 attributes/n_fixation.rds: n_fixation.R attribute_maps/n_fixation.csv .family
 
-attributes/climate_zone.rds: climate_zone.R traits_with_climate.rds
+attributes/climate_zone.rds: climate_zone.R traits/traits_with_climate.rds
 
-traits_pfts.rds all_pfts.rds: make_pft.R \
+traits/traits_analysis.rds traits/traits_pfts.rds pfts_species/all_pfts.rds: make_pft.R \
     attributes/growth_form.rds \
     attributes/ps_pathway.rds \
     attributes/leaf_type.rds \
@@ -26,20 +29,20 @@ traits_pfts.rds all_pfts.rds: make_pft.R \
     attributes/climate_zone.rds
 	Rscript make_pft.R
 
-traits_with_climate.rds: climate.R try_temperature_values.rds trait_data.rds
+traits/traits_with_climate.rds: climate.R climate/try_temperature_values.rds traits/trait_data.rds
 	Rscript climate.R
 
-tps_species.rds: merge_species.R theplantlist.rds
+pfts_species/tps_species.rds: merge_species.R pfts_species/theplantlist.rds
 	Rscript merge_species.R
 
 .family: family.R tps_species.rds
 	Rscript family.R
 
-trait_data.rds: trait_data.R
+traits/trait_data.rds: trait_data.R
 	Rscript trait_data.R
 
-summary.html: summary.Rmd traits_pfts.rds .family
+summary.html: summary.Rmd traits/traits_analysis.rds .family
 	Rscript -e 'rmarkdown::render("summary.Rmd")'
 
-theplantlist.rds: process_tpl.R
+pfts_species/theplantlist.rds: process_tpl.R
 	Rscript process_tpl.R

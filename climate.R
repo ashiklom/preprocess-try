@@ -1,11 +1,10 @@
 library(tidyverse)
-library(ncdf4)
-library(riri)
+library(sp)
 
-trait_data <- readRDS('trait_data.rds')
+trait_data <- readRDS('traits/trait_data.rds')
 
-coords <- distinct(trait_data, Longitude, Latitude) %>% 
-    filter(!is.na(Latitude), !is.na(Longitude))
+#coords <- distinct(trait_data, Longitude, Latitude) %>% 
+    #filter(!is.na(Latitude), !is.na(Longitude))
 
 #library(sp)
 #library(rgdal)
@@ -16,10 +15,14 @@ coords <- distinct(trait_data, Longitude, Latitude) %>%
 
 #saveRDS(coords_proj, 'latlon_coords.rds')
 
-temp_values <- readRDS('try_temperature_values.rds')
+coords_proj <- readRDS('climate/latlon_coords.rds')
+coords_df <- as_data_frame(coords_proj)
+temp_values <- readRDS('climate/try_temperature_values.rds')
 
-temp_data <- mutate(coords, AMT = temp_values)
+temp_data <- mutate(coords_df, AMT = temp_values)
 
 traits_with_climate <- left_join(trait_data, temp_data)
 
-saveRDS(traits_with_climate, 'traits_with_climate.rds')
+traits_with_climate %>% count(is.na(AMT))
+
+saveRDS(traits_with_climate, 'traits/traits_with_climate.rds')

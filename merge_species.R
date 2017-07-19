@@ -2,7 +2,7 @@ source('common.R')
 
 species <- collect(species)
 
-tpl_proc <- readRDS('theplantlist.rds')
+tpl_proc <- readRDS('pfts_species/theplantlist.rds')
 
 #count(species)
 #semi_join(species, tpl_proc) %>% count()

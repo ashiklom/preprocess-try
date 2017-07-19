@@ -19,19 +19,16 @@ tpl_dat <- tpl_list %>%
     map(data.table::fread, header = TRUE) %>% 
     data.table::rbindlist(fill = TRUE) %>% 
     as_data_frame()
-message('Done!')
 
 message('Forming species names from ThePlantList data...')
 tpl_proc <- tpl_dat %>% 
     mutate(AccSpeciesName = paste(Genus, Species)) %>% 
     distinct(AccSpeciesName, Family, Genus, Species)
-message('Done!')
 
 #tpl_proc %>% count(AccSpeciesName) %>% filter(n > 1)
 
 message('Counting TPL families...')
 tpl_fam <- count(tpl_proc, Family, sort = TRUE)
-message('Done!')
 
 #tpl_proc %>% glimpse()
 
@@ -51,4 +48,4 @@ tpl_rmfam <- tpl_dupfam %>%
 tpl_proc2 <- anti_join(tpl_proc, tpl_rmfam)
 message('Done!')
 
-saveRDS(tpl_proc2, 'theplantlist.rds')
+saveRDS(tpl_proc2, 'pfts_species/theplantlist.rds')

@@ -10,8 +10,8 @@ output:
 ```{r setup, echo = FALSE, results = 'hide'}
 library(tidyverse)
 pftcols <- c('jules1', 'jules2', 'clm45', 'custom')
-traits_pfts <- readRDS('traits_pfts.rds')
-all_pfts <- readRDS('all_pfts.rds')
+traits_pfts <- readRDS('traits/traits_pfts.rds')
+all_pfts <- readRDS('pfts_species/all_pfts.rds')
 species_phylo <- src_sqlite('try.sqlite') %>% 
     tbl('species_phylo') %>% 
     collect(n = Inf)
@@ -130,7 +130,7 @@ count(all_pfts, custom, sort = TRUE) %>% knitr::kable()
 # Plots and summaries 
 
 ```{r datasummary}
-cpdat <- readRDS('traits_analysis.rds')
+cpdat <- readRDS('traits/traits_analysis.rds')
 sumlong <- cpdat %>% 
     select(which(sapply(., is_double))) %>% 
     gather() %>% 

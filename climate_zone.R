@@ -1,6 +1,6 @@
 source('common.R')
 
-trait_data <- readRDS('traits_with_climate.rds')
+trait_data <- readRDS('traits/traits_with_climate.rds')
 
 species_climate <- trait_data %>% 
     group_by(AccSpeciesID) %>% 
