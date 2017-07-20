@@ -71,7 +71,7 @@ message('Writing reference list')
 references <- traits_proc %>% 
     count(ReferenceID, sort = TRUE)
 
-write_csv(references, 'processed/references.csv')
+write_csv(references, 'traits/references.csv')
 
 # Print units
 distinct(traits_proc, trait, UnitName) # %>% write_csv('trait_units.csv')

@@ -12,7 +12,7 @@ library(tidyverse)
 
 #tpl_get('tpl/')
 
-tpl_list <- list.files('tpl', full.names = TRUE)
+tpl_list <- list.files('pfts_species/tpl', full.names = TRUE)
 
 message('Reading ThePlantList data...')
 tpl_dat <- tpl_list %>% 

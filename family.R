@@ -2,13 +2,13 @@ library(tidyverse)
 
 trydb <- src_sqlite('try.sqlite')
 
-species_merge <- readRDS('tps_species.rds')
+species_merge <- readRDS('pfts_species/tps_species.rds')
 
 families <- species_merge %>% 
     filter(!is.na(Family)) %>% 
     distinct(Family)
 
-tol_fname <- 'tol_classification.rds'
+tol_fname <- 'pfts_species/tol_classification.rds'
 tol_present <- file.exists(tol_fname)
 
 if (tol_present) {

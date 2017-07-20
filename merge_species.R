@@ -45,4 +45,4 @@ species_merge <- species_fixenc %>%
                               TRUE ~ NA_character_))
 message('Done!')
 
-saveRDS(species_merge, 'tps_species.rds')
+saveRDS(species_merge, 'pfts_species/tps_species.rds')

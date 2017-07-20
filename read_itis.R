@@ -2,7 +2,7 @@ library(stringr)
 library(magrittr)
 library(tidyverse)
 
-rawfile <- readLines('Plantae_Family.txt')[-(1:4)]
+rawfile <- readLines('pfts_species/Plantae_Family.txt')[-(1:4)]
 raw_trimmed <- str_trim(rawfile)
 lead_spaces <- str_extract(rawfile, '^ +') %>% nchar()
 
@@ -36,7 +36,7 @@ tax_processed <- tax_filled %>%
 
 # Build SQLite phylogeny database
 
-phylo_db <- src_sqlite('itis_taxonomy.sqlite', create = TRUE)
+phylo_db <- src_sqlite('pfts_species/itis_taxonomy.sqlite', create = TRUE)
 
 tax_processed %>% distinct(Superorder, Order, Suborder, Family) %>% 
     DBI::dbWriteTable(phylo_db$con, name = 'order_family', value = .)

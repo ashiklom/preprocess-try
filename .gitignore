@@ -4,6 +4,8 @@
 *.html
 *.rds
 tpl/
-processed/
 *.~lock*
 diagnostics/
+
+# Generated file directories
+traits/
