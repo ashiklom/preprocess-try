@@ -1,8 +1,8 @@
 # JULES 1
-jules1_levels <- c('broadleaf', 
-                   'needleleaf', 
+jules1_levels <- c('broadleaf',
+                   'needleleaf',
                    'shrub',
-                   'c3_grass', 
+                   'c3_grass',
                    'c4_grass')
 jules1_assign <- function(growth_form, ps_pathway, leaf_type) {
     pft <- NA_character_
@@ -26,14 +26,14 @@ jules1_assign <- function(growth_form, ps_pathway, leaf_type) {
 }
 
 # JULES 2
-jules2_levels <- c('broadleaf_evergreen_tropical', 
-                   'broadleaf_evergreen_temperate', 
+jules2_levels <- c('broadleaf_evergreen_tropical',
+                   'broadleaf_evergreen_temperate',
                    'broadleaf_deciduous',
                    'needleleaf_evergreen',
                    'needleleaf_deciduous',
                    'shrub_evergreen',
                    'shrub_deciduous',
-                   'c3_grass', 
+                   'c3_grass',
                    'c4_grass')
 jules2_assign <- function(growth_form, ps_pathway, leaf_type, phenology, climate_zone) {
     pft <- NA_character_
@@ -73,8 +73,8 @@ jules2_assign <- function(growth_form, ps_pathway, leaf_type, phenology, climate
 }
 
 # CLM 4.5
-clm45_levels <- c('broadleaf_evergreen_tropical', 
-                  'broadleaf_evergreen_temperate', 
+clm45_levels <- c('broadleaf_evergreen_tropical',
+                  'broadleaf_evergreen_temperate',
                   'broadleaf_deciduous_tropical',
                   'broadleaf_deciduous_temperate',
                   'needleleaf_evergreen',
@@ -82,7 +82,7 @@ clm45_levels <- c('broadleaf_evergreen_tropical',
                   'shrub_evergreen',
                   'shrub_deciduous_temperate',
                   'shrub_deciduous_boreal',
-                  'c3_grass_arctic', 
+                  'c3_grass_arctic',
                   'c3_grass_temperate',
                   'c4_grass')
 clm45_assign <- function(growth_form, ps_pathway, leaf_type, phenology, climate_zone) {
@@ -140,7 +140,7 @@ custom_levels <- c('broadleaf_evergreen_tropical',
                    'needleleaf_evergreen',
                    'needleleaf_deciduous',
                    'c3_grass',
-                   'c3_forb',
+                   # 'c3_forb',
                    'c4',
                    'succulent',
                    'n_fixer')
@@ -179,9 +179,10 @@ custom_assign <- function(growth_form, ps_pathway, woodiness, phenology, leaf_ty
     } else if (isTRUE(woodiness == 'nonwoody')) {
         if (isTRUE(growth_form == 'graminoid')) {
             pft <- 'c3_grass'
-        } else if (isTRUE(growth_form == 'forb')) {
-            pft <- 'c3_forb'
         }
+        # } else if (isTRUE(growth_form == 'forb')) {
+        #     pft <- 'c3_forb'
+        # }
     }
     pft_factor <- factor(pft, levels = custom_levels)
     return(pft_factor)
