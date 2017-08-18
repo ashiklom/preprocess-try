@@ -9,7 +9,7 @@ attributes/%.rds: attributes
 attributes:
 	mkdir -p $@
 
-traits/%: traits 
+traits/%: traits
 
 traits:
 	mkdir -p $@
@@ -37,7 +37,7 @@ attributes/phenology.rds: phenology.R attribute_maps/phenology.csv .family
 attributes/n_fixation.rds: n_fixation.R attribute_maps/n_fixation.csv .family
 attributes/climate_zone.rds: climate_zone.R traits/traits_with_climate.rds
 
-traits/traits_analysis.rds traits/traits_pfts.rds pfts_species/all_pfts.rds: make_pft.R \
+traits/traits_analysis.rds traits/traits_pfts.rds pfts_species/all_pfts.rds: make_pft.R pft_schemes.R \
     attributes/growth_form.rds \
     attributes/ps_pathway.rds \
     attributes/leaf_type.rds \

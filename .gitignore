@@ -9,3 +9,4 @@ diagnostics/
 
 # Generated file directories
 traits/
+.Rproj.user
