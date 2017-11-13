@@ -6,9 +6,11 @@
 tpl/
 *.~lock*
 diagnostics/
+.scratch.R
 
 # Generated file directories
 traits/
 *.Rproj.user
 *.Rproj
 *.Rhistory
+.Rproj.user
