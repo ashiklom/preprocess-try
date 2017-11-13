@@ -9,7 +9,8 @@ output:
 
 ```{r setup, echo = FALSE, results = 'hide'}
 library(tidyverse)
-pftcols <- c('jules1', 'jules2', 'clm45', 'custom')
+#pftcols <- c('jules1', 'jules2', 'clm45', 'custom')
+pftcols <- "clm45"
 traits_pfts <- readRDS('traits/traits_pfts.rds')
 all_pfts <- readRDS('pfts_species/all_pfts.rds')
 species_phylo <- src_sqlite('try.sqlite') %>% 
@@ -52,18 +53,18 @@ traits_phylo %>%
 ## Number of observations (rows), by PFT
 
 ```{r rowsbypft}
-traits_pfts %>% 
-    count(jules1, sort = TRUE) %>% 
-    knitr::kable()
-traits_pfts %>% 
-    count(jules2, sort = TRUE) %>% 
-    knitr::kable()
+#traits_pfts %>% 
+    #count(jules1, sort = TRUE) %>% 
+    #knitr::kable()
+#traits_pfts %>% 
+    #count(jules2, sort = TRUE) %>% 
+    #knitr::kable()
 traits_pfts %>% 
     count(clm45, sort = TRUE) %>% 
     knitr::kable()
-traits_pfts %>% 
-    count(custom, sort = TRUE) %>% 
-    knitr::kable()
+#traits_pfts %>% 
+    #count(custom, sort = TRUE) %>% 
+    #knitr::kable()
 ```
 
 ## Non-missing traits by PFT
@@ -73,10 +74,10 @@ nmtbp <- . %>%
     summarize_at(vars(-ObservationID, -AccSpeciesID),
                  (function(x) sum(!is.na(x)))) %>% 
     knitr::kable()
-traits_pfts %>% group_by(jules1) %>% nmtbp
-traits_pfts %>% group_by(jules2) %>% nmtbp
+#traits_pfts %>% group_by(jules1) %>% nmtbp
+#traits_pfts %>% group_by(jules2) %>% nmtbp
 traits_pfts %>% group_by(clm45) %>% nmtbp
-traits_pfts %>% group_by(custom) %>% nmtbp
+#traits_pfts %>% group_by(custom) %>% nmtbp
 ```
 
 ## Non-missing traits by family
@@ -103,28 +104,28 @@ sp_miss_pft_by_attribute <- . %>%
     head(15) %>% 
     knitr::kable()
 
-all_pfts %>% filter(is.na(jules1)) %>% sp_miss_pft_by_attribute
-all_pfts %>% filter(is.na(jules2)) %>% sp_miss_pft_by_attribute
+#all_pfts %>% filter(is.na(jules1)) %>% sp_miss_pft_by_attribute
+#all_pfts %>% filter(is.na(jules2)) %>% sp_miss_pft_by_attribute
 all_pfts %>% filter(is.na(clm45)) %>% sp_miss_pft_by_attribute
-all_pfts %>% filter(is.na(custom)) %>% sp_miss_pft_by_attribute
+#all_pfts %>% filter(is.na(custom)) %>% sp_miss_pft_by_attribute
 ```
 
 ## Species, by missing vs. nonmissing PFT
 
 ```{r speciesmissingpft}
-all_pfts %>% count(is.na(jules1)) %>% knitr::kable()
-all_pfts %>% count(is.na(jules2)) %>% knitr::kable()
+#all_pfts %>% count(is.na(jules1)) %>% knitr::kable()
+#all_pfts %>% count(is.na(jules2)) %>% knitr::kable()
 all_pfts %>% count(is.na(clm45)) %>% knitr::kable()
-all_pfts %>% count(is.na(custom)) %>% knitr::kable()
+#all_pfts %>% count(is.na(custom)) %>% knitr::kable()
 ```
 
 ## Species, by PFT (including missing)
 
 ```{r speciesbypft}
-count(all_pfts, jules1, sort = TRUE) %>% knitr::kable()
-count(all_pfts, jules2, sort = TRUE) %>% knitr::kable()
+#count(all_pfts, jules1, sort = TRUE) %>% knitr::kable()
+#count(all_pfts, jules2, sort = TRUE) %>% knitr::kable()
 count(all_pfts, clm45, sort = TRUE) %>% knitr::kable()
-count(all_pfts, custom, sort = TRUE) %>% knitr::kable()
+#count(all_pfts, custom, sort = TRUE) %>% knitr::kable()
 ```
 
 # Plots and summaries 
@@ -176,28 +177,4 @@ ggplot(cor_unnest %>% filter(!is.na(clm45))) +
     facet_wrap(~cor_vars, scales = 'free_x') + 
     theme(axis.text.x = element_blank(), 
           legend.position = 'bottom')
-```
-
-```{r correlationplots, fig.width=10}
-xy_plot2 <- function(x, y) {
-    xexp <- parse(text = x)
-    yexp <- parse(text = y)
-    plt_dat <- filter(cpdat, !is.na(eval(xexp)), !is.na(eval(yexp)))
-    plt <- ggplot(plt_dat) + 
-        aes_string(x = sprintf('log(%s)', x), y = sprintf('log(%s)', y)) +
-        aes(color = clm45) + 
-        geom_point(size = 0.5, alpha = 0.2) + 
-        geom_smooth(method = 'lm', se = FALSE) + 
-        theme(legend.position = 'bottom')
-    plot(plt)
-}
-
-expand_nonrep <- . %>% combinat::combn(2) %>% t() %>% as_data_frame()
-mass_vars <- c('leaf_lifespan', 'SLA' ,'Nmass', 'Pmass', 'Rdmass', 'Vcmax_mass', 'Jmax_mass')
-mass_df <- expand_nonrep(mass_vars)
-area_vars <- c('leaf_lifespan', 'LMA' ,'Narea', 'Parea', 'Rdarea', 'Vcmax_area', 'Jmax_area')
-area_df <- expand_nonrep(area_vars)
-
-for (i in seq_len(nrow(mass_df))) xy_plot2(mass_df[[i,1]], mass_df[[i,2]])
-for (i in seq_len(nrow(area_df))) xy_plot2(area_df[[i,1]], area_df[[i,2]])
 ```
