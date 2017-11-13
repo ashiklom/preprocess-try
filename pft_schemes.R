@@ -73,57 +73,65 @@ jules2_assign <- function(growth_form, ps_pathway, leaf_type, phenology, climate
 }
 
 # CLM 4.5
-clm45_levels <- c('broadleaf_evergreen_tropical',
-                  'broadleaf_evergreen_temperate',
-                  'broadleaf_deciduous_tropical',
-                  'broadleaf_deciduous_temperate',
-                  'needleleaf_evergreen',
-                  'needleleaf_deciduous',
-                  'shrub_evergreen',
-                  'shrub_deciduous_temperate',
-                  'shrub_deciduous_boreal',
-                  'c3_grass_arctic',
-                  'c3_grass_temperate',
-                  'c4_grass')
+clm45_levels <- c("broadleaf_evergreen_tropical",
+                  "broadleaf_evergreen_temperate",
+                  "broadleaf_deciduous_tropical",
+                  "broadleaf_deciduous_temperate",
+                  "broadleaf_deciduous_boreal",
+                  "needleleaf_evergreen_temperate",
+                  "needleleaf_evergreen_boreal",
+                  "needleleaf_deciduous",
+                  "shrub_evergreen",
+                  "shrub_deciduous_temperate",
+                  "shrub_deciduous_boreal",
+                  "c3_grass_arctic",
+                  "c3_grass_temperate",
+                  "c4_grass")
 clm45_assign <- function(growth_form, ps_pathway, leaf_type, phenology, climate_zone) {
     pft <- NA_character_
-    if (isTRUE(growth_form == 'graminoid')) {
-        if (isTRUE(ps_pathway == 'C4')) {
-            pft <- 'c4_grass'
-        } else if (isTRUE(climate_zone == 'boreal')) {
-            pft <- 'c3_grass_arctic'
+    if (isTRUE(growth_form == "graminoid")) {
+        if (isTRUE(ps_pathway == "C4")) {
+            pft <- "c4_grass"
+        } else if (isTRUE(climate_zone == "boreal")) {
+            pft <- "c3_grass_arctic"
         } else {
-            pft <- 'c3_grass_temperate'
+            pft <- "c3_grass_temperate"
         }
-    } else if (isTRUE(growth_form == 'shrub')) {
-        if (isTRUE(phenology == 'deciduous')) {
-            if (isTRUE(climate_zone == 'boreal')) {
-                pft <- 'shrub_deciduous_boreal'
-            } else if (isTRUE(climate_zone == 'temperate')) {
-                pft <- 'shrub_deciduous_temperate'
+    } else if (isTRUE(growth_form == "shrub")) {
+        if (isTRUE(phenology == "deciduous")) {
+            if (isTRUE(climate_zone == "boreal")) {
+                pft <- "shrub_deciduous_boreal"
+            } else if (isTRUE(climate_zone == "temperate")) {
+                pft <- "shrub_deciduous_temperate"
             }
-        } else if (isTRUE(phenology == 'evergreen')) {
-            pft <- 'shrub_evergreen'
+        } else if (isTRUE(phenology == "evergreen")) {
+            pft <- "shrub_evergreen"
         }
-    } else if (isTRUE(growth_form == 'tree')) {
-        if (isTRUE(leaf_type == 'needle')) {
-            if (isTRUE(phenology == 'deciduous')) {
-                pft <- 'needleleaf_deciduous'
+    } else if (isTRUE(growth_form == "tree")) {
+        if (isTRUE(leaf_type == "needle")) {
+            if (isTRUE(phenology == "deciduous")) {
+                pft <- "needleleaf_deciduous"
             } else {
-                pft <- 'needleleaf_evergreen'
+              if (isTRUE(climate_zone == "boreal")) {
+                pft <- "needleleaf_evergreen_boreal"
+              } else {
+                pft <- "needleleaf_evergreen_temperate"
+              }
             }
-        } else if (isTRUE(leaf_type == 'broad')) {
-            if (isTRUE(phenology == 'deciduous')) {
-                if (isTRUE(climate_zone == 'tropical')) {
-                    pft <- 'broadleaf_deciduous_tropical'
-                } else if (isTRUE(climate_zone %in% c('temperate', 'boreal'))) {
-                    pft <- 'broadleaf_deciduous_temperate'
+        } else if (isTRUE(leaf_type == "broad")) {
+            if (isTRUE(phenology == "deciduous")) {
+                if (isTRUE(climate_zone == "tropical")) {
+                    pft <- "broadleaf_deciduous_tropical"
+                } else if (isTRUE(climate_zone == "boreal")) {
+                    pft <- "broadleaf_deciduous_boreal"
+                } else if (isTRUE(climate_zone == "temperate")) {
+                    pft <- "broadleaf_deciduous_temperate"
                 }
-            } else if (isTRUE(phenology == 'evergreen')) {
-                if (isTRUE(climate_zone == 'tropical')) {
-                    pft <- 'broadleaf_evergreen_tropical'
-                } else if (isTRUE(climate_zone %in% c('temperate', 'boreal'))) {
-                    pft <- 'broadleaf_evergreen_temperate'
+            } else if (isTRUE(phenology == "evergreen")) {
+                if (isTRUE(climate_zone == "tropical")) {
+                    pft <- "broadleaf_evergreen_tropical"
+                } else if (isTRUE(climate_zone %in% c("temperate", "boreal"))) {
+                    pft <- "broadleaf_evergreen_temperate"
                 }
             }
         }
