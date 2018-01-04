@@ -2,7 +2,6 @@
 .deprecated/
 .family
 *.html
-*.rds
 tpl/
 *.~lock*
 diagnostics/
