@@ -1,6 +1,6 @@
 # Get phenology for each species
 
-source('common.R')
+source(here::here('R/common.R'))
 
 # TraitID 37 -- "Leaf phenology type"
 
@@ -28,4 +28,4 @@ pheno_species <- pheno_proc %>%
 
 pheno_species %>% count(phenology, sort = TRUE)
 
-saveRDS(pheno_species, 'attributes/phenology.rds')
+saveRDS(pheno_species, 'processed/pfts/phenology.rds')

@@ -1,6 +1,6 @@
 # Get growth form for each species
 
-source('common.R')
+source(here::here('R/common.R'))
 
 species_phylo <- tbl(trydb, 'species_phylo') %>% collect()
 gf_map <- read_csv('attribute_maps/growth_form.csv')
@@ -146,7 +146,7 @@ gf_species <- gf_species %>%
     full_join(gf_filled)
 
 gf_species %>% ungroup %>% count(growth_form, sort = TRUE)
-saveRDS(gf_species, 'attributes/growth_form.rds')
+saveRDS(gf_species, 'processed/pfts/growth_form.rds')
 
 #gf_species %>% 
     #count(growth_form, sort = TRUE) %>% 
@@ -370,7 +370,7 @@ saveRDS(gf_species, 'attributes/growth_form.rds')
                                    #TRUE ~ NA_character_))
 #gf4_phylo %>% filter(is.na(growth_form)) %>% count(Family, sort = TRUE) %>% print(n = 20)
 
-#write_csv(gf3_final, path = 'attributes/growth_form.csv')
+#write_csv(gf3_final, path = 'processed/pfts/growth_form.csv')
 
     ## See above note about special PFTs
     #mutate(pft = case_when(grepl('succulent|succ|cact', .$rawstring) ~ 'succulent',

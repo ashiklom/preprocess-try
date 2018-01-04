@@ -1,4 +1,4 @@
-source('common.R')
+source(here::here('R/common.R'))
 
 # TraitID 43 -- Leaf type
 # Data IDs:
@@ -53,7 +53,7 @@ lt_species <- lt_species %>%
     anti_join(lt_missing) %>% 
     full_join(lt_filled)
     
-saveRDS(lt_species, 'attributes/leaf_type.rds')
+saveRDS(lt_species, 'processed/pfts/leaf_type.rds')
 
 # Also, may be of interest...
 # TraitID 154 -- Leaf shape

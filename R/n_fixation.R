@@ -1,4 +1,4 @@
-source('common.R')
+source(here::here('R/common.R'))
 
 #datanames %>% 
     #filter(TraitName %like% '%fix%') %>% 
@@ -34,4 +34,4 @@ nfix_species <- nfix_proc %>%
 
 count(nfix_species, n_fixation, sort = TRUE)
 
-saveRDS(nfix_species, 'attributes/n_fixation.rds')
+saveRDS(nfix_species, 'processed/pfts/n_fixation.rds')

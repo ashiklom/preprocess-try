@@ -1,15 +1,19 @@
-*.sqlite
-.deprecated/
+# Generated files
+diagnostics/
+processed/
 .family
 *.html
-tpl/
-*.~lock*
-diagnostics/
+
+# Scratch directories
+.deprecated/
 .scratch.R
 
-# Generated file directories
-traits/
+# Binary data files
+*.sqlite
+
+# Miscellaneous other files
 *.Rproj.user
 *.Rproj
 *.Rhistory
 .Rproj.user
+*.~lock*

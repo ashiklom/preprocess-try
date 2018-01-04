@@ -1,6 +1,6 @@
-source('common.R')
+source(here::here('R/common.R'))
 
-tol_tax <- readRDS('pfts_species/family_taxonomy.rds')
+tol_tax <- readRDS('processed/species/family_taxonomy.rds')
 
 species_tax <- left_join(species_merge, tol_tax)
 

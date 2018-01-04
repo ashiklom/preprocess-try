@@ -72,10 +72,10 @@ message("Writing reference list")
 references <- traits_proc %>%
   count(ReferenceID, sort = TRUE)
 
-write_csv(references, "traits/references.csv")
+write_csv(references, "processed/traits/references.csv")
 
 # Print units
-distinct(traits_proc, trait, UnitName) %>% write_csv("trait_units.csv")
+distinct(traits_proc, trait, UnitName) %>% write_csv("diagnostics/trait_units.csv")
 
 message("Converting traits from long to wide")
 traits_unique <- traits_proc %>%
@@ -154,7 +154,7 @@ traits_final %>%
   #glimpse()
 
 message("Saving final traits table")
-saveRDS(traits_final, file = "traits/trait_data.rds")
+saveRDS(traits_final, file = "processed/traits/trait_data.rds")
 
 traits_final_long <- traits_final %>%
   gather(trait, value, -DatasetID, -ObservationID, -AccSpeciesID) %>%

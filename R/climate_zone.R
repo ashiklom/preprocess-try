@@ -1,6 +1,6 @@
-source("common.R")
+source(here::here("R", "common.R"))
 
-trait_data <- readRDS("traits/traits_with_climate.rds")
+trait_data <- readRDS("processed/traits/traits_with_climate.rds")
 
 species_climate <- trait_data %>%
     group_by(AccSpeciesID) %>%
@@ -51,4 +51,4 @@ cz1 %>% count(climate_zone, sort = TRUE)
 
 cz_final <- filter(cz1, !is.na(climate_zone))
 
-saveRDS(cz1, "attributes/climate_zone.rds")
+saveRDS(cz1, "processed/pfts/climate_zone.rds")

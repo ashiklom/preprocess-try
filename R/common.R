@@ -1,5 +1,5 @@
 library(tidyverse)
-trydb <- src_sqlite('try.sqlite')
+trydb <- src_sqlite(here::here("try.sqlite"))
 species <- tbl(trydb, 'orig_species')
 datanames <- tbl(trydb, 'orig_datanames')
 trydat <- tbl(trydb, 'orig_data')

@@ -12,7 +12,7 @@ library(tidyverse)
 
 #tpl_get('tpl/')
 
-tpl_list <- list.files('pfts_species/tpl', full.names = TRUE)
+tpl_list <- list.files('processed/species/tpl', full.names = TRUE)
 
 message('Reading ThePlantList data...')
 tpl_dat <- tpl_list %>% 
@@ -48,4 +48,4 @@ tpl_rmfam <- tpl_dupfam %>%
 tpl_proc2 <- anti_join(tpl_proc, tpl_rmfam)
 message('Done!')
 
-saveRDS(tpl_proc2, 'pfts_species/theplantlist.rds')
+saveRDS(tpl_proc2, 'processed/species/theplantlist.rds')

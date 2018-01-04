@@ -1,8 +1,8 @@
-source('common.R')
+source(here::here('R/common.R'))
 
 species <- collect(species)
 
-tpl_proc <- readRDS('pfts_species/theplantlist.rds')
+tpl_proc <- readRDS('processed/species/theplantlist.rds')
 
 #count(species)
 #semi_join(species, tpl_proc) %>% count()
@@ -45,4 +45,4 @@ species_merge <- species_fixenc %>%
                               TRUE ~ NA_character_))
 message('Done!')
 
-saveRDS(species_merge, 'pfts_species/tps_species.rds')
+saveRDS(species_merge, 'processed/species/tps_species.rds')

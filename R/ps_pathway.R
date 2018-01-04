@@ -1,4 +1,4 @@
-source('common.R')
+source(here::here('R/common.R'))
 
 # TraitID 22 -- Photosynthetic pathway
 # DataID 25 -- Photosynthetic pathway
@@ -25,4 +25,4 @@ psp_species <- psp_proc %>%
 
 count(psp_species, ps_pathway, sort = TRUE)
 
-saveRDS(psp_species, 'attributes/ps_pathway.rds')
+saveRDS(psp_species, 'processed/pfts/ps_pathway.rds')
