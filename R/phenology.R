@@ -11,11 +11,11 @@ pheno_long <- trydat %>%
 
 #pheno_long %>% 
     #prep_sheet %>% 
-    #write_csv('attribute_maps/phenology.csv')
+    #write_csv('pft_data/phenology.csv')
 
-#lookup(42, 154, 'W', pheno_long, 'attribute_maps/phenology.csv', 'phenology')
+#lookup(42, 154, 'W', pheno_long, 'pft_data/phenology.csv', 'phenology')
 
-pheno_map <- read_csv('attribute_maps/phenology.csv')
+pheno_map <- read_csv('pft_data/phenology.csv')
 
 pheno_proc <- inner_join(pheno_long, pheno_map)
 

@@ -18,11 +18,11 @@ nfix_long <- trydat %>%
 
 #nfix_long %>% 
     #prep_sheet %>% 
-    #write_csv('attribute_maps/n_fixation.csv')
+    #write_csv('pft_data/n_fixation.csv')
 
-#lookup(9, 62, 'hp', nfix_long, 'attribute_maps/n_fixation.csv', 'n_fixation')
+#lookup(9, 62, 'hp', nfix_long, 'pft_data/n_fixation.csv', 'n_fixation')
 
-nfix_map <- read_csv('attribute_maps/n_fixation.csv')
+nfix_map <- read_csv('pft_data/n_fixation.csv')
 
 nfix_proc <- inner_join(nfix_long, nfix_map)
 

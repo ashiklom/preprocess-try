@@ -12,11 +12,11 @@ lt_long <- trydat %>%
 
 #lt_long %>% 
     #prep_sheet %>% 
-    #write_csv('attribute_maps/leaf_type.csv')
+    #write_csv('pft_data/leaf_type.csv')
 
-#lookup(1, 1, 'strin', lt_long, 'attribute_maps/leaf_type.csv', 'leaf_type')
+#lookup(1, 1, 'strin', lt_long, 'pft_data/leaf_type.csv', 'leaf_type')
 
-lt_map <- read_csv('attribute_maps/leaf_type.csv')
+lt_map <- read_csv('pft_data/leaf_type.csv')
 
 lt_proc <- inner_join(lt_long, lt_map)
 

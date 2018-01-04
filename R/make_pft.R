@@ -1,4 +1,5 @@
 library(tidyverse)
+setwd(here::here())
 match_str <- "SLA|leaf_lifespan|mass|area"
 
 #growth_form_ignore <- c("liana_climber", "cryptophyte")
@@ -25,7 +26,7 @@ plant_attrs <- plant_attrs_raw %>%
                                  !is.na(.$growth_form) & !(.$growth_form %in% woody_gf) ~ "nonwoody",
                                  TRUE ~ NA_character_))
 
-source("pft_schemes.R")
+source("R/pft_schemes.R")
 pfts <- plant_attrs %>%
     rowwise() %>%
     mutate(jules1 = jules1_assign(growth_form, ps_pathway, leaf_type),

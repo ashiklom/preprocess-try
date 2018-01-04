@@ -1,4 +1,4 @@
-source("common.R")
+source(here::here("R", "common.R"))
 
 # Data IDs:
 #   - 13 -- leaf_lifespan

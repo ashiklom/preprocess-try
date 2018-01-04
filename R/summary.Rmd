@@ -11,9 +11,9 @@ output:
 library(tidyverse)
 #pftcols <- c('jules1', 'jules2', 'clm45', 'custom')
 pftcols <- "clm45"
-traits_pfts <- readRDS('traits/traits_pfts.rds')
-all_pfts <- readRDS('pfts_species/all_pfts.rds')
-species_phylo <- src_sqlite('try.sqlite') %>% 
+traits_pfts <- readRDS(here::here('processed/traits/traits_pfts.rds'))
+all_pfts <- readRDS(here::here('processed/species/all_pfts.rds'))
+species_phylo <- src_sqlite(here::here('try.sqlite')) %>% 
     tbl('species_phylo') %>% 
     collect(n = Inf)
 traits_phylo <- traits_pfts %>% 
@@ -131,7 +131,7 @@ count(all_pfts, clm45, sort = TRUE) %>% knitr::kable()
 # Plots and summaries 
 
 ```{r datasummary}
-cpdat <- readRDS('traits/traits_analysis.rds')
+cpdat <- readRDS(here::here('processed/traits/traits_analysis.rds'))
 sumlong <- cpdat %>% 
     select(which(sapply(., is_double))) %>% 
     gather() %>% 

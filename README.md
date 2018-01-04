@@ -13,7 +13,7 @@ Workflow for processing TRY data
         - `family.R` -- Use `taxize` to retrieve species phylogeny
     - `pfts/` -- Scripts and data for assigning attributes to PFTs
     - `traits/` -- Scripts for extracting traits from TRY
-- `attribute_maps/*.csv` -- CSV files containing maps between TRY data and my attributes
+- `pft_data/*.csv` -- CSV files containing maps between TRY data and my attributes
 
 # Prerequisites
 

@@ -10,11 +10,11 @@ psp_long <- trydat %>%
 
 #psp_long %>% 
     #prep_sheet %>% 
-    #write_csv('attribute_maps/ps_pathway.csv')
+    #write_csv('pft_data/ps_pathway.csv')
 
-#lookup(25, 205, 'Y', psp_long, 'attribute_maps/ps_pathway.csv', 'ps_pathway')
+#lookup(25, 205, 'Y', psp_long, 'pft_data/ps_pathway.csv', 'ps_pathway')
 
-psp_map <- read_csv('attribute_maps/ps_pathway.csv')
+psp_map <- read_csv('pft_data/ps_pathway.csv')
 
 psp_proc <- inner_join(psp_long, psp_map)
 

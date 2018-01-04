@@ -3,7 +3,7 @@
 source(here::here('R/common.R'))
 
 species_phylo <- tbl(trydb, 'species_phylo') %>% collect()
-gf_map <- read_csv('attribute_maps/growth_form.csv')
+gf_map <- read_csv('pft_data/growth_form.csv')
 
 # Trait ID 42 -- Plant growth form
 # Data IDs:

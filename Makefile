@@ -19,7 +19,7 @@ processed/species/%: processed/species
 processed/species:
 	mkdir -p $@
 
-R/phenology.R R/growth_form.R R/ps_pathway.R R/leaf_type.R: common.R
+R/phenology.R R/growth_form.R R/ps_pathway.R R/leaf_type.R: R/common.R
 
 # Species attributes
 processed/pfts/%.rds: R/%.R
@@ -32,14 +32,14 @@ processed/pfts/phenology.rds: R/phenology.R pft_data/phenology.csv .family
 processed/pfts/n_fixation.rds: R/n_fixation.R pft_data/n_fixation.csv .family
 processed/pfts/climate_zone.rds: R/climate_zone.R processed/traits/traits_with_climate.rds
 
-processed/traits/traits_analysis.rds processed/traits/traits_pfts.rds processed/species/all_pfts.rds: make_pft.R pft_schemes.R \
+processed/traits/traits_analysis.rds processed/traits/traits_pfts.rds processed/species/all_pfts.rds: R/make_pft.R R/pft_schemes.R \
     processed/pfts/growth_form.rds \
     processed/pfts/ps_pathway.rds \
     processed/pfts/leaf_type.rds \
     processed/pfts/phenology.rds \
     processed/pfts/n_fixation.rds \
     processed/pfts/climate_zone.rds
-	Rscript make_pft.R
+	Rscript R/make_pft.R
 
 processed/traits/traits_with_climate.rds: R/climate.R pft_data/lat_lon_AMT.rds processed/traits/trait_data.rds
 	Rscript R/climate.R
