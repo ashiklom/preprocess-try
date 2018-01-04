@@ -98,6 +98,12 @@ fill_prod <- function(tofill, fillfrom, multby) {
 }
 
 match_str <- "SLA|LMA|leaf_lifespan|mass|area"
+trait_list <- c("leaf_lifespan", "SLA",
+                "Nmass", "Narea",
+                "Pmass", "Parea",
+                "Rdmass", "Rdarea",
+                "Vcmax_mass", "Vcmax_area",
+                "Jmax_mass", "Jmax_area")
 
 message("Filling trait values based on LMA/SLA products")
 traits_fill <- traits_wide %>%
@@ -122,7 +128,7 @@ traits_fill <- traits_wide %>%
     Vcmax_area = fill_prod(Vcmax_area, Vcmax_mass, LMA),
     Jmax_area = fill_prod(Jmax_area, Jmax_mass, LMA)
   ) %>%
-  mutate_at(vars(matches(match_str)), function(x) {x[x < 0] = NA; x}) %>%
+  mutate_at(vars(one_of(trait_list)), function(x) {x[x < 0] = NA; x}) %>%
   # Fix unit mismatch for certain datasets
   mutate(
     Jmax_mass = case_when(
@@ -134,13 +140,13 @@ traits_fill <- traits_wide %>%
 message("Removing fully missing and duplicate rows")
 traits_final <- traits_fill %>%
   # Remove rows where all traits are missing
-  filter_at(vars(matches(match_str)), any_vars(!is.na(.))) %>%
+  filter_at(vars(one_of(trait_list)), any_vars(!is.na(.))) %>%
   # Remove rows where all traits have the same value
   filter(!duplicated(select(., -DatasetID, -ObservationID, -AccSpeciesID)))
 
 message("Non-missing value counts of each trait:")
 traits_final %>%
-  summarize_at(vars(matches(match_str)), ~sum(!is.na(.))) %>%
+  summarize_at(vars(one_of(trait_list)), ~sum(!is.na(.))) %>%
   glimpse()
 
 #traits_final %>% 
