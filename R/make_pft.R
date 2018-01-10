@@ -51,13 +51,6 @@ traits_fill <- readRDS("processed/traits/trait_data.rds")
 traits_pfts <- left_join(traits_fill, distinct_pfts)
 
 saveRDS(traits_pfts, file = "processed/traits/traits_pfts.rds")
-
-traits_analysis <- traits_pfts %>%
-    filter_at(vars(one_of(pftcols)), all_vars(!is.na(.))) %>%
-    filter_at(vars(matches(match_str)), any_vars(!is.na(.))) %>%
-    select(ObservationID, AccSpeciesID, one_of(pftcols), which(sapply(., is_double)))
-
-saveRDS(traits_analysis, file = "processed/traits/traits_analysis.rds")
 ############################################################
 
 #plant_attrs %>% count(phenology, sort = TRUE)
