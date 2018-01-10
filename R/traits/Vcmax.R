@@ -105,4 +105,6 @@ diag_plot <- vcmax_final %>%
   geom_jitter(size = 0.1) +
   facet_wrap(~ trait, scales = "free")
 if (interactive()) diag_plot
-ggsave("diagnostics/Vcmax.pdf", diag_plot)
+ggsave(here("diagnostics", "Vcmax.pdf"), diag_plot)
+
+saveRDS(vcmax_final, here("processed", "traits", "Vcmax.rds"))

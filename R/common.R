@@ -1,38 +1,39 @@
 library(tidyverse)
 library(units)
+library(here)
 
-trydb <- src_sqlite(here::here("try.sqlite"))
-species <- tbl(trydb, 'orig_species')
-datanames <- tbl(trydb, 'orig_datanames')
-trydat <- tbl(trydb, 'orig_data')
-refs <- tbl(trydb, 'orig_citations')
+trydb <- src_sqlite(here("try.sqlite"))
+species <- tbl(trydb, "orig_species")
+datanames <- tbl(trydb, "orig_datanames")
+trydat <- tbl(trydb, "orig_data")
+refs <- tbl(trydb, "orig_citations")
 
 check_unique_species <- function(dat) {
     stopifnot((dat %>% count(AccSpeciesID) %>% filter(n > 1) %>% nrow()) == 0)
 }
 
 raw_string <- function(data_long, sep = ' ', lower = TRUE) {
-    data_long %>% 
-        select(AccSpeciesID, OrigValueStr) %>% 
-        group_by(AccSpeciesID) %>% 
-        summarize(rawstring = paste(unique(OrigValueStr), collapse = sep) %>% 
-                  (function(.) if (lower) tolower(.) else (.)) %>% 
+    data_long %>%
+        select(AccSpeciesID, OrigValueStr) %>%
+        group_by(AccSpeciesID) %>%
+        summarize(rawstring = paste(unique(OrigValueStr), collapse = sep) %>%
+                  (function(.) if (lower) tolower(.) else (.)) %>%
                   trimws)
 }
 
 lookup <- function(did, rid, string, data, fname, column) {
     dat_in <- read_csv(fname)
-    data %>% 
-        filter(DataID == did, ReferenceID == rid, OrigValueStr == string) %>% 
-        distinct(AccSpeciesID) %>% 
-        left_join(data %>% left_join(dat_in)) %>% 
+    data %>%
+        filter(DataID == did, ReferenceID == rid, OrigValueStr == string) %>%
+        distinct(AccSpeciesID) %>%
+        left_join(data %>% left_join(dat_in)) %>%
         count_(column, sort = TRUE)
 }
 
 prep_sheet <- . %>%
-    count(DataID, DataName, ReferenceID, OrigValueStr, sort = TRUE) %>% 
-    ungroup() %>% 
-    left_join(datanames %>% collect()) %>% 
+    count(DataID, DataName, ReferenceID, OrigValueStr, sort = TRUE) %>%
+    ungroup() %>%
+    left_join(datanames %>% collect()) %>%
     select(DataID, DataName, ReferenceID, OrigValueStr, n)
 
 most_frequent <- function(val, tie = NA) {
