@@ -1,4 +1,6 @@
 library(tidyverse)
+library(units)
+
 trydb <- src_sqlite(here::here("try.sqlite"))
 species <- tbl(trydb, 'orig_species')
 datanames <- tbl(trydb, 'orig_datanames')
@@ -50,4 +52,69 @@ most_frequent <- function(val, tie = NA) {
         out <- val[max_ind]
     }
     return(out)
+}
+
+get_leaf_temp <- function() {
+  temp_ids <- c(
+    1666,   # Leaf temperature (deg C)
+    322,    # Temperature during measurement (deg C)
+    51,     # Temperature during respiration measurement (deg C)
+    339,    # Temperature during measurement (deg C)
+    243     # Exposition temperature (deg C)
+  )
+  # DataID 1666 -- leaf temperature (degrees C)
+  temp_raw <- trydat %>%
+    filter(DataID %in% temp_ids) %>%
+    select(ObservationID, DataID, value = OrigValueStr) %>%
+    collect() %>%
+    mutate(
+      variable = recode(
+        DataID,
+        `51` = "respiration_temperature",
+        `322` = "measurement_temperature",
+        `339` = "measurement2_temperature",
+        `243` = "exposition_temperature",
+        `1666` = "leaf_temperature"
+      ),
+      value = as.numeric(value)
+    ) %>%
+    select(-DataID)
+
+  # Only one measurement temperature should exist
+  # (Exclude measurement-specific temperatures -- I always give those priority)
+  special_temp <- temp_raw %>%
+    filter(variable %in% c("respiration_temperature"))
+  meas_raw <- temp_raw %>%
+    anti_join(special_temp, by = "ObservationID")
+  duplicated_meas <- meas_raw %>%
+    count(ObservationID) %>%
+    filter(n > 1)
+  if (nrow(duplicated_meas) > 0) {
+    meas_raw %>%
+      semi_join(duplicated_meas) %>%
+      arrange(ObservationID) %>%
+      print()
+    stop("Found duplicated temperature measurements")
+  }
+  meas_temp <- meas_raw %>%
+    group_by(ObservationID) %>%
+    summarize(
+      variable = "measurement_temperature",
+      value = unique(value)
+    )
+  bind_rows(special_temp, meas_temp) %>%
+    spread(variable, value)
+}
+
+# Reference-specific measurement temperatures (deg C), based on literature
+fill_reference_temp <- function(dat) {
+  dat %>%
+    mutate(
+      measurement_temperature = case_when(
+        !is.na(measurement_temperature) ~ measurement_temperature,
+        ReferenceID == 146 ~ 30,    # All measurements at this temperature
+        ReferenceID == 181 ~ 30.9,
+        TRUE ~ NA_real_
+      )
+    )
 }
