@@ -32,17 +32,29 @@ processed/pfts/phenology.rds: R/phenology.R pft_data/phenology.csv .family
 processed/pfts/n_fixation.rds: R/n_fixation.R pft_data/n_fixation.csv .family
 processed/pfts/climate_zone.rds: R/climate_zone.R processed/traits/traits_with_climate.rds
 
-processed/traits/traits_analysis.rds: processed/traits/traits_pfts.rds
-	Rscript R/finalize_traits.R
+processed/pfts/lat_lon.rds: R/pfts/lat_lon.R R/common.R
+	Rscript $<
 
-processed/traits/traits_pfts.rds processed/species/all_pfts.rds: R/make_pft.R R/pft_schemes.R \
+# Trait data
+processed/traits/%.rds: R/traits/%.R
+	Rscript $<
+
+processed/traits/Rd.rds: R/traits/Rd.R R/common.R
+processed/traits/Jmax.rds: R/traits/Jmax.R R/common.R
+processed/traits/Vcmax.rds: R/traits/Vcmax.R R/common.R
+processed/traits/N_P_LL_SLA.rds: R/traits/N_P_LL_SLA.R R/common.R
+
+processed/traits/traits_analysis.rds: R/traits/finalize_traits.R processed/traits/traits_pfts.rds
+	Rscript $<
+
+processed/traits/traits_pfts.rds processed/species/all_pfts.rds: R/traits/make_pft.R R/pft_schemes.R \
     processed/pfts/growth_form.rds \
     processed/pfts/ps_pathway.rds \
     processed/pfts/leaf_type.rds \
     processed/pfts/phenology.rds \
     processed/pfts/n_fixation.rds \
     processed/pfts/climate_zone.rds
-	Rscript R/make_pft.R
+	Rscript $<
 
 processed/traits/traits_with_climate.rds: R/climate.R pft_data/lat_lon_AMT.rds processed/traits/trait_data.rds
 	Rscript R/climate.R
