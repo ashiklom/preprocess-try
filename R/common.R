@@ -142,3 +142,57 @@ ps_temp_scale <- function(k_l, T_l_C, H_a, dS, T_ref_C = 25) {
   term <- a * num / denom
   k_l / term
 }
+
+load_trait <- function(data_ids) {
+  data_raw <- trydat %>%
+    filter(DataID %in% data_ids$DataID) %>%
+    select(ObservationID, DataID, ReferenceID, value = StdValue, UnitName) %>%
+    collect()
+
+  message("Units:")
+  data_raw %>%
+    distinct(UnitName) %>%
+    print()
+
+  data_raw2 <- data_raw %>%
+    filter(!is.na(value)) %>%
+    mutate(
+      DataID = factor(DataID, data_ids$DataID),
+      variable = lvls_revalue(DataID, data_ids$variable)
+    ) %>%
+    # Deduplicate:
+    # Sort by trustworthiness within each trait (DataID factor levels), then take
+    # the most trustworthy value.
+    group_by(variable, ObservationID, ReferenceID) %>%
+    arrange(DataID) %>%
+    summarize(value = value[1]) %>%
+    ungroup() %>%
+    spread(variable, value)
+  data_raw2
+}
+
+diagnose_save <- function(data_final, trait_vec, trait_prefix) {
+  diag_plot <- data_final %>%
+    gather("trait", "value", trait_vec, na.rm = TRUE) %>%
+    ggplot() +
+    aes(x = factor(ReferenceID), y = value) +
+    geom_violin() +
+    geom_jitter(size = 0.1) +
+    facet_wrap(~ trait, scales = "free")
+  if (interactive()) print(diag_plot)
+  plotfile <- here("diagnostics", paste0(trait_prefix, ".pdf"))
+  savefile <- here("processed", "traits", paste0(trait_prefix, ".rds"))
+  ggsave(plotfile, diag_plot)
+  write_rds(data_final, savefile)
+}
+
+missfuns <- funs(
+  npres = sum(!is.na(.)),
+  nmiss = sum(is.na(.)),
+  fpres = mean(!is.na(.)) * 100,
+  fmiss = mean(is.na(.)) * 100
+)
+
+censor <- function(variable, condition) {
+  if_else(condition, NA_real_, variable)
+}
