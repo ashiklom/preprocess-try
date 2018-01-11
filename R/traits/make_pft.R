@@ -47,8 +47,13 @@ distinct_pfts <- pfts %>%
     #distinct(AccSpeciesID, jules1, jules2, clm45, custom)
 
 traits_fill <- readRDS("processed/traits/trait_data.rds")
+species <- trydat %>%
+  distinct(ObservationID, AccSpeciesID) %>%
+  collect()
 
-traits_pfts <- left_join(traits_fill, distinct_pfts)
+traits_pfts <- traits_fill %>%
+  left_join(species) %>%
+  left_join(distinct_pfts)
 
 saveRDS(traits_pfts, file = "processed/traits/traits_pfts.rds")
 ############################################################

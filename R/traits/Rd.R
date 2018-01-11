@@ -51,9 +51,8 @@ rd_proc <- rd_rawtemp %>%
         rd_temp_correction(Rd_mass_LT, measurement_temperature),
       TRUE ~ NA_real_
     ),
-    # Se
-    Rdarea = if_else(Rdarea <= 0, NA_real_, Rdarea),
-    Rdmass = if_else(Rdmass <= 0, NA_real_, Rdmass)
+    Rdarea = censor(Rdarea, Rdarea <= 0.02),
+    Rdmass = censor(Rdmass, Rdmass <= 0.4e-3)
   ) %>%
   select(ObservationID, Rdmass, Rdarea, ReferenceID) %>%
   filter_at(c("Rdmass", "Rdarea"), any_vars(!is.na(.)))

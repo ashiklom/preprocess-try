@@ -27,11 +27,11 @@ ll_unit <- as_units("months")
 data_final <- data_raw %>%
   mutate(
     # Remove crazy values
-    SLA = censor(SLA, SLA > 100 | SLA <= 0),
-    Nmass = censor(Nmass, Nmass > 100 | Nmass <= 0),
-    Narea = censor(Narea, Narea > 20 | Narea <= 0),
+    SLA = censor(SLA, SLA > 100 | SLA <= 0.2),
+    Nmass = censor(Nmass, Nmass > 100 | Nmass <= 1e-1),
+    Narea = censor(Narea, Narea > 20 | Narea <= 0.1),
     Pmass = censor(Pmass, Pmass > 10 | Pmass <= 0),
-    Parea = censor(Parea, Parea > 1 | Parea <= 0),
+    Parea = censor(Parea, Parea > 1 | Parea <= 0.0014),
     # Assign units
     leaf_lifespan = leaf_lifespan * ll_unit,
     SLA = SLA * sla_unit,
