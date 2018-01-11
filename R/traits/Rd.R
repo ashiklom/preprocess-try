@@ -80,7 +80,7 @@ diag_plot <- rd_final %>%
   aes(x = factor(ReferenceID), y = value) +
   geom_jitter(size = 0.1) +
   facet_wrap(~ trait, scales = "free")
-if (interactive()) diag_plot 
+if (interactive()) diag_plot
 ggsave("diagnostics/Rd.pdf", diag_plot)
 
-write_rds(rd_proc, "processed/traits/Rd.rds")
+write_rds(rd_final, "processed/traits/Rd.rds")

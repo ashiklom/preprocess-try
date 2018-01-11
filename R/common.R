@@ -119,3 +119,26 @@ fill_reference_temp <- function(dat) {
       )
     )
 }
+
+# Temperature response of Vcmax and Jmax
+# Based on Kattge & Knorr 2007 PCE, eq. 1
+# - k_t - Variable at leaf temperature
+# - T_l_C - Leaf temperature, deg. C
+# - T_ref_C - Reference temperature, deg. C
+# - H_a - Activation energy
+# - dS - Entropy
+H_a_vcmax <- 71513
+H_a_jmax <- 49884
+dS_vcmax <- 649.12
+dS_jmax <- 646.22
+ps_temp_scale <- function(k_l, T_l_C, H_a, dS, T_ref_C = 25) {
+  R <- 8.314    # Gas constant, J mol-1 K-1
+  H_d <- 200    # Deactivation energy, kJ mol-1
+  T_l <- T_l_C + 273.15
+  T_ref <- T_ref_C + 273.15
+  a <- exp(H_a * (T_l - T_ref) / (T_ref * R * T_l))
+  num <- 1 + exp((T_ref * dS - H_d) / (T_ref * R))
+  denom <- 1 + exp((T_l * dS - H_d) / (T_l * R))
+  term <- a * num / denom
+  k_l / term
+}
