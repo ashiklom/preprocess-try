@@ -144,8 +144,13 @@ ps_temp_scale <- function(k_l, T_l_C, H_a, dS, T_ref_C = 25) {
 }
 
 load_trait <- function(data_ids) {
+  bad_kinds <- c("Mean", "Species mean", "Maximum", "Minimum", "Median",
+                 "Site specific mean")
   data_raw <- trydat %>%
-    filter(DataID %in% data_ids$DataID) %>%
+    filter(
+      DataID %in% data_ids$DataID,
+      !ValueKindName %in% bad_kinds
+    ) %>%
     select(ObservationID, DataID, ReferenceID, value = StdValue, UnitName) %>%
     collect()
 
