@@ -1,8 +1,17 @@
 source(here::here("R", "common.R"))
 trait_files <- paste0(c("N_P_LL_SLA", "Vcmax", "Jmax", "Rd"), ".rds")
-traits_combined <- here("processed", "traits", trait_files) %>%
+traits_combined_pre <- here("processed", "traits", trait_files) %>%
   map(read_rds) %>%
   reduce(full_join)
+
+obs_ids <- pull(traits_combined_pre, ObservationID)
+
+ids_species <- trydat %>%
+  filter(ObservationID %in% obs_ids) %>%
+  distinct(ObservationID, AccSpeciesID) %>%
+  collect()
+
+traits_combined <- left_join(traits_combined_pre, ids_species)
 
 mass_traits <- c("SLA", "leaf_lifespan", "Nmass", "Pmass", "Rdmass", "Vcmax_mass", "Jmax_mass")
 area_traits <- gsub("mass", "area", mass_traits)

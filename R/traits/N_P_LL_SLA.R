@@ -32,6 +32,7 @@ data_final <- data_raw %>%
     Narea = censor(Narea, Narea > 20 | Narea <= 0.1),
     Pmass = censor(Pmass, Pmass > 10 | Pmass <= 0),
     Parea = censor(Parea, Parea > 1 | Parea <= 0.0014),
+    leaf_lifespan = censor(leaf_lifespan, leaf_lifespan < 200),
     # Assign units
     leaf_lifespan = leaf_lifespan * ll_unit,
     SLA = SLA * sla_unit,
